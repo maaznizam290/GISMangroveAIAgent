@@ -120,7 +120,11 @@ proxies and the site scores.
    Engine use.
 2. Run `uv run earthengine authenticate`, or set `GOOGLE_APPLICATION_CREDENTIALS` to a
    service-account key stored **outside** this repository.
-3. `cp .env.example .env`, set `EE_PROJECT`, then run `uv run indus-delta check-ee`.
+3. `cp .env.example .env`, set `EE_PROJECT=your-project-id` in it, then run
+   `uv run indus-delta check-ee`. The CLI reads `.env` from the folder you run it in;
+   variables already set in the shell take precedence. Alternatively `export EE_PROJECT=...`
+   for the terminal session, or pass `--project` to `check-ee`, `inventory` and `preview`.
+   Note that `EE_PROJECT=x uv run ...` sets the variable for that one command only.
 4. For full-scale exports also set `EXPORT_BUCKET` (Cloud Storage) or `EXPORT_DRIVE_FOLDER`.
 
 In a Claude Code cloud environment, add `EE_PROJECT` and a service-account key (via

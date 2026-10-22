@@ -33,6 +33,10 @@ def _load(config_dir: Path):
 
 @app.callback()
 def main(verbose: bool = typer.Option(False, "--verbose", "-v")) -> None:
+    # Settings such as EE_PROJECT may live in ./.env (see .env.example); shell values win.
+    from indus_delta.envfile import load_env_file
+
+    load_env_file()
     logging.basicConfig(
         level=logging.INFO if verbose else logging.WARNING,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
