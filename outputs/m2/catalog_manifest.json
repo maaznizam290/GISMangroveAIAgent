@@ -1,0 +1,60 @@
+{
+  "milestone": "M2-catalog",
+  "command": "indus-delta catalog-check",
+  "created_utc": "2026-10-22T05:27:02+00:00",
+  "status": "FAIL",
+  "git_revision": "7173fc3d8c3c09c8d80ceb2fbc0fe6d53ac6d043",
+  "config_sha256": {
+    "project.yaml": "a1ada330b21f992f667ce8089e5071cf30828d5c559f7f7d38b6f4880ba9788e",
+    "datasets.yaml": "28338fa55650bfa6aff3c97f4f65375e5d81120d8038c153f3316598031302ff",
+    "indices.yaml": "6ad540c5799ea570eadecdece95bfe017942dfe5181c642c90c630ed0e592d08",
+    "preprocessing.yaml": "b517bfc232a7961b222635976c930c5addd1175657f86e9c1d0dbf6c8af068e6"
+  },
+  "software": {
+    "python": "3.13.16",
+    "indus-delta-mangrove-agent": "0.1.0",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "shapely": "2.2.0",
+    "pyproj": "3.8.0",
+    "geopandas": "1.2.0",
+    "pyogrio": "0.13.0",
+    "rasterio": "1.5.2",
+    "matplotlib": "3.11.2",
+    "pydantic": "2.14.1",
+    "earthengine-api": "1.7.49",
+    "gdal": "3.12.2",
+    "proj": "9.8.1"
+  },
+  "inputs": [
+    {
+      "stac_root": "https://storage.googleapis.com/earthengine-stac/catalog",
+      "records": {
+        "landsat5_l2": "beb1b3fe198137746bcb2d8e4e0fdad1eaca99647991fec08fd749b5d0fac111",
+        "landsat7_l2": "1eb2f79a3f9e314f0f13d7062650efd8fd0215c15bed7b6fd8fe975fca4d35fc",
+        "landsat8_l2": "b29db592f94b42369e5babc0669b1d935687bc84cdd37badf6fe85c35897566d",
+        "landsat9_l2": "0d81bdd960e5a44da1eeac6e5bdf8e88eaf2de5acb37090528e87e8b7e9b4f2e",
+        "sentinel2_sr": "88c840d22013eb6799487f2a547f71554cc9f63d59f2149b5420735fda19f29b",
+        "cloud_score_plus": "4c226f40472e6e3d94ea03278ad7988b22e2f7544d92797ccb6c29b16697552a",
+        "sentinel1_grd": "926b7cd5fc02df62a93eff76dd9d235593051cd2fe3d2527ed78dda7263e520d",
+        "jrc_gsw": "d7a2a2140e1c76cdba1550affc12dcfbdc5d3811afbfe592acb10a124f1fe295",
+        "jrc_gsw_yearly": "9438a13b032237e91c6c331b9fe3a56a7dd9603fcaad70f96ef6d3d4ba72470c",
+        "jrc_gsw_monthly": "81e3bcd959f233fd150b0e4560d6f28b928ff827ff18b0d6f8de06a9c432ed3d",
+        "cgmd_extent30": "176798f024e751807a2433083298da4c923c0fb1f37aedd66491fd13ab9a6c2e"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "path": "outputs/m2/catalog_verification.csv",
+      "sha256": "de8210dd6c42e5a7a3934c3136e574aac6078e0ececd9af26f53699bfd287445",
+      "bytes": 7399
+    },
+    {
+      "path": "outputs/m2/catalog_records.json",
+      "sha256": "5f3bbddcac47981781c04b33a7823f441a799ef41bb5a44e7dbf937c70c9f9ce",
+      "bytes": 7888
+    }
+  ]
+}

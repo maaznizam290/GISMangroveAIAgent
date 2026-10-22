@@ -1,0 +1,197 @@
+{
+  "status": "FAIL",
+  "retrieved_utc": "2026-10-22T05:27:02+00:00",
+  "records": {
+    "landsat5_l2": {
+      "ee_id": "LANDSAT/LT05/C02/T1_L2",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/LANDSAT/LANDSAT_LT05_C02_T1_L2.json",
+      "record_sha256": "beb1b3fe198137746bcb2d8e4e0fdad1eaca99647991fec08fd749b5d0fac111",
+      "title": "USGS Landsat 5 Level 2, Collection 2, Tier 1",
+      "gee_type": "image_collection",
+      "version": "C02",
+      "status": "ready",
+      "temporal_extent": [
+        "1984-03-16",
+        "2012-05-05"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LT05_C02_T1_L2#terms-of-use",
+        "https://www.usgs.gov/centers/eros/data-citation"
+      ]
+    },
+    "landsat7_l2": {
+      "ee_id": "LANDSAT/LE07/C02/T1_L2",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/LANDSAT/LANDSAT_LE07_C02_T1_L2.json",
+      "record_sha256": "1eb2f79a3f9e314f0f13d7062650efd8fd0215c15bed7b6fd8fe975fca4d35fc",
+      "title": "USGS Landsat 7 Level 2, Collection 2, Tier 1",
+      "gee_type": "image_collection",
+      "version": "C02",
+      "status": "ready",
+      "temporal_extent": [
+        "1999-05-28",
+        "2024-01-19"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LE07_C02_T1_L2#terms-of-use"
+      ]
+    },
+    "landsat8_l2": {
+      "ee_id": "LANDSAT/LC08/C02/T1_L2",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/LANDSAT/LANDSAT_LC08_C02_T1_L2.json",
+      "record_sha256": "b29db592f94b42369e5babc0669b1d935687bc84cdd37badf6fe85c35897566d",
+      "title": "USGS Landsat 8 Level 2, Collection 2, Tier 1",
+      "gee_type": "image_collection",
+      "version": "C02",
+      "status": "ready",
+      "temporal_extent": [
+        "2013-03-18",
+        "2026-10-11"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2#terms-of-use",
+        "https://www.usgs.gov/centers/eros/data-citation"
+      ]
+    },
+    "landsat9_l2": {
+      "ee_id": "LANDSAT/LC09/C02/T1_L2",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/LANDSAT/LANDSAT_LC09_C02_T1_L2.json",
+      "record_sha256": "0d81bdd960e5a44da1eeac6e5bdf8e88eaf2de5acb37090528e87e8b7e9b4f2e",
+      "title": "USGS Landsat 9 Level 2, Collection 2, Tier 1",
+      "gee_type": "image_collection",
+      "version": null,
+      "status": "ready",
+      "temporal_extent": [
+        "2021-10-31",
+        "2026-10-11"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC09_C02_T1_L2#terms-of-use",
+        "https://www.usgs.gov/centers/eros/data-citation"
+      ]
+    },
+    "sentinel2_sr": {
+      "ee_id": "COPERNICUS/S2_SR_HARMONIZED",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/COPERNICUS/COPERNICUS_S2_SR_HARMONIZED.json",
+      "record_sha256": "88c840d22013eb6799487f2a547f71554cc9f63d59f2149b5420735fda19f29b",
+      "title": "Harmonized Sentinel-2 MSI: MultiSpectral Instrument, Level-2A (SR)",
+      "gee_type": "image_collection",
+      "version": "harmonized",
+      "status": "ready",
+      "temporal_extent": [
+        "2017-03-28",
+        "2026-10-21"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED#terms-of-use"
+      ]
+    },
+    "cloud_score_plus": {
+      "ee_id": "GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/GOOGLE/GOOGLE_CLOUD_SCORE_PLUS_V1_S2_HARMONIZED.json",
+      "record_sha256": "4c226f40472e6e3d94ea03278ad7988b22e2f7544d92797ccb6c29b16697552a",
+      "title": "Cloud Score+ S2_HARMONIZED V1",
+      "gee_type": "image_collection",
+      "version": "1",
+      "status": "ready",
+      "temporal_extent": [
+        "2015-06-27",
+        "2026-10-21"
+      ],
+      "license": "CC-BY-4.0",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_CLOUD_SCORE_PLUS_V1_S2_HARMONIZED#terms-of-use"
+      ]
+    },
+    "sentinel1_grd": {
+      "ee_id": "COPERNICUS/S1_GRD",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/COPERNICUS/COPERNICUS_S1_GRD.json",
+      "record_sha256": "926b7cd5fc02df62a93eff76dd9d235593051cd2fe3d2527ed78dda7263e520d",
+      "title": "Sentinel-1 SAR GRD: C-band Synthetic Aperture Radar Ground Range Detected, log scaling",
+      "gee_type": "image_collection",
+      "version": null,
+      "status": "ready",
+      "temporal_extent": [
+        "2014-10-03",
+        "2026-10-21"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD#terms-of-use"
+      ]
+    },
+    "jrc_gsw": {
+      "ee_id": "JRC/GSW1_4/GlobalSurfaceWater",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/JRC/JRC_GSW1_4_GlobalSurfaceWater.json",
+      "record_sha256": "d7a2a2140e1c76cdba1550affc12dcfbdc5d3811afbfe592acb10a124f1fe295",
+      "title": "JRC Global Surface Water Mapping Layers, v1.4",
+      "gee_type": "image",
+      "version": "1.4",
+      "status": "ready",
+      "temporal_extent": [
+        "1984-03-16",
+        "2022-01-01"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_4_GlobalSurfaceWater#terms-of-use"
+      ]
+    },
+    "jrc_gsw_yearly": {
+      "ee_id": "JRC/GSW1_4/YearlyHistory",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/JRC/JRC_GSW1_4_YearlyHistory.json",
+      "record_sha256": "9438a13b032237e91c6c331b9fe3a56a7dd9603fcaad70f96ef6d3d4ba72470c",
+      "title": "JRC Yearly Water Classification History, v1.4",
+      "gee_type": "image_collection",
+      "version": "1.4",
+      "status": "ready",
+      "temporal_extent": [
+        "1984-03-16",
+        "2022-01-01"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_4_YearlyHistory#terms-of-use"
+      ]
+    },
+    "jrc_gsw_monthly": {
+      "ee_id": "JRC/GSW1_4/MonthlyHistory",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/JRC/JRC_GSW1_4_MonthlyHistory.json",
+      "record_sha256": "81e3bcd959f233fd150b0e4560d6f28b928ff827ff18b0d6f8de06a9c432ed3d",
+      "title": "JRC Monthly Water History, v1.4",
+      "gee_type": "image_collection",
+      "version": "1.4",
+      "status": "ready",
+      "temporal_extent": [
+        "1984-03-16",
+        "2022-01-01"
+      ],
+      "license": "proprietary",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_4_MonthlyHistory#terms-of-use"
+      ]
+    },
+    "cgmd_extent30": {
+      "ee_id": "projects/mangrovedatahub2/assets/CGMD-Extent30",
+      "stac_url": "https://storage.googleapis.com/earthengine-stac/catalog/mangrovedatahub2/projects_mangrovedatahub2_assets_CGMD-Extent30.json",
+      "record_sha256": "176798f024e751807a2433083298da4c923c0fb1f37aedd66491fd13ab9a6c2e",
+      "title": "Global Annual Mangrove Extent (1984-2023)",
+      "gee_type": "table",
+      "version": "1.0",
+      "status": "ready",
+      "temporal_extent": [
+        "1984-01-01",
+        "2023-12-31"
+      ],
+      "license": "CC-BY-4.0",
+      "terms_links": [
+        "https://developers.google.com/earth-engine/datasets/catalog/projects_mangrovedatahub2_assets_CGMD-Extent30#terms-of-use",
+        "https://spdx.org/licenses/CC-BY-4.0.html"
+      ]
+    }
+  }
+}

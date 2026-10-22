@@ -1,0 +1,83 @@
+dataset,check,status,detail
+landsat5_l2,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/LANDSAT/LANDSAT_LT05_C02_T1_L2.json
+landsat5_l2,id_matches,PASS,"catalog id 'LANDSAT/LT05/C02/T1_L2', configured 'LANDSAT/LT05/C02/T1_L2'"
+landsat5_l2,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+landsat5_l2,status_ready,PASS,gee:status 'ready'
+landsat5_l2,temporal_extent,WARN,catalog 1984-03-16..2012-05-05; requested 2004-11-01..latest; collection ended 2012-05-05 (no data after this date)
+landsat5_l2,required_bands,PASS,all required bands present
+landsat5_l2,scale_offset,PASS,"6 bands match scale 2.75e-05, offset -0.2"
+landsat5_l2,qa_pixel_bits,PASS,configured QA_PIXEL bits match the catalog
+landsat5_l2,qa_radsat_bits,PASS,saturation bit n-1 <-> SR_Bn confirmed
+landsat7_l2,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/LANDSAT/LANDSAT_LE07_C02_T1_L2.json
+landsat7_l2,id_matches,PASS,"catalog id 'LANDSAT/LE07/C02/T1_L2', configured 'LANDSAT/LE07/C02/T1_L2'"
+landsat7_l2,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+landsat7_l2,status_ready,PASS,gee:status 'ready'
+landsat7_l2,temporal_extent,PASS,catalog 1999-05-28..2024-01-19; requested 2004-11-01..2021-12-31
+landsat7_l2,required_bands,PASS,all required bands present
+landsat7_l2,scale_offset,PASS,"6 bands match scale 2.75e-05, offset -0.2"
+landsat7_l2,qa_pixel_bits,PASS,configured QA_PIXEL bits match the catalog
+landsat7_l2,qa_radsat_bits,PASS,saturation bit n-1 <-> SR_Bn confirmed
+landsat8_l2,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/LANDSAT/LANDSAT_LC08_C02_T1_L2.json
+landsat8_l2,id_matches,PASS,"catalog id 'LANDSAT/LC08/C02/T1_L2', configured 'LANDSAT/LC08/C02/T1_L2'"
+landsat8_l2,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+landsat8_l2,status_ready,PASS,gee:status 'ready'
+landsat8_l2,temporal_extent,WARN,catalog 2013-03-18..2026-10-11; requested 2004-11-01..latest; usable 2013-03-18..2026-10-11
+landsat8_l2,required_bands,PASS,all required bands present
+landsat8_l2,scale_offset,PASS,"6 bands match scale 2.75e-05, offset -0.2"
+landsat8_l2,qa_pixel_bits,PASS,configured QA_PIXEL bits match the catalog
+landsat8_l2,qa_radsat_bits,PASS,saturation bit n-1 <-> SR_Bn confirmed
+landsat9_l2,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/LANDSAT/LANDSAT_LC09_C02_T1_L2.json
+landsat9_l2,id_matches,PASS,"catalog id 'LANDSAT/LC09/C02/T1_L2', configured 'LANDSAT/LC09/C02/T1_L2'"
+landsat9_l2,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+landsat9_l2,status_ready,PASS,gee:status 'ready'
+landsat9_l2,temporal_extent,WARN,catalog 2021-10-31..2026-10-11; requested 2004-11-01..latest; usable 2021-10-31..2026-10-11
+landsat9_l2,required_bands,PASS,all required bands present
+landsat9_l2,scale_offset,PASS,"6 bands match scale 2.75e-05, offset -0.2"
+landsat9_l2,qa_pixel_bits,PASS,configured QA_PIXEL bits match the catalog
+landsat9_l2,qa_radsat_bits,PASS,saturation bit n-1 <-> SR_Bn confirmed
+sentinel2_sr,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/COPERNICUS/COPERNICUS_S2_SR_HARMONIZED.json
+sentinel2_sr,id_matches,PASS,"catalog id 'COPERNICUS/S2_SR_HARMONIZED', configured 'COPERNICUS/S2_SR_HARMONIZED'"
+sentinel2_sr,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+sentinel2_sr,status_ready,PASS,gee:status 'ready'
+sentinel2_sr,temporal_extent,PASS,catalog 2017-03-28..2026-10-21; requested 2019-11-01..latest
+sentinel2_sr,required_bands,PASS,all required bands present
+sentinel2_sr,scale_offset,PASS,"6 bands match scale 0.0001, offset 0.0"
+sentinel2_sr,scl_classes,PASS,configured SCL mask classes match the catalog
+cloud_score_plus,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/GOOGLE/GOOGLE_CLOUD_SCORE_PLUS_V1_S2_HARMONIZED.json
+cloud_score_plus,id_matches,PASS,"catalog id 'GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED', configured 'GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED'"
+cloud_score_plus,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+cloud_score_plus,status_ready,PASS,gee:status 'ready'
+cloud_score_plus,temporal_extent,PASS,catalog 2015-06-27..2026-10-21; requested 2019-11-01..latest
+cloud_score_plus,required_bands,PASS,all required bands present
+cloud_score_plus,cloud_score_band,PASS,band 'cs_cdf' present
+sentinel1_grd,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/COPERNICUS/COPERNICUS_S1_GRD.json
+sentinel1_grd,id_matches,PASS,"catalog id 'COPERNICUS/S1_GRD', configured 'COPERNICUS/S1_GRD'"
+sentinel1_grd,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+sentinel1_grd,status_ready,PASS,gee:status 'ready'
+sentinel1_grd,temporal_extent,PASS,catalog 2014-10-03..2026-10-21; requested 2019-11-01..latest
+sentinel1_grd,required_bands,PASS,all required bands present
+jrc_gsw,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/JRC/JRC_GSW1_4_GlobalSurfaceWater.json
+jrc_gsw,id_matches,PASS,"catalog id 'JRC/GSW1_4/GlobalSurfaceWater', configured 'JRC/GSW1_4/GlobalSurfaceWater'"
+jrc_gsw,type_matches,PASS,"catalog type 'image', configured kind 'image'"
+jrc_gsw,status_ready,PASS,gee:status 'ready'
+jrc_gsw,temporal_extent,PASS,catalog 1984-03-16..2022-01-01; requested 1984-03-16..2021-12-31
+jrc_gsw,required_bands,PASS,all required bands present
+jrc_gsw_yearly,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/JRC/JRC_GSW1_4_YearlyHistory.json
+jrc_gsw_yearly,id_matches,PASS,"catalog id 'JRC/GSW1_4/YearlyHistory', configured 'JRC/GSW1_4/YearlyHistory'"
+jrc_gsw_yearly,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+jrc_gsw_yearly,status_ready,PASS,gee:status 'ready'
+jrc_gsw_yearly,temporal_extent,PASS,catalog 1984-03-16..2022-01-01; requested 2005-01-01..2021-12-31
+jrc_gsw_yearly,required_bands,PASS,all required bands present
+jrc_gsw_monthly,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/JRC/JRC_GSW1_4_MonthlyHistory.json
+jrc_gsw_monthly,id_matches,PASS,"catalog id 'JRC/GSW1_4/MonthlyHistory', configured 'JRC/GSW1_4/MonthlyHistory'"
+jrc_gsw_monthly,type_matches,PASS,"catalog type 'image_collection', configured kind 'image_collection'"
+jrc_gsw_monthly,status_ready,PASS,gee:status 'ready'
+jrc_gsw_monthly,temporal_extent,PASS,catalog 1984-03-16..2022-01-01; requested 2005-01-01..2021-12-31
+jrc_gsw_monthly,required_bands,PASS,all required bands present
+gmw_v4,catalog_entry,FAIL,no Earth Engine ID configured; the dataset must be supplied as an uploaded asset or local raster with a recorded DOI
+cgmd_extent30,catalog_entry,PASS,https://storage.googleapis.com/earthengine-stac/catalog/mangrovedatahub2/projects_mangrovedatahub2_assets_CGMD-Extent30.json
+cgmd_extent30,id_matches,PASS,"catalog id 'projects/mangrovedatahub2/assets/CGMD-Extent30', configured 'projects/mangrovedatahub2/assets/CGMD-Extent30'"
+cgmd_extent30,type_matches,PASS,"catalog type 'table', configured kind 'table'"
+cgmd_extent30,status_ready,PASS,gee:status 'ready'
+cgmd_extent30,temporal_extent,PASS,catalog 1984-01-01..2023-12-31; requested 2005-01-01..2023-12-31
+cgmd_extent30,required_bands,PASS,all required bands present
