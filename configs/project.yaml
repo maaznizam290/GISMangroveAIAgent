@@ -42,6 +42,11 @@ aoi:
   polygon_path: null
   # Alternative AOIs evaluated in the M1 AOI review. They are proposals, never applied silently.
   alternative_buffers_m: [10000, 15000, 20000, 30000]
+  # Set to true (with a note) once the operator has chosen the AOI on documented
+  # hydrological evidence (M1 review, assumptions U2/U3). Full-scale processing is refused
+  # until then; the inventory and the small-area preview are allowed.
+  operator_confirmed: false
+  confirmation_note: ""
 
 periods:
   landsat: {start_year: 2005, end_year: 2026}

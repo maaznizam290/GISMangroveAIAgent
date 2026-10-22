@@ -93,22 +93,135 @@ def _later(milestone: str) -> None:
     raise typer.Exit(3)
 
 
+def _ee_or_exit(project: str | None) -> None:
+    from indus_delta.ee_auth import EEUnavailableError, initialize
+
+    try:
+        initialize(project)
+    except EEUnavailableError as exc:
+        typer.secho(f"Earth Engine unavailable: {exc}", fg="red", err=True)
+        typer.secho(
+            "No processing was run. See README: Earth Engine authentication.", fg="yellow", err=True
+        )
+        raise typer.Exit(4) from exc
+
+
+EEProject = typer.Option(None, "--project", help="Cloud project (default: $EE_PROJECT).")
+OutDir = typer.Option(None, "--out-dir", help="Output root (default: project.output_dir).")
+
+
+@app.command("catalog-check")
+def catalog_check(
+    config_dir: Path = ConfigDir,
+    out_dir: Path = OutDir,
+    record: bool = typer.Option(
+        False, "--record", help="Write catalog_verified status into datasets.yaml."
+    ),
+) -> None:
+    """[M2] Verify dataset IDs, extents, bands, scale/offset and QA definitions against the
+    official Earth Engine catalog (no authentication needed)."""
+    from indus_delta.m2 import run_catalog
+
+    cfgs = _load(config_dir)
+    status, path = run_catalog(
+        cfgs,
+        out_dir or cfgs.project.project.output_dir,
+        record_to=config_dir / "datasets.yaml" if record else None,
+    )
+    import pandas as pd
+
+    df = pd.read_csv(path / "catalog_verification.csv")
+    for r in df.itertuples():
+        if r.status != "PASS" or r.check == "temporal_extent":
+            typer.echo(f"[{r.status}] {r.dataset}.{r.check}: {r.detail}")
+    typer.echo(
+        f"\n{(df.status == 'PASS').sum()}/{len(df)} checks passed; status {status}. "
+        f"Details: {path / 'catalog_verification.csv'}"
+    )
+    raise typer.Exit(1 if status == "FAIL" else 0)
+
+
 @app.command("inventory")
-def inventory() -> None:
-    """[M2] Verify dataset IDs and inventory usable scenes by sensor/year/season."""
-    _later("M2")
+def inventory(
+    config_dir: Path = ConfigDir,
+    out_dir: Path = OutDir,
+    project: str = EEProject,
+    dataset: list[str] = typer.Option(None, "--dataset", help="Limit to these dataset keys."),
+) -> None:
+    """[M2] Inventory images by sensor, year and season over the primary AOI (Earth Engine)."""
+    from indus_delta.inventory import InventoryError
+    from indus_delta.m2 import run_inventory
+
+    cfgs = _load(config_dir)
+    _ee_or_exit(project)
+    try:
+        status, checks, path = run_inventory(
+            cfgs, out_dir or cfgs.project.project.output_dir, datasets=dataset or None
+        )
+    except InventoryError as exc:
+        typer.secho(f"Inventory FAILED: {exc}", fg="red", err=True)
+        raise typer.Exit(1) from exc
+    _print(checks)
+    typer.echo(f"\nInventory status {status}; files in {path}")
 
 
 @app.command("preview")
-def preview() -> None:
-    """[M2] Small-area Earth Engine dry run."""
-    _later("M2")
+def preview(config_dir: Path = ConfigDir, out_dir: Path = OutDir, project: str = EEProject) -> None:
+    """[M3] Small-area dry run: seasonal composites for a box around the reference point,
+    downloaded and checked. Writes the preview gate."""
+    from indus_delta.m3_preview import run_preview
+
+    cfgs = _load(config_dir)
+    _ee_or_exit(project)
+    status, checks, path = run_preview(cfgs, out_dir or cfgs.project.project.output_dir)
+    _print(checks)
+    typer.echo(f"\nPreview gate: {status}. Files in {path}")
+    raise typer.Exit(0 if status == "PASS" else 1)
 
 
 @app.command("preprocess")
-def preprocess() -> None:
-    """[M3] Masked, scaled seasonal composites."""
-    _later("M3")
+def preprocess(
+    config_dir: Path = ConfigDir,
+    out_dir: Path = OutDir,
+    project: str = EEProject,
+    series: list[str] = typer.Option(["landsat", "sentinel2", "sentinel1"], "--series"),
+    start: bool = typer.Option(
+        False, "--start", help="Actually submit the Earth Engine export tasks."
+    ),
+) -> None:
+    """[M3] Full-AOI seasonal composites. Plans only, unless --start is given. Refused until
+    the AOI is confirmed and the preview gate has passed for the current configuration."""
+    from datetime import UTC, datetime
+
+    from indus_delta.gate import GateError
+    from indus_delta.m3_export import check_preconditions, plan_exports, submit_exports, write_plan
+
+    cfgs = _load(config_dir)
+    root = out_dir or cfgs.project.project.output_dir
+    try:
+        gate = check_preconditions(cfgs, root / "m3" / "preview")
+        plan = plan_exports(cfgs, gate, series, datetime.now(UTC).date())
+    except GateError as exc:
+        typer.secho(f"Full-scale processing refused: {exc}", fg="red", err=True)
+        raise typer.Exit(5) from exc
+    plan_path = root / "m3" / "export_plan.json"
+    total = sum(p["pixels"] for p in plan)
+    if not start:
+        write_plan(plan_path, plan)
+        typer.echo(
+            f"{len(plan)} composites planned ({total:,} pixels per band in total). "
+            f"Plan: {plan_path}. Nothing submitted; rerun with --start to export."
+        )
+        return
+    _ee_or_exit(project)
+    try:
+        submitted = submit_exports(cfgs, plan, gate)
+    except GateError as exc:
+        typer.secho(f"Export refused: {exc}", fg="red", err=True)
+        raise typer.Exit(5) from exc
+    write_plan(plan_path, plan, submitted)
+    n = sum(1 for r in submitted if r["status"] == "submitted")
+    typer.echo(f"{n} export tasks submitted, {len(submitted) - n} skipped. Record: {plan_path}")
 
 
 @app.command("classify")

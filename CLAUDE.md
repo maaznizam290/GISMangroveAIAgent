@@ -22,6 +22,11 @@
 
 ## Layout
 - `src/indus_delta/`: package. `config.py` (schema), `crs.py`, `aoi.py`, `seasons.py`,
-  `hydrology.py` (M1 review), `preview.py`, `m1.py`, `manifest.py`, `ee_auth.py`, `cli.py`
+  `hydrology.py` (M1 review), `preview.py`, `m1.py`, `manifest.py`, `ee_auth.py`, `cli.py`,
+  `catalog.py` and `m2.py` (catalog check, inventory), `inventory.py`, `spectral.py` (NumPy
+  reference), `grid.py`, `preview_checks.py`, `gate.py`, `m3_preview.py`, `m3_export.py`
+- `src/indus_delta/earthengine/`: all Earth Engine calls (prep, composite, inventory, download)
+- Full-scale processing must go through the gate (`m3_export.check_preconditions`); never
+  bypass it or start exports without `--start`.
 - `configs/`: versioned parameters. `docs/`: protocol, assessment, milestones.
 - `gee/`: Earth Engine script notes. `outputs/`: generated (large files git-ignored).

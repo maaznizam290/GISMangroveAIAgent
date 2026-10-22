@@ -73,6 +73,9 @@ class AOIConfig(_Strict):
     buffer_m: Annotated[float, Field(gt=0)] | None = None
     polygon_path: Path | None = None
     alternative_buffers_m: list[Annotated[float, Field(gt=0)]] = []
+    # Full-scale processing is refused until the operator confirms the AOI (M1 review).
+    operator_confirmed: bool = False
+    confirmation_note: str = ""
 
     @model_validator(mode="after")
     def _mode_fields(self) -> AOIConfig:
@@ -184,36 +187,161 @@ class UsePeriod(_Strict):
     end: date | None = None
 
 
+class CatalogExtent(_Strict):
+    start: date
+    end: date
+
+
 class DatasetEntry(_Strict):
     ee_id: str | None = None
+    # Path of the STAC record below the catalog root when it does not follow the
+    # "<first segment>/<id with / replaced by _>.json" convention.
+    stac_path: str | None = None
     local_path: Path | None = None
-    kind: Literal["image", "image_collection", "reference_product"]
+    kind: Literal["image", "image_collection", "table", "reference_product"]
     sensor: str
     role: str
     use_period: UsePeriod
     reflectance_scale: float | None = None
     reflectance_offset: float | None = None
+    required_bands: list[str] = []
+    optional: bool = False
     doi: str | None = None
     notes: str = ""
-    verification: Literal["pending", "verified"]
+    verification: Literal["pending", "catalog_verified", "verified"]
     verified_on: date | None = None
     verified_by: str | None = None
+    catalog_extent: CatalogExtent | None = None
 
     @model_validator(mode="after")
     def _verified_has_record(self) -> DatasetEntry:
-        if self.verification == "verified" and (self.verified_on is None or not self.verified_by):
-            raise ValueError("verified datasets need verified_on and verified_by")
+        if self.verification != "pending" and (self.verified_on is None or not self.verified_by):
+            raise ValueError(f"{self.verification} datasets need verified_on and verified_by")
         if self.kind != "reference_product" and not self.ee_id:
             raise ValueError("Earth Engine datasets need ee_id")
         return self
+
+    def requested_window(self, today: date) -> tuple[date, date]:
+        """Requested start/end (inclusive), clipped to the catalog extent when known."""
+        start, end = self.use_period.start, self.use_period.end or today
+        if self.catalog_extent:
+            start = max(start, self.catalog_extent.start)
+            end = min(end, self.catalog_extent.end)
+        return start, end
 
 
 class DatasetRegistry(_Strict):
     config_version: str
     datasets: dict[str, DatasetEntry]
 
-    def pending(self) -> list[str]:
-        return [k for k, v in self.datasets.items() if v.verification != "verified"]
+    def pending(self, level: str = "verified") -> list[str]:
+        """Datasets not yet at the given verification level (optional ones excluded)."""
+        rank = {"pending": 0, "catalog_verified": 1, "verified": 2}
+        return [
+            k
+            for k, v in self.datasets.items()
+            if not v.optional and rank[v.verification] < rank[level]
+        ]
+
+
+# --------------------------------------------------------------------------- preprocessing.yaml
+
+
+class CatalogConfig(_Strict):
+    stac_root: str
+
+
+class QABit(_Strict):
+    bit: Annotated[int, Field(ge=0, le=15)]
+    description: str
+    sensors: list[str] | None = None
+
+
+class LandsatPrep(_Strict):
+    members: dict[str, str]
+    qa_pixel_mask_bits: list[QABit]
+    mask_saturated_bands: bool
+    max_scene_cloud_cover_pct: Annotated[float, Field(ge=0, le=100)]
+    harmonisation: Literal["none"]
+
+    def mask_bits_for(self, index_sensor: str) -> list[int]:
+        return [
+            b.bit for b in self.qa_pixel_mask_bits if b.sensors is None or index_sensor in b.sensors
+        ]
+
+
+class SCLClass(_Strict):
+    value: Annotated[int, Field(ge=0, le=11)]
+    description: str
+
+
+class CloudScorePlus(_Strict):
+    enabled: bool
+    dataset: str
+    band: str
+    min_score: Annotated[float, Field(ge=0, le=1)]
+
+
+class Sentinel2Prep(_Strict):
+    dataset: str
+    index_sensor: str
+    scl_band: str
+    scl_mask_classes: list[SCLClass]
+    scl_mask_nodata_value: int
+    cloud_score_plus: CloudScorePlus
+    max_scene_cloud_pct: Annotated[float, Field(ge=0, le=100)]
+
+
+class Sentinel1Prep(_Strict):
+    dataset: str
+    instrument_mode: str
+    polarisations: Annotated[list[str], Field(min_length=1)]
+    resolution_meters: float
+    orbit_pass: Literal["ASCENDING", "DESCENDING"] | None
+    speckle_filter: Literal["none"]
+
+
+class CompositeConfig(_Strict):
+    reducer: Literal["median"]
+    indices_from: Literal["composite"]
+    landsat_scale_m: Annotated[float, Field(gt=0)]
+    sentinel2_scale_m: Annotated[float, Field(gt=0)]
+    sentinel1_scale_m: Annotated[float, Field(gt=0)]
+    landsat7_primary_end: date
+    nodata_value: float
+
+
+class TideConfig(_Strict):
+    provider: Literal["none"]
+
+
+class InventoryConfig(_Strict):
+    region: Literal["primary_aoi"]
+    valid_fraction_scale_m: Annotated[float, Field(gt=0)]
+    min_usable_valid_fraction: Annotated[float, Field(ge=0, le=1)]
+    required_datasets: list[str]
+
+
+class PreviewConfig(_Strict):
+    half_size_m: Annotated[float, Field(gt=0, le=10000)]
+    season: str
+    label_year: int | None = None
+    min_valid_fraction: Annotated[float, Field(ge=0, le=1)]
+    index_recompute_tolerance: Annotated[float, Field(gt=0)]
+    reflectance_tolerance: Annotated[float, Field(ge=0)]
+    sar_db_range: tuple[float, float]
+
+
+class PreprocessingConfig(_Strict):
+    config_version: str
+    catalog: CatalogConfig
+    landsat: LandsatPrep
+    sentinel2: Sentinel2Prep
+    sentinel1: Sentinel1Prep
+    composites: CompositeConfig
+    tide: TideConfig
+    inventory: InventoryConfig
+    preview: PreviewConfig
 
 
 # --------------------------------------------------------------------------- indices.yaml
@@ -310,7 +438,13 @@ class Configs(_Strict):
     project: ProjectConfig
     datasets: DatasetRegistry
     indices: IndicesConfig
+    preprocessing: PreprocessingConfig
     sha256: dict[str, str]
+
+    def combined_sha256(self) -> str:
+        """One hash over all config files, used to bind gate results to a configuration."""
+        joined = "".join(f"{k}={v};" for k, v in sorted(self.sha256.items()))
+        return hashlib.sha256(joined.encode()).hexdigest()
 
 
 def _read_yaml(path: Path) -> dict:
@@ -337,10 +471,47 @@ def load_configs(config_dir: Path = DEFAULT_CONFIG_DIR) -> Configs:
         "project": config_dir / "project.yaml",
         "datasets": config_dir / "datasets.yaml",
         "indices": config_dir / "indices.yaml",
+        "preprocessing": config_dir / "preprocessing.yaml",
     }
-    return Configs(
+    cfgs = Configs(
         project=_validate(ProjectConfig, paths["project"]),
         datasets=_validate(DatasetRegistry, paths["datasets"]),
         indices=_validate(IndicesConfig, paths["indices"]),
-        sha256={str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths.values()},
+        preprocessing=_validate(PreprocessingConfig, paths["preprocessing"]),
+        sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths.values()},
     )
+    _cross_check(cfgs)
+    return cfgs
+
+
+def _cross_check(cfgs: Configs) -> None:
+    """References between config files must resolve."""
+    ds, pp, idx = cfgs.datasets.datasets, cfgs.preprocessing, cfgs.indices
+    errors = []
+    for key, sensor in pp.landsat.members.items():
+        if key not in ds:
+            errors.append(f"preprocessing.landsat.members: unknown dataset {key!r}")
+        if sensor not in idx.sensors:
+            errors.append(f"preprocessing.landsat.members: unknown index sensor {sensor!r}")
+    for key in (
+        pp.sentinel2.dataset,
+        pp.sentinel2.cloud_score_plus.dataset,
+        pp.sentinel1.dataset,
+        *pp.inventory.required_datasets,
+    ):
+        if key not in ds:
+            errors.append(f"preprocessing references unknown dataset {key!r}")
+    if pp.sentinel2.index_sensor not in idx.sensors:
+        errors.append(f"unknown index sensor {pp.sentinel2.index_sensor!r}")
+    if pp.preview.season not in cfgs.project.seasons:
+        errors.append(f"preview.season {pp.preview.season!r} is not a configured season")
+    for key, sensor in [
+        *pp.landsat.members.items(),
+        (pp.sentinel2.dataset, pp.sentinel2.index_sensor),
+    ]:
+        if key in ds and sensor in idx.sensors:
+            missing = set(idx.sensors[sensor].bands.values()) - set(ds[key].required_bands)
+            if missing:
+                errors.append(f"datasets.{key}.required_bands lacks index bands {sorted(missing)}")
+    if errors:
+        raise ConfigError("configuration cross-check failed:\n" + "\n".join(errors))

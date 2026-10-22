@@ -18,8 +18,12 @@ def test_repository_configs_validate(cfgs):
     assert cfgs.project.crs.analysis_epsg == 32642
     assert cfgs.project.aoi.mode == "buffer"
     assert set(cfgs.sha256) == {
-        str(CONFIG_DIR / f) for f in ("project.yaml", "datasets.yaml", "indices.yaml")
+        "project.yaml",
+        "datasets.yaml",
+        "indices.yaml",
+        "preprocessing.yaml",
     }
+    assert len(cfgs.combined_sha256()) == 64
 
 
 def test_missing_config_dir_is_readable_error(tmp_path):
@@ -88,9 +92,16 @@ def _datasets() -> dict:
     return yaml.safe_load((CONFIG_DIR / "datasets.yaml").read_text())
 
 
-def test_all_datasets_pending_until_inventory(cfgs):
-    # Nothing has been verified against Earth Engine yet; the registry must say so.
-    assert set(cfgs.datasets.pending()) == set(cfgs.datasets.datasets)
+def test_no_dataset_claims_account_verification(cfgs):
+    # No authenticated inventory has run yet; no entry may claim the "verified" level.
+    assert not any(d.verification == "verified" for d in cfgs.datasets.datasets.values())
+    assert "gmw_v4" in cfgs.datasets.pending("catalog_verified")
+
+
+def test_catalog_verified_entries_carry_record(cfgs):
+    for d in cfgs.datasets.datasets.values():
+        if d.verification == "catalog_verified":
+            assert d.verified_on and d.verified_by and d.catalog_extent
 
 
 def test_brief_collection_ids_present(cfgs):
@@ -102,6 +113,24 @@ def test_gmw_has_no_assumed_ee_asset(cfgs):
     assert cfgs.datasets.datasets["gmw_v4"].ee_id is None
 
 
+def test_requested_windows_start_with_a_full_dry_season(cfgs):
+    ds = cfgs.datasets.datasets
+    assert ds["landsat8_l2"].use_period.start.isoformat() == "2004-11-01"
+    assert ds["sentinel2_sr"].use_period.start.isoformat() == "2019-11-01"
+
+
+def test_cross_reference_errors_are_reported(tmp_path):
+    import shutil
+
+    for f in CONFIG_DIR.glob("*.yaml"):
+        shutil.copy(f, tmp_path / f.name)
+    pp = yaml.safe_load((tmp_path / "preprocessing.yaml").read_text())
+    pp["landsat"]["members"]["landsat_x"] = "landsat_oli"
+    (tmp_path / "preprocessing.yaml").write_text(yaml.safe_dump(pp))
+    with pytest.raises(ConfigError, match="unknown dataset 'landsat_x'"):
+        load_configs(tmp_path)
+
+
 def test_landsat7_primary_series_stops_2021(cfgs):
     assert cfgs.datasets.datasets["landsat7_l2"].use_period.end.year == 2021
 
@@ -109,6 +138,7 @@ def test_landsat7_primary_series_stops_2021(cfgs):
 def test_verified_dataset_needs_record():
     data = _datasets()
     data["datasets"]["landsat8_l2"]["verification"] = "verified"
+    data["datasets"]["landsat8_l2"].pop("verified_on", None)
     with pytest.raises(ValidationError, match="verified_on"):
         DatasetRegistry.model_validate(data)
 

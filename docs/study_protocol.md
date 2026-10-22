@@ -1,6 +1,6 @@
 # Study protocol: Keti Bandar mangrove, inundation, salinity-proxy and freshwater-influence study
 
-Status: **draft, M1**. Sections marked *planned* describe the intended method. They have
+Status: **draft, M3**. Sections marked *planned* describe the intended method. They have
 not been run. Results are reported only from runs recorded in a `run_manifest.json`.
 
 ## 1. Purpose
@@ -62,22 +62,58 @@ evidence (Section 9, items U2–U4). Until then the 5 km buffer remains the conf
 AOI, because the 5 km size is a project requirement, and the review report records why it
 may be insufficient.
 
-## 4. Data and periods (planned; identifiers pending verification in M2)
+## 4. Data and periods (catalog-verified 2026-10-22; account access not yet verified)
 
-| Series | Source | Period | Grid |
+`indus-delta catalog-check` compared every entry in `configs/datasets.yaml` with the official
+Earth Engine catalog (`outputs/m2/catalog_verification.csv`).
+
+| Dataset | Earth Engine ID | Catalog extent | Notes verified in the catalog |
 |---|---|---|---|
-| Historical | Landsat 5 TM, 7 ETM+ (through 2021 only), 8 OLI, 9 OLI-2, Collection 2 L2 SR | 2005–2026 | 30 m |
-| Recent | Sentinel-2 `COPERNICUS/S2_SR_HARMONIZED`; Sentinel-1 `COPERNICUS/S1_GRD` | 2020–2026 | 10/20 m native (index effective resolution is recorded) |
-| Reference | GMW v4.1 annual extent (distribution method not yet verified); JRC GSW v1.4 | 1985–2025 / 1984–2021 | native |
-| Field | Operator-supplied creek salinity/EC, ground truth | as supplied | points |
+| Landsat 5 TM C2 L2 | `LANDSAT/LT05/C02/T1_L2` | 1984-03-16 to **2012-05-05** | SR scale 2.75e-5, offset −0.2; QA bits match |
+| Landsat 7 ETM+ C2 L2 | `LANDSAT/LE07/C02/T1_L2` | 1999-05-28 to 2024-01-19 | Primary series used only through 2021-12-31 |
+| Landsat 8 OLI C2 L2 | `LANDSAT/LC08/C02/T1_L2` | 2013-03-18 to present | QA bit 2 = cirrus (OLI only) |
+| Landsat 9 OLI-2 C2 L2 | `LANDSAT/LC09/C02/T1_L2` | 2021-10-31 to present | |
+| Sentinel-2 SR harmonized | `COPERNICUS/S2_SR_HARMONIZED` | 2017-03-28 to present | Scale 1e-4, **no offset**; SCL classes match |
+| Cloud Score+ | `GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED` | 2015-06-27 to present | Band `cs_cdf` |
+| Sentinel-1 GRD | `COPERNICUS/S1_GRD` | 2014-10-03 to present | Values in dB after thermal-noise removal, calibration and terrain correction; 10/25/40 m products |
+| JRC GSW v1.4 | `JRC/GSW1_4/GlobalSurfaceWater`, `YearlyHistory`, `MonthlyHistory` | 1984-03-16 to 2022-01-01 | Ends with 2021, so a Landsat-derived water series must follow |
+| GMW v4.1 | **not in the official catalog** | n/a | Must be supplied as an uploaded asset or local rasters (U7) |
+| CGMD-Extent30 | `projects/mangrovedatahub2/assets/CGMD-Extent30` | 1984 to 2023 | CC BY 4.0 table; optional candidate reference, not adopted |
+
+Consequences for the historical series:
+
+* Between Landsat 5's end (2012-05-05) and Landsat 8's start (2013-03-18), only Landsat 7
+  SLC-off data exist. The post-monsoon 2012 and dry 2013 seasons depend on gap-striped data
+  (U19).
+* Sentinel-2 and Sentinel-1 requests start on 2019-11-01, so that dry season 2020 is complete.
+
+Rules carried over from M1:
 
 * The Landsat and Sentinel trend lines are never combined. In the 2020–2026 overlap,
   Sentinel estimates are aggregated to the Landsat 30 m grid for comparison.
 * Landsat 7 data after 2021 may be used only in a separate sensitivity analysis.
-* A Landsat-derived water-frequency series continues the inundation record after JRC ends
-  in 2021.
-* Each run starts with a scene inventory by sensor, year and season (`image_inventory.csv`)
-  and fails visibly when required data are missing.
+* Each run starts with a scene inventory (`indus-delta inventory`) by sensor, year and
+  season, which fails visibly when a required dataset returns no images.
+
+## 4a. Preprocessing (implemented in M3; not yet run)
+
+* **Landsat:** remove QA_PIXEL Fill, Dilated Cloud, Cloud, Cloud Shadow and Snow (plus
+  Cirrus on OLI) and any saturated analysis band (QA_RADSAT). Scale with the catalog
+  factors and mask reflectance outside 0–1. Bands are renamed to roles via
+  `configs/indices.yaml`. No cross-sensor harmonisation until U9 is resolved; every
+  composite records its contributing sensors.
+* **Sentinel-2:** remove SCL 0, 1, 3, 8, 9, 10 and 11, and pixels with Cloud Score+
+  `cs_cdf` < 0.6 (U18). Scale by 1e-4. Exported at 10 m; indices using B11/B12 have a 20 m
+  effective resolution, which is recorded.
+* **Sentinel-1:** IW mode with VV+VH at 10 m pixel spacing, from one orbit pass (U20). No
+  speckle filter in the baseline.
+* **Composites:** per-season median of masked images. Indices are computed from the median
+  reflectance, with a `valid_obs` count band. Grids are aligned to the source sensor's native
+  grid, read from the image projection at preview time.
+* **Tide:** no tide information yet (U10). Every image is tagged `tide_status: unavailable`.
+* **Gate:** full-scale processing (`indus-delta preprocess --start`) is refused until the
+  operator confirms the AOI and a small-area preview passes every check for the current
+  configuration.
 
 ## 5. Seasons
 
@@ -147,9 +183,9 @@ Rules:
 | U2 | A creek with present-day freshwater input exists within reach of the AOI | Site B depends on it | Traceable active-channel map; Kotri-downstream discharge records for the study years; field salinity/EC | before M6 (AOI choice before M2) |
 | U3 | The 5 km AOI holds enough hydrological contrast for both sites | M1 shows a 5 km AOI that is nearly all intertidal/water, with the coarse main channel 12.4 km away | Operator chooses an AOI from the review alternatives or supplies a polygon | before M2 |
 | U4 | Connected water implies a creek connection to the river | The M1 connectivity test may pass through the open sea | Sea/coastline mask, then a creek-only connectivity test | M5 |
-| U5 | JRC value 255 means no data (ocean or outside the product) | It affects the no-data statistics | Confirm against the JRC GSW user guide | M2 |
-| U6 | The dataset IDs and scale factors in `configs/datasets.yaml` are correct | Every series depends on them | `indus-delta inventory` verifies them against Earth Engine (needs authentication) | M2 |
-| U7 | GMW v4.1 is accessible | It is the independent extent reference | Verify the distribution (DOI, licence, format); import it as an asset or local raster | M2 |
+| U5 | JRC value 255 means no data (ocean or outside the product) | It affects the no-data statistics | Confirm against the JRC GSW user guide (the Earth Engine version can be compared once authenticated) | M2 |
+| U6 | The dataset IDs and scale factors in `configs/datasets.yaml` are correct | Every series depends on them | **Catalog-verified 2026-10-22.** Account access and AOI coverage still need an authenticated `inventory` | M2 |
+| U7 | GMW v4.1 is accessible | It is the independent extent reference | **Not in the official Earth Engine catalog.** Obtain it from the GMW distribution (DOI, licence), upload it as an asset or local raster, or decide whether CGMD-Extent30 may serve as an additional reference | M2 |
 | U8 | Enough cloud-free Landsat 5/7 scenes exist for 2005–2012 dry seasons | Annual versus epoch maps depend on it | Scene inventory; fall back to multi-year epochs where coverage is thin | M2 |
 | U9 | Cross-sensor reflectance is consistent (TM/ETM+ versus OLI) | Trends could reflect sensor changes | Decide on and test harmonisation (for example published transformation coefficients) against 2013 and 2021 overlap data | M3 |
 | U10 | Tide state at image time can be estimated | Vegetation, soil and inundation analysis need tide filtering | Choose a documented tide model with checked licence and model-file access (pyTMD is the candidate) or a local gauge | M3 |
@@ -159,6 +195,10 @@ Rules:
 | U14 | Analysis-grid alignment matches the native Landsat grid | It avoids resampling artefacts | M1 snaps to multiples of 30 m in EPSG:32642; compare with the Landsat Collection 2 pixel-corner convention during the M2 dry run | M2 |
 | U15 | Planting campaigns, floods and cyclones are documented | They explain observed changes (never causes) | Gather dated, cited records; flag them, never infer them | M5 |
 | U16 | Season definitions fit every year | Monsoon flood timing varies between years | Check post-monsoon windows against inventory data and documented floods | M3 |
+| U17 | Sentinel-2 SCL class 2 (dark area pixels) can stay unmasked | Dark wet surfaces near creeks may be dropped or kept wrongly | Inspect the preview; compare with Cloud Score+ masking | M3 |
+| U18 | A Cloud Score+ `cs_cdf` threshold of 0.6 suits this coast | Too strict loses bright mudflats; too loose keeps haze | Tune on the preview and record the value | M3 |
+| U19 | Seasons between Landsat 5's end and Landsat 8's start can be represented | Only Landsat 7 SLC-off data exist for May 2012 to March 2013 | The inventory shows the valid fractions; mark these seasons low-confidence or use epochs | M3 |
+| U20 | One Sentinel-1 orbit pass gives a consistent series | Mixing passes changes viewing geometry and backscatter | Choose a pass from `s1_orbit_summary.csv` and fix `sentinel1.orbit_pass` | M3 |
 
 ## 10. Reproducibility
 

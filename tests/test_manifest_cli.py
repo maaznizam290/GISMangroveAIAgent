@@ -43,6 +43,7 @@ def test_cli_bad_config_dir(tmp_path):
 
 
 def test_later_milestones_do_not_pretend_to_run():
+    # select-sites is still a placeholder (M6).
     result = runner.invoke(app, ["select-sites"])
     assert result.exit_code == 3
     assert "no processing was run" in result.output
@@ -53,3 +54,17 @@ def test_check_ee_without_project_fails_cleanly(monkeypatch):
     result = runner.invoke(app, ["check-ee"])
     assert result.exit_code == 1
     assert "EE_PROJECT" in result.output
+
+
+def test_ee_commands_exit_cleanly_without_project(monkeypatch):
+    monkeypatch.delenv("EE_PROJECT", raising=False)
+    for cmd in ("inventory", "preview"):
+        result = runner.invoke(app, [cmd])
+        assert result.exit_code == 4, result.output
+        assert "No processing was run" in result.output
+
+
+def test_preprocess_refused_without_confirmed_aoi():
+    result = runner.invoke(app, ["preprocess"])
+    assert result.exit_code == 5
+    assert "operator_confirmed" in result.output

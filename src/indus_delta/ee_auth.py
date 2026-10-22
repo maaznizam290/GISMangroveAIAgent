@@ -42,3 +42,16 @@ def check_ee(project: str | None = None, probe_asset: str | None = None) -> list
         except Exception as exc:
             checks.append(Check("ee_probe_asset", "FAIL", f"{probe_asset}: {exc}"))
     return checks
+
+
+class EEUnavailableError(RuntimeError):
+    """Earth Engine cannot be used in this environment (no project or no credentials)."""
+
+
+def initialize(project: str | None = None) -> str:
+    """Initialise Earth Engine or raise EEUnavailableError with the manual steps needed."""
+    checks = check_ee(project)
+    failed = [c for c in checks if c.status == "FAIL"]
+    if failed:
+        raise EEUnavailableError("; ".join(f"{c.name}: {c.detail}" for c in failed))
+    return project or os.environ[PROJECT_ENV]

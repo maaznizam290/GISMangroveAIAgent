@@ -1,0 +1,112 @@
+# Preprocessing configuration for M2-M3 (schema: indus_delta.config.PreprocessingConfig)
+#
+# Mask bit/class definitions are written together with the description the official Earth
+# Engine catalog gives for them. `indus-delta catalog-check` fails if the catalog disagrees.
+config_version: "0.1.0"
+
+catalog:
+  # Official Earth Engine catalog, published as STAC by Google (readable without auth).
+  stac_root: https://storage.googleapis.com/earthengine-stac/catalog
+
+landsat:
+  # Datasets (keys of datasets.yaml) forming the 30 m historical series and the index
+  # sensor mapping (keys of indices.yaml sensors) each one uses.
+  members:
+    landsat5_l2: landsat_tm_etm
+    landsat7_l2: landsat_tm_etm
+    landsat8_l2: landsat_oli
+    landsat9_l2: landsat_oli
+  # QA_PIXEL bits whose value 1 removes a pixel. `sensors` limits a bit to sensor mappings
+  # where the catalog defines it (bit 2 is "Unused" on TM/ETM+).
+  qa_pixel_mask_bits:
+    - {bit: 0, description: Fill}
+    - {bit: 1, description: Dilated Cloud}
+    - {bit: 2, description: Cirrus (high confidence), sensors: [landsat_oli]}
+    - {bit: 3, description: Cloud}
+    - {bit: 4, description: Cloud Shadow}
+    - {bit: 5, description: Snow}
+  # QA_RADSAT: a pixel is removed when any band used for analysis is saturated.
+  # Bit for band SR_Bn is n-1 ("Band n data saturated" in the catalog).
+  mask_saturated_bands: true
+  # Scenes with scene-level CLOUD_COVER above this are still inventoried, never silently
+  # dropped; they are only skipped when building composites.
+  max_scene_cloud_cover_pct: 80
+  # Cross-sensor harmonisation of TM/ETM+ and OLI reflectance. "none" until assumption U9
+  # is resolved; every composite records which sensors contributed.
+  harmonisation: none
+
+sentinel2:
+  dataset: sentinel2_sr
+  index_sensor: sentinel2_msi
+  # SCL classes removed. 0 (no data) is not listed by the catalog but is the fill value.
+  scl_band: SCL
+  scl_mask_classes:
+    - {value: 1, description: Saturated or defective}
+    - {value: 3, description: Cloud Shadows}
+    - {value: 8, description: Clouds Medium Probability}
+    - {value: 9, description: Clouds High Probability}
+    - {value: 10, description: Cirrus}
+    - {value: 11, description: Snow / Ice}
+  scl_mask_nodata_value: 0
+  # Class 2 "Dark Area Pixels" is kept: it can include dark wet surfaces near creeks.
+  # Revisit with the preview (assumption U17).
+  cloud_score_plus:
+    enabled: true
+    dataset: cloud_score_plus
+    band: cs_cdf
+    # Pixels with cs_cdf below this are removed. Starting value; tune with the preview and
+    # record the decision (assumption U18).
+    min_score: 0.6
+  max_scene_cloud_pct: 80
+
+sentinel1:
+  dataset: sentinel1_grd
+  instrument_mode: IW
+  polarisations: [VV, VH]
+  resolution_meters: 10
+  # null = choose the pass with most acquisitions over the AOI from the inventory, then fix
+  # it here. Mixing passes changes the viewing geometry.
+  orbit_pass: null
+  # Values are already dB in Earth Engine (thermal noise removal, calibration, terrain
+  # correction, 10*log10). No speckle filter in the baseline.
+  speckle_filter: none
+
+composites:
+  reducer: median
+  # Indices are computed from the median reflectance composite, not per image.
+  indices_from: composite
+  landsat_scale_m: 30
+  # Sentinel-2 composites are exported at 10 m; 20 m-band indices keep their 20 m effective
+  # resolution, recorded per band. A 30 m aggregate supports Landsat comparison.
+  sentinel2_scale_m: 10
+  sentinel1_scale_m: 10
+  # Landsat 7 joins the primary series only through this date (sensitivity analysis after).
+  landsat7_primary_end: "2021-12-31"
+  nodata_value: -9999
+
+tide:
+  # No tide model or gauge selected yet (assumption U10). Images are tagged accordingly.
+  provider: none
+
+inventory:
+  # Region over which per-image valid fractions are computed: the primary AOI.
+  region: primary_aoi
+  # Per-image fraction of AOI pixels that are valid after masking, at this scale.
+  valid_fraction_scale_m: 30
+  # An image counts as usable for a season-year when at least this fraction is valid.
+  min_usable_valid_fraction: 0.2
+  # Fail visibly when a required dataset returns no images for its requested window.
+  required_datasets: [landsat5_l2, landsat7_l2, landsat8_l2, landsat9_l2, sentinel2_sr, sentinel1_grd]
+
+preview:
+  # Small square centred on the reference point (no site coordinates involved).
+  half_size_m: 1500
+  season: dry
+  # null = most recent complete season in the inventory window.
+  label_year: null
+  # Checks the downloaded preview must pass before full-scale processing is allowed.
+  min_valid_fraction: 0.8
+  index_recompute_tolerance: 0.0001
+  reflectance_tolerance: 0.0001
+  # Sanity range for Sentinel-1 backscatter in dB (catches scaling errors, not a threshold).
+  sar_db_range: [-50, 20]

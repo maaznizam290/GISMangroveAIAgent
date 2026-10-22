@@ -55,15 +55,19 @@ def static_checks(cfgs: Configs) -> list[Check]:
             + f". Status: {loc.verification_status}.",
         )
     )
-    pending = cfgs.datasets.pending()
+    no_catalog = cfgs.datasets.pending("catalog_verified")
+    no_account = cfgs.datasets.pending("verified")
     checks.append(
         Check(
             "dataset_ids_verified",
-            "WARN" if pending else "PASS",
-            f"{len(pending)} dataset entr{'y' if len(pending) == 1 else 'ies'} pending "
-            f"Earth Engine verification (M2 inventory): {', '.join(pending)}"
-            if pending
-            else "all dataset entries verified",
+            "PASS" if not no_account else "WARN",
+            (
+                f"not in the Earth Engine catalog or unchecked: {', '.join(no_catalog) or 'none'}; "
+                "not yet confirmed by an authenticated inventory: "
+                f"{', '.join(no_account) or 'none'}"
+            )
+            if no_account
+            else "all required datasets verified by an authenticated inventory",
         )
     )
     aoi = aoi_mod.build_aoi(p)

@@ -1,15 +1,18 @@
 # Dataset registry (schema: indus_delta.config.DatasetRegistry)
 #
 # verification:
-#   pending  - identifier taken from the project brief or published documentation but NOT yet
-#              confirmed against the live Earth Engine catalog in this project. The M2 inventory
-#              step must confirm it (ee.data.getInfo / collection size) and fail visibly otherwise.
-#   verified - confirmed by a recorded inventory run (verified_on + verified_by filled in).
+#   pending          - not yet checked.
+#   catalog_verified - ID, type, temporal extent, required bands and scale/offset confirmed
+#                      against the official Earth Engine catalog (STAC) by
+#                      `indus-delta catalog-check`. Says nothing about account access.
+#   verified         - additionally confirmed accessible and non-empty over the AOI by an
+#                      authenticated `indus-delta inventory` run.
+# verified_on / verified_by record which run established the status.
 #
-# use_period is the window this project requests; actual sensor coverage is discovered by the
-# inventory, not asserted here.
-# Scale/offset values must be checked against the catalog page during M2 verification.
-config_version: "0.1.0"
+# use_period is the window this project requests. It starts on 1 November of the year before
+# the first label year because dry season N runs November N-1 to March N. The sensor's actual coverage comes from
+# the catalog (catalog_extent) and the inventory, never from memory.
+config_version: "0.2.0"
 
 datasets:
   landsat5_l2:
@@ -17,67 +20,127 @@ datasets:
     kind: image_collection
     sensor: Landsat 5 TM
     role: primary historical series
-    use_period: {start: "2005-01-01", end: null}
+    use_period: {start: "2004-11-01", end: null}
     reflectance_scale: 0.0000275
     reflectance_offset: -0.2
-    verification: pending
+    required_bands: [SR_B1, SR_B2, SR_B3, SR_B4, SR_B5, SR_B7, QA_PIXEL, QA_RADSAT]
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "1984-03-16", end: "2012-05-05"}
   landsat7_l2:
     ee_id: LANDSAT/LE07/C02/T1_L2
     kind: image_collection
     sensor: Landsat 7 ETM+
     role: primary historical series (through 2021); later data sensitivity analysis only
-    use_period: {start: "2005-01-01", end: "2021-12-31"}
+    use_period: {start: "2004-11-01", end: "2021-12-31"}
     reflectance_scale: 0.0000275
     reflectance_offset: -0.2
-    notes: Scan Line Corrector failed 2003-05-31; all scenes in the period have SLC-off gaps.
-    verification: pending
+    required_bands: [SR_B1, SR_B2, SR_B3, SR_B4, SR_B5, SR_B7, QA_PIXEL, QA_RADSAT]
+    notes: Scan Line Corrector failed 2003-05-31; all scenes in the period have SLC-off gaps (masked as Fill).
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "1999-05-28", end: "2024-01-19"}
   landsat8_l2:
     ee_id: LANDSAT/LC08/C02/T1_L2
     kind: image_collection
     sensor: Landsat 8 OLI
     role: primary historical series
-    use_period: {start: "2005-01-01", end: null}
+    use_period: {start: "2004-11-01", end: null}
     reflectance_scale: 0.0000275
     reflectance_offset: -0.2
-    verification: pending
+    required_bands: [SR_B2, SR_B3, SR_B4, SR_B5, SR_B6, SR_B7, QA_PIXEL, QA_RADSAT]
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "2013-03-18", end: "2026-10-11"}
   landsat9_l2:
     ee_id: LANDSAT/LC09/C02/T1_L2
     kind: image_collection
     sensor: Landsat 9 OLI-2
     role: primary historical series
-    use_period: {start: "2005-01-01", end: null}
+    use_period: {start: "2004-11-01", end: null}
     reflectance_scale: 0.0000275
     reflectance_offset: -0.2
-    verification: pending
+    required_bands: [SR_B2, SR_B3, SR_B4, SR_B5, SR_B6, SR_B7, QA_PIXEL, QA_RADSAT]
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "2021-10-31", end: "2026-10-11"}
   sentinel2_sr:
     ee_id: COPERNICUS/S2_SR_HARMONIZED
     kind: image_collection
     sensor: Sentinel-2 MSI
     role: recent series
-    use_period: {start: "2020-01-01", end: null}
+    use_period: {start: "2019-11-01", end: null}
     reflectance_scale: 0.0001
     reflectance_offset: 0.0
-    verification: pending
+    required_bands: [B2, B3, B4, B8, B11, B12, SCL]
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "2017-03-28", end: "2026-10-21"}
+  cloud_score_plus:
+    ee_id: GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED
+    kind: image_collection
+    sensor: Sentinel-2 Cloud Score+
+    role: Sentinel-2 cloud/shadow masking
+    use_period: {start: "2019-11-01", end: null}
+    required_bands: [cs, cs_cdf]
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "2015-06-27", end: "2026-10-21"}
   sentinel1_grd:
     ee_id: COPERNICUS/S1_GRD
     kind: image_collection
     sensor: Sentinel-1 C-SAR
     role: recent series (inundation)
-    use_period: {start: "2020-01-01", end: null}
-    verification: pending
+    use_period: {start: "2019-11-01", end: null}
+    required_bands: [VV, VH, angle]
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "2014-10-03", end: "2026-10-21"}
   jrc_gsw:
     ee_id: JRC/GSW1_4/GlobalSurfaceWater
     kind: image
     sensor: Landsat-derived (JRC)
     role: reference surface water 1984-2021
-    use_period: {start: "1984-01-01", end: "2021-12-31"}
+    use_period: {start: "1984-03-16", end: "2021-12-31"}
+    required_bands: [occurrence, seasonality, recurrence, max_extent]
     notes: >-
       The M1 AOI review reads the same product from the public JRC tile store
       (configs/project.yaml hydrology_review.jrc_occurrence), not from Earth Engine.
-    verification: pending
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "1984-03-16", end: "2022-01-01"}
+  jrc_gsw_yearly:
+    ee_id: JRC/GSW1_4/YearlyHistory
+    kind: image_collection
+    sensor: Landsat-derived (JRC)
+    role: annual water classes 1984-2021 (reference for the Landsat water-frequency series)
+    use_period: {start: "2005-01-01", end: "2021-12-31"}
+    required_bands: [waterClass]
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "1984-03-16", end: "2022-01-01"}
+  jrc_gsw_monthly:
+    ee_id: JRC/GSW1_4/MonthlyHistory
+    kind: image_collection
+    sensor: Landsat-derived (JRC)
+    role: monthly water history 1984-2021 (seasonal reference)
+    use_period: {start: "2005-01-01", end: "2021-12-31"}
+    required_bands: [water]
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "1984-03-16", end: "2022-01-01"}
   gmw_v4:
-    # Distribution method not yet verified (Zenodo / GMW portal were unreachable from the
-    # build environment). Do not assume an Earth Engine asset exists. Set ee_id to an
+    # Not in the official Earth Engine catalog (catalog searched 2026-10-22). Set ee_id to an
     # operator-uploaded asset or local_path to downloaded rasters, and record the DOI.
     ee_id: null
     local_path: null
@@ -87,3 +150,17 @@ datasets:
     use_period: {start: "1985-01-01", end: "2025-12-31"}
     doi: null
     verification: pending
+  cgmd_extent30:
+    # Found in the official catalog while searching for GMW. A different product from GMW;
+    # listed as an optional additional reference pending an operator decision.
+    ee_id: projects/mangrovedatahub2/assets/CGMD-Extent30
+    stac_path: mangrovedatahub2/projects_mangrovedatahub2_assets_CGMD-Extent30.json
+    kind: table
+    sensor: CGMD-Extent30 (Continuous Global Mangrove Dynamics, 30 m annual extent)
+    role: optional additional mangrove-extent reference (not adopted)
+    use_period: {start: "2005-01-01", end: "2023-12-31"}
+    optional: true
+    verification: catalog_verified
+    verified_on: "2026-10-22"
+    verified_by: "indus-delta catalog-check (outputs/m2/catalog_records.json)"
+    catalog_extent: {start: "1984-01-01", end: "2023-12-31"}
