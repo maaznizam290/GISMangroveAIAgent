@@ -1,0 +1,85 @@
+{
+  "milestone": "M1",
+  "command": "indus-delta m1",
+  "created_utc": "2026-10-22T05:07:38+00:00",
+  "status": "WARN",
+  "git_revision": "d81412605eff36dcc54d684df71ec0829c8593d6",
+  "config_sha256": {
+    "configs/project.yaml": "ed080e11856db8c1ca522b1ee8c8a438fb387f82cf11a7980d0dca4919eeaa0a",
+    "configs/datasets.yaml": "0f8293b4c156b7ad51e9ca42f65790c1faae9a7baa8a24f10eec65c00fa5086c",
+    "configs/indices.yaml": "6ad540c5799ea570eadecdece95bfe017942dfe5181c642c90c630ed0e592d08"
+  },
+  "software": {
+    "python": "3.13.16",
+    "indus-delta-mangrove-agent": "0.1.0",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "shapely": "2.2.0",
+    "pyproj": "3.8.0",
+    "geopandas": "1.2.0",
+    "pyogrio": "0.13.0",
+    "rasterio": "1.5.2",
+    "matplotlib": "3.11.2",
+    "pydantic": "2.14.1",
+    "earthengine-api": "1.7.49",
+    "gdal": "3.12.2",
+    "proj": "9.8.1"
+  },
+  "inputs": [
+    {
+      "name": "jrc_gsw_v1_4_occurrence",
+      "urls": [
+        "https://storage.googleapis.com/global-surface-water/downloads2021/occurrence/occurrence_60E_30Nv1_4_2021.tif"
+      ],
+      "access": "HTTP range reads (GDAL /vsicurl)"
+    },
+    {
+      "name": "natural_earth_rivers",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_rivers_lake_centerlines.geojson",
+      "version": "git commit ca96624a56bd078437bca8184e78163e5039ad19",
+      "md5": "465509c3b2b6d3c7ce3139475839aca1"
+    },
+    {
+      "name": "reference_location",
+      "sources": [
+        {
+          "dataset": "GeoNames gazetteer, redistributed as lutangar/cities.json (cities with population > 1000)",
+          "url": "https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json",
+          "version": "git commit c05addfe79dce8a87076ef3fd487eab7e5fe4abd",
+          "record": "{\"name\": \"Keti Bandar\", \"lat\": \"24.14422\", \"lng\": \"67.45094\", \"country\": \"PK\", \"admin1\": \"05\", \"admin2\": \"1163570\"}",
+          "licence": "CC BY 4.0 (GeoNames)",
+          "retrieved": "2026-10-22",
+          "file_md5": "d4e5cdcb195e2d96c45185b58d80e9ab"
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "path": "outputs/m1/jrc_gsw14_occurrence_review_epsg32642_30m.tif",
+      "sha256": "e90fc735c0c1c928c98640a4ac2404e69c1ebc7d1863894b1fce20216502401c",
+      "bytes": 2004456
+    },
+    {
+      "path": "outputs/m1/m1_aoi.gpkg",
+      "sha256": "6619390832b348096ad0e970e6af26fc92cfb0e1487f7b7e8fe5f701abdd3eec",
+      "bytes": 2682880
+    },
+    {
+      "path": "outputs/m1/m1_aoi_preview.png",
+      "sha256": "21ce14deb0a1af8864b56f283050a994b9f221b837927a4df11beb73d1702a69",
+      "bytes": 1625077
+    },
+    {
+      "path": "outputs/m1/m1_aoi_review.json",
+      "sha256": "8be437b4a52e3ba2fcd253fdf8c9e1ed89102391acf851af9a30dac79f811365",
+      "bytes": 9582
+    },
+    {
+      "path": "outputs/m1/m1_aoi_review.md",
+      "sha256": "cdd4685807b89cb2132a8fec5bbb27fe1ccadd8ea2df952c6f2661ad15aacb06",
+      "bytes": 6273
+    }
+  ]
+}

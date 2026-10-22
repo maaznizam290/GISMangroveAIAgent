@@ -1,0 +1,254 @@
+{
+  "status": "WARN",
+  "checks": [
+    {
+      "name": "config_valid",
+      "status": "PASS",
+      "detail": "project/datasets/indices configs validate (version 0.1.0)"
+    },
+    {
+      "name": "crs_projected",
+      "status": "PASS",
+      "detail": "EPSG:32642 (WGS 84 / UTM zone 42N) is projected"
+    },
+    {
+      "name": "crs_units_metre",
+      "status": "PASS",
+      "detail": "axis units: ['metre']"
+    },
+    {
+      "name": "crs_utm_zone_matches_location",
+      "status": "PASS",
+      "detail": "CRS zone 42N; location (67.45094, 24.14422) falls in zone 42N"
+    },
+    {
+      "name": "crs_round_trip",
+      "status": "PASS",
+      "detail": "reference point -> (342606.68 E, 2671064.28 N) m; round-trip error 3.93e-10 m"
+    },
+    {
+      "name": "crs_scale_factor",
+      "status": "PASS",
+      "detail": "meridional scale factor at reference point 0.999906 (distance distortion 94 ppm)"
+    },
+    {
+      "name": "reference_location_provenance",
+      "status": "WARN",
+      "detail": "Keti Bandar (67.45094, 24.14422); 1 source(s): GeoNames gazetteer, redistributed as lutangar/cities.json (cities with population > 1000) [git commit c05addfe79dce8a87076ef3fd487eab7e5fe4abd]. Status: provisional."
+    },
+    {
+      "name": "dataset_ids_verified",
+      "status": "WARN",
+      "detail": "8 dataset entries pending Earth Engine verification (M2 inventory): landsat5_l2, landsat7_l2, landsat8_l2, landsat9_l2, sentinel2_sr, sentinel1_grd, jrc_gsw, gmw_v4"
+    },
+    {
+      "name": "aoi_geometry_valid",
+      "status": "PASS",
+      "detail": "buffer_5000m: Polygon, 78.532 km2, CRS EPSG:32642"
+    },
+    {
+      "name": "aoi_contains_reference",
+      "status": "PASS",
+      "detail": "primary AOI contains the reference point"
+    },
+    {
+      "name": "aoi_buffer_area",
+      "status": "PASS",
+      "detail": "buffer area 78.532 km2 vs pi*r^2 78.540 km2 (relative difference 1.00e-04)"
+    },
+    {
+      "name": "jrc_valid_coverage",
+      "status": "PASS",
+      "detail": "100.0% of primary-AOI pixels have valid JRC occurrence"
+    },
+    {
+      "name": "creek_system_present",
+      "status": "PASS",
+      "detail": "63 water component(s) with occurrence >= 50% intersect the primary AOI (63.08 km2 inside it). Presence of frequently inundated channels only; says nothing about their water source."
+    },
+    {
+      "name": "creek_network_extent",
+      "status": "WARN",
+      "detail": "the primary AOI holds 2.1% of the area of the water components it intersects (2956.6 km2 in total); the largest of them continues to the edge of the review extent, i.e. the creeks are part of a water network larger than any candidate AOI. Containment cannot be achieved by enlarging a buffer; hydrological context must be judged from channel connectivity to a documented freshwater source."
+    },
+    {
+      "name": "land_surface_available",
+      "status": "WARN",
+      "detail": "0.09 km2 (0.1%) of the primary AOI was rarely or never observed as water (JRC 1984-2021). Bare saline-flat (Site A) candidates need surfaces that are exposed in the analysed images; intermittently flooded flats may still qualify under tide-filtered imagery (to be tested in M2+). Sensitivity to the class edge - area below each occurrence level: <5%: 0.07 km2, <10%: 0.09 km2, <20%: 0.42 km2, <30%: 1.96 km2"
+    },
+    {
+      "name": "coarse_main_channel_in_aoi",
+      "status": "WARN",
+      "detail": "Natural Earth 1:10M Indus centreline is 12.4 km from the reference point and does not intersect the primary AOI (coarse cartographic reference, not active-channel evidence)."
+    },
+    {
+      "name": "river_creek_connectivity",
+      "status": "WARN",
+      "detail": "19.0% of the coarse Indus line pixels in the review extent lie on water components (occurrence >= 50%) that also reach the primary AOI; nearest such pixel is 13.8 km from the reference point. Topological connectivity only, and the connected water body includes open coastal water, so the link may run through the sea rather than through creeks (a sea/coastline mask is needed to test creek-only connectivity). Not evidence of flow direction, discharge or freshwater reaching the AOI creeks."
+    },
+    {
+      "name": "freshwater_influence_candidate",
+      "status": "WARN",
+      "detail": "UNRESOLVED. No M1 input can establish freshwater delivery to any creek in any candidate AOI. JRC occurrence cannot separate tidal from riverine water and the Natural Earth line is a 1:10M generalisation. See the review report for the evidence required."
+    }
+  ],
+  "aoi_statistics": [
+    {
+      "aoi_id": "buffer_5000m",
+      "role": "primary",
+      "area_km2": 78.53193127331944,
+      "valid_fraction": 1.0,
+      "occurrence_class_km2": {
+        "rarely_or_never": 0.0891,
+        "intermittent": 15.3585,
+        "frequent": 41.9769,
+        "near_permanent": 21.1059
+      },
+      "area_below_pct_km2": {
+        "5": 0.0693,
+        "10": 0.0891,
+        "20": 0.4221,
+        "30": 1.9602
+      },
+      "water_ever_km2": 78.471,
+      "channel_components": 63,
+      "channel_km2_inside": 63.0828,
+      "channel_km2_total_of_touching": 2956.5666,
+      "channel_fraction_inside": 0.021336505661668503,
+      "largest_component_touches_review_edge": true,
+      "coarse_river_intersects": false,
+      "coarse_river_distance_km": 12.426775445278611,
+      "notes": []
+    },
+    {
+      "aoi_id": "buffer_10000m",
+      "role": "alternative",
+      "area_km2": 314.12772509327687,
+      "valid_fraction": 1.0,
+      "occurrence_class_km2": {
+        "rarely_or_never": 20.8701,
+        "intermittent": 75.4983,
+        "frequent": 147.942,
+        "near_permanent": 69.82469999999999
+      },
+      "area_below_pct_km2": {
+        "5": 18.776699999999998,
+        "10": 20.8701,
+        "20": 26.2701,
+        "30": 37.007999999999996
+      },
+      "water_ever_km2": 296.3286,
+      "channel_components": 264,
+      "channel_km2_inside": 217.7667,
+      "channel_km2_total_of_touching": 2957.8572,
+      "channel_fraction_inside": 0.07362312825649595,
+      "largest_component_touches_review_edge": true,
+      "coarse_river_intersects": false,
+      "coarse_river_distance_km": 12.426775445278611,
+      "notes": []
+    },
+    {
+      "aoi_id": "buffer_15000m",
+      "role": "alternative",
+      "area_km2": 706.7873814598735,
+      "valid_fraction": 1.0,
+      "occurrence_class_km2": {
+        "rarely_or_never": 113.1912,
+        "intermittent": 153.4797,
+        "frequent": 234.88559999999998,
+        "near_permanent": 205.21259999999998
+      },
+      "area_below_pct_km2": {
+        "5": 103.1769,
+        "10": 113.1912,
+        "20": 134.1882,
+        "30": 162.5373
+      },
+      "water_ever_km2": 613.0332,
+      "channel_components": 590,
+      "channel_km2_inside": 440.09819999999996,
+      "channel_km2_total_of_touching": 2959.6041,
+      "channel_fraction_inside": 0.14870171317846193,
+      "largest_component_touches_review_edge": true,
+      "coarse_river_intersects": true,
+      "coarse_river_distance_km": 12.426775445278611,
+      "notes": []
+    },
+    {
+      "aoi_id": "buffer_20000m",
+      "role": "alternative",
+      "area_km2": 1256.5109003731097,
+      "valid_fraction": 1.0,
+      "occurrence_class_km2": {
+        "rarely_or_never": 256.3866,
+        "intermittent": 263.1033,
+        "frequent": 294.8265,
+        "near_permanent": 442.1844
+      },
+      "area_below_pct_km2": {
+        "5": 238.90949999999998,
+        "10": 256.3866,
+        "20": 294.4611,
+        "30": 349.25489999999996
+      },
+      "water_ever_km2": 1039.6593,
+      "channel_components": 1025,
+      "channel_km2_inside": 737.0109,
+      "channel_km2_total_of_touching": 2961.5454,
+      "channel_fraction_inside": 0.24886024033263174,
+      "largest_component_touches_review_edge": true,
+      "coarse_river_intersects": true,
+      "coarse_river_distance_km": 12.426775445278611,
+      "notes": []
+    },
+    {
+      "aoi_id": "buffer_30000m",
+      "role": "alternative",
+      "area_km2": 2827.1495258394875,
+      "valid_fraction": 0.9991949136625284,
+      "occurrence_class_km2": {
+        "rarely_or_never": 634.2003,
+        "intermittent": 572.2011,
+        "frequent": 418.89959999999996,
+        "near_permanent": 1199.5731
+      },
+      "area_below_pct_km2": {
+        "5": 578.5956,
+        "10": 634.2003,
+        "20": 759.4902,
+        "30": 911.8782
+      },
+      "water_ever_km2": 2305.026,
+      "channel_components": 1827,
+      "channel_km2_inside": 1618.4727,
+      "channel_km2_total_of_touching": 2973.0924,
+      "channel_fraction_inside": 0.5443734947491037,
+      "largest_component_touches_review_edge": true,
+      "coarse_river_intersects": true,
+      "coarse_river_distance_km": 12.426775445278611,
+      "notes": []
+    }
+  ],
+  "review_extent_m": [
+    302606.6781804655,
+    2631064.2792544975,
+    382606.6781804655,
+    2711064.2792544975
+  ],
+  "review_nodata_fraction": 0.12616442060184757,
+  "river_connectivity": {
+    "line_pixels": 5151,
+    "line_pixels_on_primary_aoi_components": 981,
+    "nearest_connected_line_pixel_km": 13.808795194684532
+  },
+  "inputs": {
+    "jrc_occurrence_urls": [
+      "https://storage.googleapis.com/global-surface-water/downloads2021/occurrence/occurrence_60E_30Nv1_4_2021.tif"
+    ],
+    "coarse_river": {
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_rivers_lake_centerlines.geojson",
+      "version": "git commit ca96624a56bd078437bca8184e78163e5039ad19",
+      "md5": "465509c3b2b6d3c7ce3139475839aca1"
+    }
+  }
+}
