@@ -1,0 +1,675 @@
+{
+  "status": "INCOMPLETE",
+  "series": "landsat",
+  "label_year": 2026,
+  "created_utc": "2026-10-22T06:18:47+00:00",
+  "git_revision": "677da91e3e103a26d47010b0abf9966329e93c9c",
+  "missing_required": [
+    "composite_dry",
+    "composite_post_monsoon",
+    "landcover",
+    "classification_uncertainty",
+    "mangrove",
+    "tidal_inundation",
+    "soil_salinity_proxy",
+    "freshwater_influence_proxy",
+    "training_samples",
+    "validation_samples",
+    "candidate_plots",
+    "site_a",
+    "site_b",
+    "site_alternatives",
+    "annual_metrics",
+    "site_metrics",
+    "classification_accuracy",
+    "image_inventory",
+    "candidate_site_scores",
+    "confusion_matrix",
+    "selection_criteria",
+    "site_comparison",
+    "inventory_summary",
+    "missing_observations",
+    "accuracy_report",
+    "selection_report",
+    "preview_quicklook",
+    "model_metadata"
+  ],
+  "items": [
+    {
+      "id": "jrc_occurrence_review",
+      "kind": "raster",
+      "required": true,
+      "source": "m1/jrc_gsw14_occurrence_review_epsg32642_30m.tif",
+      "target": "rasters/jrc_occurrence_review_epsg32642.tif",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "raster_crs",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: CRS EPSG:32642 (expected EPSG:32642)"
+        },
+        {
+          "name": "raster_dimensions",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: 2668x2667x1 (source 2668x2667x1)"
+        },
+        {
+          "name": "raster_transform",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: transform (30.0, 0.0, 302580.0, 0.0, -30.0, 2711070.0)"
+        },
+        {
+          "name": "raster_not_upsampled",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: pixel 30.0 m; native resolution of the source 30.0 m"
+        },
+        {
+          "name": "raster_nodata",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: nodata 255.0 (source 255.0)"
+        },
+        {
+          "name": "raster_cog_layout",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: valid COG"
+        },
+        {
+          "name": "raster_metadata",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: required tags present"
+        },
+        {
+          "name": "raster_band_descriptions",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: bands ['water_occurrence_pct_1984_2021']"
+        },
+        {
+          "name": "raster_band_units",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: units on every band"
+        },
+        {
+          "name": "raster_content_identical",
+          "status": "PASS",
+          "detail": "jrc_occurrence_review_epsg32642.tif: pixel values and nodata mask equal the source"
+        }
+      ]
+    },
+    {
+      "id": "composite_dry",
+      "kind": "raster",
+      "required": true,
+      "source": "{composites_dir}/{series}_dry_{year}*_epsg32642_*m.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "composite_post_monsoon",
+      "kind": "raster",
+      "required": true,
+      "source": "{composites_dir}/{series}_post_monsoon_{year}*_epsg32642_*m.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "landcover",
+      "kind": "raster",
+      "required": true,
+      "source": "m4/{series}_{year}/landcover.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "classification_uncertainty",
+      "kind": "raster",
+      "required": true,
+      "source": "m4/{series}_{year}/classification_uncertainty.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "mangrove",
+      "kind": "raster",
+      "required": true,
+      "source": "m5/{series}_{year}/mangrove.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "tidal_inundation",
+      "kind": "raster",
+      "required": true,
+      "source": "m5/{series}_{year}/tidal_inundation.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "soil_salinity_proxy",
+      "kind": "raster",
+      "required": true,
+      "source": "m5/{series}_{year}/soil_salinity_proxy.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "freshwater_influence_proxy",
+      "kind": "raster",
+      "required": true,
+      "source": "m5/{series}_{year}/freshwater_influence_proxy.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "mangrove_change",
+      "kind": "raster",
+      "required": false,
+      "source": "m5/change_{series}_{from_year}_{year}.tif",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "reference_location",
+      "kind": "vector",
+      "required": true,
+      "source": "m1/m1_aoi.gpkg:reference_location",
+      "target": "vectors/indus_delta_handover.gpkg",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "vector_crs",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:reference_location: CRS EPSG:32642"
+        },
+        {
+          "name": "vector_feature_count",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:reference_location: 1 features (source 1)"
+        },
+        {
+          "name": "vector_geometry_valid",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:reference_location: 0 invalid geometries"
+        },
+        {
+          "name": "vector_fields",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:reference_location: fields ['feature_type', 'n_sources', 'name', 'source_dataset', 'source_licence', 'source_retrieved', 'source_url', 'source_version', 'verification_status']"
+        }
+      ]
+    },
+    {
+      "id": "aoi_primary",
+      "kind": "vector",
+      "required": true,
+      "source": "m1/m1_aoi.gpkg:aoi_primary",
+      "target": "vectors/indus_delta_handover.gpkg",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "vector_crs",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:aoi_primary: CRS EPSG:32642"
+        },
+        {
+          "name": "vector_feature_count",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:aoi_primary: 1 features (source 1)"
+        },
+        {
+          "name": "vector_geometry_valid",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:aoi_primary: 0 invalid geometries"
+        },
+        {
+          "name": "vector_fields",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:aoi_primary: fields ['aoi_id', 'area_km2', 'buffer_m', 'config_version', 'mode', 'role']"
+        }
+      ]
+    },
+    {
+      "id": "aoi_alternatives",
+      "kind": "vector",
+      "required": false,
+      "source": "m1/m1_aoi.gpkg:aoi_alternatives",
+      "target": "vectors/indus_delta_handover.gpkg",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "vector_crs",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:aoi_alternatives: CRS EPSG:32642"
+        },
+        {
+          "name": "vector_feature_count",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:aoi_alternatives: 4 features (source 4)"
+        },
+        {
+          "name": "vector_geometry_valid",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:aoi_alternatives: 0 invalid geometries"
+        },
+        {
+          "name": "vector_fields",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:aoi_alternatives: fields ['aoi_id', 'area_km2', 'buffer_m', 'config_version', 'mode', 'role']"
+        }
+      ]
+    },
+    {
+      "id": "jrc_water_components",
+      "kind": "vector",
+      "required": false,
+      "source": "m1/m1_aoi.gpkg:jrc_water_components_touching_primary_aoi",
+      "target": "vectors/indus_delta_handover.gpkg",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "vector_crs",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:jrc_water_components: CRS EPSG:32642"
+        },
+        {
+          "name": "vector_feature_count",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:jrc_water_components: 63 features (source 63)"
+        },
+        {
+          "name": "vector_geometry_valid",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:jrc_water_components: 0 invalid geometries"
+        },
+        {
+          "name": "vector_fields",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:jrc_water_components: fields ['area_km2', 'component_id', 'min_occurrence_pct', 'note', 'source']"
+        }
+      ]
+    },
+    {
+      "id": "coarse_indus_centerline",
+      "kind": "vector",
+      "required": false,
+      "source": "m1/m1_aoi.gpkg:coarse_indus_centerline",
+      "target": "vectors/indus_delta_handover.gpkg",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "vector_crs",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:coarse_indus_centerline: CRS EPSG:32642"
+        },
+        {
+          "name": "vector_feature_count",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:coarse_indus_centerline: 1 features (source 1)"
+        },
+        {
+          "name": "vector_geometry_valid",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:coarse_indus_centerline: 0 invalid geometries"
+        },
+        {
+          "name": "vector_fields",
+          "status": "PASS",
+          "detail": "indus_delta_handover.gpkg:coarse_indus_centerline: fields ['featurecla', 'name', 'note', 'scalerank', 'source']"
+        }
+      ]
+    },
+    {
+      "id": "training_samples",
+      "kind": "vector",
+      "required": true,
+      "source": "m4/{series}_{year}/samples.gpkg:training_samples",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "validation_samples",
+      "kind": "vector",
+      "required": true,
+      "source": "m4/{series}_{year}/samples.gpkg:validation_samples",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "candidate_plots",
+      "kind": "vector",
+      "required": true,
+      "source": "m6/{series}_{year}/sites.gpkg:candidate_plots",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "site_a",
+      "kind": "vector",
+      "required": true,
+      "source": "m6/{series}_{year}/sites.gpkg:site_a",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "site_b",
+      "kind": "vector",
+      "required": true,
+      "source": "m6/{series}_{year}/sites.gpkg:site_b",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "water_salinity_field",
+      "kind": "vector",
+      "required": false,
+      "source": "m5/{series}_{year}/water_salinity_field.gpkg:water_salinity_field",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "site_alternatives",
+      "kind": "vector",
+      "required": true,
+      "source": "m6 site_metrics.csv + candidate_plots",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "annual_metrics",
+      "kind": "table",
+      "required": true,
+      "source": "m5/annual_metrics.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "site_metrics",
+      "kind": "table",
+      "required": true,
+      "source": "m6/{series}_{year}/site_metrics.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "classification_accuracy",
+      "kind": "table",
+      "required": true,
+      "source": "m4/{series}_{year}/classification_accuracy.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "image_inventory",
+      "kind": "table",
+      "required": true,
+      "source": "m2/image_inventory.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "candidate_site_scores",
+      "kind": "table",
+      "required": true,
+      "source": "m6/{series}_{year}/candidate_site_scores.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "confusion_matrix",
+      "kind": "table",
+      "required": true,
+      "source": "m4/{series}_{year}/confusion_matrix.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "selection_criteria",
+      "kind": "table",
+      "required": true,
+      "source": "m6/{series}_{year}/selection_criteria.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "site_comparison",
+      "kind": "table",
+      "required": true,
+      "source": "m6/{series}_{year}/site_comparison.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "inventory_summary",
+      "kind": "table",
+      "required": true,
+      "source": "m2/inventory_summary.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "missing_observations",
+      "kind": "table",
+      "required": true,
+      "source": "m2/missing_observations.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "catalog_verification",
+      "kind": "table",
+      "required": true,
+      "source": "m2/catalog_verification.csv",
+      "target": "tables/catalog_verification.csv",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "table_columns",
+          "status": "PASS",
+          "detail": "tables/catalog_verification.csv: columns ok"
+        },
+        {
+          "name": "table_identical",
+          "status": "PASS",
+          "detail": "tables/catalog_verification.csv: 82 rows, identical to source"
+        }
+      ]
+    },
+    {
+      "id": "trend_tests",
+      "kind": "table",
+      "required": false,
+      "source": "m5/trend_tests.csv",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "aoi_review",
+      "kind": "document",
+      "required": true,
+      "source": "m1/m1_aoi_review.md",
+      "target": "docs/m1_aoi_review.md",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "document_nonempty",
+          "status": "PASS",
+          "detail": "docs/m1_aoi_review.md"
+        }
+      ]
+    },
+    {
+      "id": "aoi_preview_map",
+      "kind": "document",
+      "required": true,
+      "source": "m1/m1_aoi_preview.png",
+      "target": "docs/m1_aoi_preview.png",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "document_nonempty",
+          "status": "PASS",
+          "detail": "docs/m1_aoi_preview.png"
+        }
+      ]
+    },
+    {
+      "id": "accuracy_report",
+      "kind": "document",
+      "required": true,
+      "source": "m4/{series}_{year}/accuracy_report.md",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "selection_report",
+      "kind": "document",
+      "required": true,
+      "source": "m6/{series}_{year}/selection_report.md",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "preview_quicklook",
+      "kind": "document",
+      "required": true,
+      "source": "m3/preview/preview_quicklook.png",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "model_metadata",
+      "kind": "document",
+      "required": true,
+      "source": "m4/{series}_{year}/model/random_forest_metadata.json",
+      "target": null,
+      "status": "missing",
+      "note": "",
+      "checks": []
+    },
+    {
+      "id": "catalog_records",
+      "kind": "document",
+      "required": true,
+      "source": "m2/catalog_records.json",
+      "target": "docs/catalog_records.json",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "document_nonempty",
+          "status": "PASS",
+          "detail": "docs/catalog_records.json"
+        }
+      ]
+    },
+    {
+      "id": "qgis_project",
+      "kind": "generated",
+      "required": true,
+      "source": "PyQGIS",
+      "target": "qgis/indus_delta_handover.qgz",
+      "status": "delivered",
+      "note": "",
+      "checks": [
+        {
+          "name": "qgis_project_reopens",
+          "status": "PASS",
+          "detail": "QGIS 3.34.4-Prizren reopened the saved project"
+        },
+        {
+          "name": "qgis_project_crs",
+          "status": "PASS",
+          "detail": "project CRS EPSG:32642"
+        },
+        {
+          "name": "qgis_layers_load",
+          "status": "PASS",
+          "detail": "6 layers loaded; invalid []; missing []"
+        },
+        {
+          "name": "qgis_layer_crs",
+          "status": "PASS",
+          "detail": "layers not in EPSG:32642: []"
+        },
+        {
+          "name": "qgis_relative_paths",
+          "status": "PASS",
+          "detail": "7 stored datasources; absolute: []"
+        },
+        {
+          "name": "qgis_layout",
+          "status": "PASS",
+          "detail": "layout items ['QGraphicsRectItem', 'QgsLayoutItemLabel', 'QgsLayoutItemLegend', 'QgsLayoutItemMap', 'QgsLayoutItemPage', 'QgsLayoutItemScaleBar']"
+        }
+      ]
+    }
+  ]
+}

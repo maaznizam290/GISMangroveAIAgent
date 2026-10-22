@@ -1,0 +1,172 @@
+{
+  "status": "INCOMPLETE",
+  "created_utc": "2026-10-22T06:18:47+00:00",
+  "command": "indus-delta handover",
+  "config_sha256": {
+    "project.yaml": "a1ada330b21f992f667ce8089e5071cf30828d5c559f7f7d38b6f4880ba9788e",
+    "datasets.yaml": "28338fa55650bfa6aff3c97f4f65375e5d81120d8038c153f3316598031302ff",
+    "indices.yaml": "6ad540c5799ea570eadecdece95bfe017942dfe5181c642c90c630ed0e592d08",
+    "preprocessing.yaml": "b517bfc232a7961b222635976c930c5addd1175657f86e9c1d0dbf6c8af068e6",
+    "classification.yaml": "7ee56bc6241bc303620d44445d72effd27f4ca9d91ec4a1cf40419d2c357135a",
+    "layers.yaml": "dc28cdadc78b2083e27964c4d0088351820cc1b501ed06f5316a4a3b279a5319",
+    "site_selection.yaml": "f0fd7c39fa74b7c99936dee5f10e98b7a93a1b3ecdd27c016b54b461e44b8e52",
+    "handover.yaml": "317c59461ff830f0e2807bfb0f1f07c6e93f64a8f177bb9e71a20665bbccfa0e"
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "b74fa5778ef5a49dc66dcbe1cd183df76680522bb416467bb68027348d77055a",
+      "bytes": 1727
+    },
+    {
+      "path": "config/classification.yaml",
+      "sha256": "7ee56bc6241bc303620d44445d72effd27f4ca9d91ec4a1cf40419d2c357135a",
+      "bytes": 3659
+    },
+    {
+      "path": "config/datasets.yaml",
+      "sha256": "28338fa55650bfa6aff3c97f4f65375e5d81120d8038c153f3316598031302ff",
+      "bytes": 7497
+    },
+    {
+      "path": "config/handover.yaml",
+      "sha256": "317c59461ff830f0e2807bfb0f1f07c6e93f64a8f177bb9e71a20665bbccfa0e",
+      "bytes": 6832
+    },
+    {
+      "path": "config/indices.yaml",
+      "sha256": "6ad540c5799ea570eadecdece95bfe017942dfe5181c642c90c630ed0e592d08",
+      "bytes": 2445
+    },
+    {
+      "path": "config/layers.yaml",
+      "sha256": "dc28cdadc78b2083e27964c4d0088351820cc1b501ed06f5316a4a3b279a5319",
+      "bytes": 3122
+    },
+    {
+      "path": "config/preprocessing.yaml",
+      "sha256": "b517bfc232a7961b222635976c930c5addd1175657f86e9c1d0dbf6c8af068e6",
+      "bytes": 4783
+    },
+    {
+      "path": "config/project.yaml",
+      "sha256": "a1ada330b21f992f667ce8089e5071cf30828d5c559f7f7d38b6f4880ba9788e",
+      "bytes": 4722
+    },
+    {
+      "path": "config/site_selection.yaml",
+      "sha256": "f0fd7c39fa74b7c99936dee5f10e98b7a93a1b3ecdd27c016b54b461e44b8e52",
+      "bytes": 1354
+    },
+    {
+      "path": "docs/catalog_records.json",
+      "sha256": "5f3bbddcac47981781c04b33a7823f441a799ef41bb5a44e7dbf937c70c9f9ce",
+      "bytes": 7888
+    },
+    {
+      "path": "docs/data_dictionary.csv",
+      "sha256": "aa08792edb5290ca4e6be6bacedef0a8b496440d1f2a0911304bd4ed0358921d",
+      "bytes": 4538
+    },
+    {
+      "path": "docs/data_dictionary.md",
+      "sha256": "da407c0ba63ab30d64b1a87eaddc942018e835bdcad75b73b62b38ac642a6833",
+      "bytes": 5651
+    },
+    {
+      "path": "docs/limitations.md",
+      "sha256": "5c6c13deeb420ee9b5cc27f97d1cb956c0a993acfb111ddb78df761e7dda247d",
+      "bytes": 13296
+    },
+    {
+      "path": "docs/m1_aoi_preview.png",
+      "sha256": "21ce14deb0a1af8864b56f283050a994b9f221b837927a4df11beb73d1702a69",
+      "bytes": 1625077
+    },
+    {
+      "path": "docs/m1_aoi_review.md",
+      "sha256": "cdd4685807b89cb2132a8fec5bbb27fe1ccadd8ea2df952c6f2661ad15aacb06",
+      "bytes": 6273
+    },
+    {
+      "path": "docs/methods_report.md",
+      "sha256": "724723bd73c3806d66868e9bfa25afc1f330b1d3dffb662fd36ad73d77c9a820",
+      "bytes": 1989
+    },
+    {
+      "path": "docs/processing_history.csv",
+      "sha256": "c3fac4bd852af3d51c3502a666c681b9f13d6c44306782a135ccf2245a86ac0a",
+      "bytes": 318
+    },
+    {
+      "path": "docs/repository_assessment.md",
+      "sha256": "f5b3d659db17456ce711a85be2a9c5a6bda6c8e30a5b05e96c78795005b3f200",
+      "bytes": 5477
+    },
+    {
+      "path": "docs/software_versions.json",
+      "sha256": "8f9605e66ea1a05110c88252d4480d480550f6da949b9161be9a4b181f5eafcb",
+      "bytes": 389
+    },
+    {
+      "path": "docs/study_protocol.md",
+      "sha256": "dcf9eebf07bc7f5a6de7268d532947180e3e8ff63331daa24a8184b5e62828a6",
+      "bytes": 16210
+    },
+    {
+      "path": "docs/uncertainty.md",
+      "sha256": "05618c8341b55967f5b850133ac95f8423950587e0c6a525fa2d6e462a994e24",
+      "bytes": 6126
+    },
+    {
+      "path": "handover_validation.json",
+      "sha256": "5fa317348da8879434ca05866cf90e43a70dc91ad24355b69370ea2e731033b4",
+      "bytes": 18579
+    },
+    {
+      "path": "handover_validation.md",
+      "sha256": "d1714827d8594064a8476c66252ffa01f543fe2b0a25e415f1bb653807d85293",
+      "bytes": 3063
+    },
+    {
+      "path": "qgis/handover_layout.png",
+      "sha256": "1f3ed41328bfd8e483b8f142adc5713658dd326a0df2428c311b1c96d273321e",
+      "bytes": 642998
+    },
+    {
+      "path": "qgis/indus_delta_handover.qgz",
+      "sha256": "9358e930431b71769ca26859e9134b640bf5af7365ad415659b868de6691aab3",
+      "bytes": 17766
+    },
+    {
+      "path": "qgis/project_spec.json",
+      "sha256": "4ee6cccfca1cd220091cb7cc5be8d9690a60c94953e88fa23061fd02a37b8dc4",
+      "bytes": 3727
+    },
+    {
+      "path": "qgis/qgis_build_result.json",
+      "sha256": "0e30dc1d9a9cb8e39d782e871aebe966cf6da8c3d360ba1bf09c30363fc974aa",
+      "bytes": 2162
+    },
+    {
+      "path": "rasters/jrc_occurrence_review_epsg32642.tif",
+      "sha256": "0c92a584ca2c02c9cc5e104d424758c57680c14db728d6819a24c4d0140aea60",
+      "bytes": 2834542
+    },
+    {
+      "path": "rasters/jrc_occurrence_review_epsg32642.tif.aux.xml",
+      "sha256": "5288baafaefc837483e3f01358bafb5ba48075b07233b89b984cd7d40ea91ab5",
+      "bytes": 472
+    },
+    {
+      "path": "tables/catalog_verification.csv",
+      "sha256": "de8210dd6c42e5a7a3934c3136e574aac6078e0ececd9af26f53699bfd287445",
+      "bytes": 7399
+    },
+    {
+      "path": "vectors/indus_delta_handover.gpkg",
+      "sha256": "49df5777fdff30f0b5629380b33dc428cf93331aa545dcffcf910ef4409af939",
+      "bytes": 2682880
+    }
+  ]
+}
