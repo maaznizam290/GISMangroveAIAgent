@@ -1,0 +1,89 @@
+# Dataset registry (schema: indus_delta.config.DatasetRegistry)
+#
+# verification:
+#   pending  - identifier taken from the project brief or published documentation but NOT yet
+#              confirmed against the live Earth Engine catalog in this project. The M2 inventory
+#              step must confirm it (ee.data.getInfo / collection size) and fail visibly otherwise.
+#   verified - confirmed by a recorded inventory run (verified_on + verified_by filled in).
+#
+# use_period is the window this project requests; actual sensor coverage is discovered by the
+# inventory, not asserted here.
+# Scale/offset values must be checked against the catalog page during M2 verification.
+config_version: "0.1.0"
+
+datasets:
+  landsat5_l2:
+    ee_id: LANDSAT/LT05/C02/T1_L2
+    kind: image_collection
+    sensor: Landsat 5 TM
+    role: primary historical series
+    use_period: {start: "2005-01-01", end: null}
+    reflectance_scale: 0.0000275
+    reflectance_offset: -0.2
+    verification: pending
+  landsat7_l2:
+    ee_id: LANDSAT/LE07/C02/T1_L2
+    kind: image_collection
+    sensor: Landsat 7 ETM+
+    role: primary historical series (through 2021); later data sensitivity analysis only
+    use_period: {start: "2005-01-01", end: "2021-12-31"}
+    reflectance_scale: 0.0000275
+    reflectance_offset: -0.2
+    notes: Scan Line Corrector failed 2003-05-31; all scenes in the period have SLC-off gaps.
+    verification: pending
+  landsat8_l2:
+    ee_id: LANDSAT/LC08/C02/T1_L2
+    kind: image_collection
+    sensor: Landsat 8 OLI
+    role: primary historical series
+    use_period: {start: "2005-01-01", end: null}
+    reflectance_scale: 0.0000275
+    reflectance_offset: -0.2
+    verification: pending
+  landsat9_l2:
+    ee_id: LANDSAT/LC09/C02/T1_L2
+    kind: image_collection
+    sensor: Landsat 9 OLI-2
+    role: primary historical series
+    use_period: {start: "2005-01-01", end: null}
+    reflectance_scale: 0.0000275
+    reflectance_offset: -0.2
+    verification: pending
+  sentinel2_sr:
+    ee_id: COPERNICUS/S2_SR_HARMONIZED
+    kind: image_collection
+    sensor: Sentinel-2 MSI
+    role: recent series
+    use_period: {start: "2020-01-01", end: null}
+    reflectance_scale: 0.0001
+    reflectance_offset: 0.0
+    verification: pending
+  sentinel1_grd:
+    ee_id: COPERNICUS/S1_GRD
+    kind: image_collection
+    sensor: Sentinel-1 C-SAR
+    role: recent series (inundation)
+    use_period: {start: "2020-01-01", end: null}
+    verification: pending
+  jrc_gsw:
+    ee_id: JRC/GSW1_4/GlobalSurfaceWater
+    kind: image
+    sensor: Landsat-derived (JRC)
+    role: reference surface water 1984-2021
+    use_period: {start: "1984-01-01", end: "2021-12-31"}
+    notes: >-
+      The M1 AOI review reads the same product from the public JRC tile store
+      (configs/project.yaml hydrology_review.jrc_occurrence), not from Earth Engine.
+    verification: pending
+  gmw_v4:
+    # Distribution method not yet verified (Zenodo / GMW portal were unreachable from the
+    # build environment). Do not assume an Earth Engine asset exists. Set ee_id to an
+    # operator-uploaded asset or local_path to downloaded rasters, and record the DOI.
+    ee_id: null
+    local_path: null
+    kind: reference_product
+    sensor: Global Mangrove Watch v4.1 (annual extent)
+    role: independent reference for mangrove extent
+    use_period: {start: "1985-01-01", end: "2025-12-31"}
+    doi: null
+    verification: pending

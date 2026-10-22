@@ -1,0 +1,96 @@
+# indus-delta-mangrove-agent — project configuration (schema: indus_delta.config.ProjectConfig)
+# Every value here is versioned. Change values here, never in code.
+config_version: "0.1.0"
+
+project:
+  name: indus-delta-mangrove-agent
+  study_area_name: Keti Bandar, Indus Delta, Sindh, Pakistan
+  output_dir: outputs
+
+crs:
+  # UTM zone 42N (66°E–72°E, northern hemisphere). Used for every distance and area calculation.
+  analysis_epsg: 32642
+  geographic_epsg: 4326
+
+reference_location:
+  name: Keti Bandar
+  longitude: 67.45094
+  latitude: 24.14422
+  # provisional = one traceable source only; verified = confirmed by an independent
+  # source (e.g. official gazetteer, OSM node, or operator field GPS). The M1 gate
+  # reports a WARN until this is "verified".
+  verification_status: provisional
+  feature_type: populated place (GeoNames P class, cities1000 subset)
+  sources:
+    - dataset: GeoNames gazetteer, redistributed as lutangar/cities.json (cities with population > 1000)
+      url: https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json
+      version: git commit c05addfe79dce8a87076ef3fd487eab7e5fe4abd
+      record: '{"name": "Keti Bandar", "lat": "24.14422", "lng": "67.45094", "country": "PK", "admin1": "05", "admin2": "1163570"}'
+      licence: CC BY 4.0 (GeoNames)
+      retrieved: "2026-10-22"
+      file_md5: d4e5cdcb195e2d96c45185b58d80e9ab
+  notes: >-
+    A gazetteer point marks a settlement, not a hydrological feature. The direct GeoNames,
+    OpenStreetMap and Wikidata services were unreachable from the build environment on
+    2026-10-22, so no independent second source has been checked yet.
+
+aoi:
+  # buffer: circular buffer of buffer_m around the reference location (in analysis_epsg).
+  # polygon: operator-supplied polygon file (GeoPackage/GeoJSON) at polygon_path.
+  mode: buffer
+  buffer_m: 5000
+  polygon_path: null
+  # Alternative AOIs evaluated in the M1 AOI review. They are proposals, never applied silently.
+  alternative_buffers_m: [10000, 15000, 20000, 30000]
+
+periods:
+  landsat: {start_year: 2005, end_year: 2026}
+  sentinel: {start_year: 2020, end_year: 2026}
+
+seasons:
+  dry:
+    months: [11, 12, 1, 2, 3]
+    # A season spanning a year boundary is labelled with the year in which it ends
+    # (Nov 2019–Mar 2020 -> dry season 2020).
+    year_assignment: end
+  post_monsoon:
+    months: [9, 10]
+    year_assignment: end
+
+hydrology_review:
+  # JRC Global Surface Water v1.4 occurrence (percentage of valid observations classed
+  # as water, 1984–2021). Read with HTTP range requests from the public tile store.
+  jrc_occurrence:
+    url_template: https://storage.googleapis.com/global-surface-water/downloads2021/occurrence/occurrence_{tile}v1_4_2021.tif
+    tile_size_deg: 10
+    # Observed in the tile on 2026-10-22: no nodata declared; values 0–100 and 255.
+    # 255 lies outside the 0–100 % domain and is treated as no-data. Confirm against the
+    # JRC GSW data user guide before relying on it.
+    nodata_value: 255
+    valid_max: 100
+  # Pixels in the review extent are reprojected (nearest neighbour) to this grid. 30 m
+  # matches the ~0.00025° native JRC pixel; it does not add resolution.
+  analysis_resolution_m: 30
+  # Margin around the largest candidate AOI for the review raster, in metres.
+  review_margin_m: 10000
+  # Occurrence classes for describing (not proving) the channel network. These are
+  # descriptive bins for AOI review only, not mapping thresholds.
+  occurrence_classes_pct:
+    rarely_or_never: [0, 10]
+    intermittent: [10, 50]
+    frequent: [50, 90]
+    near_permanent: [90, 100]
+  # Also report area with occurrence below each of these levels (sensitivity to class edges).
+  cumulative_below_pct: [5, 10, 20, 30]
+  # Pixels with occurrence >= this value are grouped into connected water bodies to
+  # test whether the AOI truncates the channel network.
+  channel_occurrence_min_pct: 50
+  # Coarse cartographic reference for the main Indus channel. 1:10M generalisation;
+  # it does NOT show active distributaries or freshwater delivery.
+  coarse_river_reference:
+    dataset: Natural Earth 1:10m rivers and lake centerlines
+    url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_rivers_lake_centerlines.geojson
+    version: git commit ca96624a56bd078437bca8184e78163e5039ad19
+    licence: Public domain (Natural Earth)
+    feature_name: Indus
+    feature_class: River

@@ -1,0 +1,12 @@
+services:
+  pipeline:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./configs:/app/configs:ro
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+      # Earth Engine user credentials (created by `earthengine authenticate` on the host).
+      - ${HOME}/.config/earthengine:/root/.config/earthengine:ro

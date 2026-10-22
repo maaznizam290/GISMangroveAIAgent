@@ -1,0 +1,61 @@
+[project]
+name = "indus-delta-mangrove-agent"
+version = "0.1.0"
+description = "Reproducible geospatial pipeline for mangrove, inundation, salinity-proxy and freshwater-influence analysis around Keti Bandar, Indus Delta."
+readme = "README.md"
+# Current releases of rasterio, pyproj, numpy and scipy require Python >= 3.12,
+# so 3.11 cannot be satisfied with a maintained pinned set. Tested on 3.13.
+requires-python = ">=3.12,<3.14"
+license = "MIT"
+dependencies = [
+    "pydantic>=2.13,<3",
+    "pyyaml>=6.0,<7",
+    "numpy>=2.3,<3",
+    "pandas>=2.3,<4",
+    "scipy>=1.16,<2",
+    "shapely>=2.1,<3",
+    "pyproj>=3.7,<4",
+    "geopandas>=1.1,<2",
+    "pyogrio>=0.11,<1",
+    "rasterio>=1.4,<2",
+    "matplotlib>=3.10,<4",
+    "typer>=0.16,<1",
+    "earthengine-api>=1.6,<2",
+]
+
+[project.optional-dependencies]
+# Later milestones. Pinned in uv.lock, installed with `uv sync --extra <name>`; untested in M1.
+classification = ["scikit-learn>=1.7,<2", "pymannkendall>=1.4,<2"]
+dashboard = ["streamlit>=1.50,<2", "plotly>=6,<8", "geemap>=0.36,<1", "streamlit-folium>=0.25,<1"]
+
+[project.scripts]
+indus-delta = "indus_delta.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8.4,<10", "ruff>=0.12,<1"]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/indus_delta"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "network: needs outbound access to public data hosts (deselect with -m 'not network')",
+    "ee: needs authenticated Google Earth Engine access",
+]
+addopts = "-m 'not network and not ee'"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.flake8-bugbear]
+# Typer declares CLI options through call defaults.
+extend-immutable-calls = ["typer.Option", "typer.Argument"]

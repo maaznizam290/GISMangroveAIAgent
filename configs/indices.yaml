@@ -1,0 +1,59 @@
+# Spectral feature definitions (schema: indus_delta.config.IndicesConfig)
+#
+# Formulas reference band ROLES, never sensor band names. Each sensor maps roles to its own
+# bands so Landsat 5/7, Landsat 8/9 and Sentinel-2 cannot be mixed up.
+# No classification thresholds live here: thresholds are estimated from reference samples
+# and stored with the trained model configuration (later milestones).
+config_version: "0.1.0"
+
+band_roles: [blue, green, red, nir, swir1, swir2]
+
+sensors:
+  landsat_tm_etm:          # Landsat 5 TM, Landsat 7 ETM+ (Collection 2 Level 2)
+    bands: {blue: SR_B1, green: SR_B2, red: SR_B3, nir: SR_B4, swir1: SR_B5, swir2: SR_B7}
+    native_resolution_m: {blue: 30, green: 30, red: 30, nir: 30, swir1: 30, swir2: 30}
+  landsat_oli:             # Landsat 8 OLI, Landsat 9 OLI-2 (Collection 2 Level 2)
+    bands: {blue: SR_B2, green: SR_B3, red: SR_B4, nir: SR_B5, swir1: SR_B6, swir2: SR_B7}
+    native_resolution_m: {blue: 30, green: 30, red: 30, nir: 30, swir1: 30, swir2: 30}
+  sentinel2_msi:           # COPERNICUS/S2_SR_HARMONIZED
+    bands: {blue: B2, green: B3, red: B4, nir: B8, swir1: B11, swir2: B12}
+    native_resolution_m: {blue: 10, green: 10, red: 10, nir: 10, swir1: 20, swir2: 20}
+
+# Valid surface reflectance after scaling. Pixels outside this range are masked, not clipped.
+valid_reflectance: {min: 0.0, max: 1.0}
+# |denominator| below this value -> masked output (avoids division by ~0).
+min_abs_denominator: 1.0e-6
+
+indices:
+  ndvi:
+    long_name: Normalized Difference Vegetation Index
+    type: normalized_difference
+    a: nir
+    b: red
+  ndmi:
+    long_name: Normalized Difference Moisture Index
+    type: normalized_difference
+    a: nir
+    b: swir1
+  mndwi:
+    long_name: Modified Normalized Difference Water Index (Xu 2006)
+    type: normalized_difference
+    a: green
+    b: swir1
+  ndwi_mcfeeters:
+    long_name: Normalized Difference Water Index, McFeeters (1996) convention
+    type: normalized_difference
+    a: green
+    b: nir
+  mvi:
+    long_name: Mangrove Vegetation Index (Baloloy et al. 2020)
+    type: ratio_of_differences
+    # (NIR - Green) / (SWIR1 - Green)
+    numerator: [nir, green]
+    denominator: [swir1, green]
+  cmri:
+    long_name: Combined Mangrove Recognition Index (Gupta et al. 2018)
+    type: difference_of_indices
+    # CMRI = NDVI - NDWI, where NDWI uses the McFeeters (Green - NIR)/(Green + NIR) convention.
+    minuend: ndvi
+    subtrahend: ndwi_mcfeeters

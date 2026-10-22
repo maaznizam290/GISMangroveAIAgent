@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Secrets
+.env
+*.json.key
+credentials*.json
+service-account*.json
+
+# Data caches and large generated outputs
+data/cache/
+outputs/**/*.tif
+outputs/**/*.gpkg
+outputs/**/*.gpkg-*
+outputs/**/*.aux.xml
