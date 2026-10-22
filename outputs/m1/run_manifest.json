@@ -1,18 +1,18 @@
 {
   "milestone": "M1",
   "command": "indus-delta m1",
-  "created_utc": "2026-10-22T06:40:38+00:00",
+  "created_utc": "2026-10-22T10:05:39+00:00",
   "status": "WARN",
-  "git_revision": "b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty",
+  "git_revision": "7439d24b7b00bb250fa92dee89bcecc9b8588988-dirty",
   "config_sha256": {
-    "project.yaml": "70d8b38c12e3fac392af5fc49d769707a7af3b042ac97fa52ac804fe7d5c3078",
+    "project.yaml": "38575f2f50a83b722e80fbaebb2a33df3cb889bf1e23a1b479336e7323b0504e",
     "datasets.yaml": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
     "indices.yaml": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
-    "preprocessing.yaml": "29d7872be8c3f559aa96a2b3d69adf2de6d14f4adaefe59c97812db93932b542",
+    "preprocessing.yaml": "f98fd5e44f5788f171291cff8994a70644f9a6f98f2b76d4503b152e9b0530e0",
     "classification.yaml": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
     "layers.yaml": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
     "site_selection.yaml": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
-    "handover.yaml": "ed1d13868e86bddaf8211927c3a1d1b5e377f09344c0a07e93d1c10ce2894414"
+    "handover.yaml": "5d1540d7dcd4a63f5095295ee3e34a5845c647f0f42a8eaca887efac120d6438"
   },
   "software": {
     "python": "3.12.10",
@@ -68,23 +68,23 @@
     },
     {
       "path": "outputs\\m1\\m1_aoi.gpkg",
-      "sha256": "ebda630eb7b80709519687714c5ebf21884aa3ec7d3c2faa5443f379ac4b07c0",
-      "bytes": 2682880
+      "sha256": "f9de9bf048e2abbb9e370a2d4fc0a5ecd4d98face89eb40965afc0e5fd7e2f6c",
+      "bytes": 2781184
     },
     {
       "path": "outputs\\m1\\m1_aoi_preview.png",
-      "sha256": "676c6256a8c48fbf677432b2bfb457b924b221d6fccf09f9781e7e8f57f688f5",
-      "bytes": 1496188
+      "sha256": "1d2897d9a26f1537559e3daf811a54b3f5b3dd185a25c67f3b3fa0c3a07a767e",
+      "bytes": 1495662
     },
     {
       "path": "outputs\\m1\\m1_aoi_review.json",
-      "sha256": "170510fd9d8ca0dd5315dc1c72a8160e13e6766e039580da77dafdf0f51151dd",
-      "bytes": 9919
+      "sha256": "aeea9bed74cce1125b7943f2b5e65c9c20915d543f454d6c09b5b5b88b5ca9dc",
+      "bytes": 9930
     },
     {
       "path": "outputs\\m1\\m1_aoi_review.md",
-      "sha256": "1d2feb40b616b359b073addd24c34a8c96c4235f02c1c56e0e6453375dd9fcab",
-      "bytes": 6428
+      "sha256": "5c3f16d2af940c1184b02b9a4e396a63069fc0f981c19028f90a3e2407f45476",
+      "bytes": 6439
     }
   ]
 }

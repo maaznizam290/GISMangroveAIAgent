@@ -44,7 +44,7 @@
     {
       "name": "aoi_geometry_valid",
       "status": "PASS",
-      "detail": "buffer_5000m: Polygon, 78.532 km2, CRS EPSG:32642"
+      "detail": "buffer_10000m: Polygon, 314.128 km2, CRS EPSG:32642"
     },
     {
       "name": "aoi_contains_reference",
@@ -54,7 +54,7 @@
     {
       "name": "aoi_buffer_area",
       "status": "PASS",
-      "detail": "buffer area 78.532 km2 vs pi*r^2 78.540 km2 (relative difference 1.00e-04)"
+      "detail": "buffer area 314.128 km2 vs pi*r^2 314.159 km2 (relative difference 1.00e-04)"
     },
     {
       "name": "jrc_valid_coverage",
@@ -64,17 +64,17 @@
     {
       "name": "creek_system_present",
       "status": "PASS",
-      "detail": "63 water component(s) with occurrence >= 50% intersect the primary AOI (63.08 km2 inside it). Presence of frequently inundated channels only; says nothing about their water source."
+      "detail": "264 water component(s) with occurrence >= 50% intersect the primary AOI (217.77 km2 inside it). Presence of frequently inundated channels only; says nothing about their water source."
     },
     {
       "name": "creek_network_extent",
       "status": "WARN",
-      "detail": "the primary AOI holds 2.1% of the area of the water components it intersects (2956.6 km2 in total); the largest of them continues to the edge of the review extent, i.e. the creeks are part of a water network larger than any candidate AOI. Containment cannot be achieved by enlarging a buffer; hydrological context must be judged from channel connectivity to a documented freshwater source."
+      "detail": "the primary AOI holds 7.4% of the area of the water components it intersects (2957.9 km2 in total); the largest of them continues to the edge of the review extent, i.e. the creeks are part of a water network larger than any candidate AOI. Containment cannot be achieved by enlarging a buffer; hydrological context must be judged from channel connectivity to a documented freshwater source."
     },
     {
       "name": "land_surface_available",
       "status": "WARN",
-      "detail": "0.09 km2 (0.1%) of the primary AOI was rarely or never observed as water (JRC 1984-2021). Bare saline-flat (Site A) candidates need surfaces that are exposed in the analysed images; intermittently flooded flats may still qualify under tide-filtered imagery (to be tested in M2+). Sensitivity to the class edge - area below each occurrence level: <5%: 0.07 km2, <10%: 0.09 km2, <20%: 0.42 km2, <30%: 1.96 km2"
+      "detail": "20.87 km2 (6.6%) of the primary AOI was rarely or never observed as water (JRC 1984-2021). Bare saline-flat (Site A) candidates need surfaces that are exposed in the analysed images; intermittently flooded flats may still qualify under tide-filtered imagery (to be tested in M2+). Sensitivity to the class edge - area below each occurrence level: <5%: 18.78 km2, <10%: 20.87 km2, <20%: 26.27 km2, <30%: 37.01 km2"
     },
     {
       "name": "coarse_main_channel_in_aoi",
@@ -94,35 +94,8 @@
   ],
   "aoi_statistics": [
     {
-      "aoi_id": "buffer_5000m",
-      "role": "primary",
-      "area_km2": 78.53193127331944,
-      "valid_fraction": 1.0,
-      "occurrence_class_km2": {
-        "rarely_or_never": 0.0891,
-        "intermittent": 15.3585,
-        "frequent": 41.9769,
-        "near_permanent": 21.1059
-      },
-      "area_below_pct_km2": {
-        "5": 0.0693,
-        "10": 0.0891,
-        "20": 0.4221,
-        "30": 1.9602
-      },
-      "water_ever_km2": 78.471,
-      "channel_components": 63,
-      "channel_km2_inside": 63.0828,
-      "channel_km2_total_of_touching": 2956.5666,
-      "channel_fraction_inside": 0.021336505661668503,
-      "largest_component_touches_review_edge": true,
-      "coarse_river_intersects": false,
-      "coarse_river_distance_km": 12.426775445278611,
-      "notes": []
-    },
-    {
       "aoi_id": "buffer_10000m",
-      "role": "alternative",
+      "role": "primary",
       "area_km2": 314.12772509327687,
       "valid_fraction": 1.0,
       "occurrence_class_km2": {
@@ -142,6 +115,33 @@
       "channel_km2_inside": 217.7667,
       "channel_km2_total_of_touching": 2957.8572,
       "channel_fraction_inside": 0.07362312825649595,
+      "largest_component_touches_review_edge": true,
+      "coarse_river_intersects": false,
+      "coarse_river_distance_km": 12.426775445278611,
+      "notes": []
+    },
+    {
+      "aoi_id": "buffer_5000m",
+      "role": "alternative",
+      "area_km2": 78.53193127331944,
+      "valid_fraction": 1.0,
+      "occurrence_class_km2": {
+        "rarely_or_never": 0.0891,
+        "intermittent": 15.3585,
+        "frequent": 41.9769,
+        "near_permanent": 21.1059
+      },
+      "area_below_pct_km2": {
+        "5": 0.0693,
+        "10": 0.0891,
+        "20": 0.4221,
+        "30": 1.9602
+      },
+      "water_ever_km2": 78.471,
+      "channel_components": 63,
+      "channel_km2_inside": 63.0828,
+      "channel_km2_total_of_touching": 2956.5666,
+      "channel_fraction_inside": 0.021336505661668503,
       "largest_component_touches_review_edge": true,
       "coarse_river_intersects": false,
       "coarse_river_distance_km": 12.426775445278611,

@@ -73,7 +73,19 @@ def test_ee_commands_exit_cleanly_without_project(monkeypatch):
         assert "No processing was run" in result.output
 
 
-def test_preprocess_refused_without_confirmed_aoi():
-    result = runner.invoke(app, ["preprocess"])
+def test_preprocess_refused_without_confirmed_aoi(tmp_path):
+    import shutil
+
+    cfg = tmp_path / "configs"
+    shutil.copytree(CONFIG_DIR, cfg)
+    project = cfg / "project.yaml"
+    text = project.read_text(encoding="utf-8")
+    assert "operator_confirmed: true" in text or "operator_confirmed: false" in text
+    project.write_text(
+        text.replace("operator_confirmed: true", "operator_confirmed: false"), encoding="utf-8"
+    )
+    result = runner.invoke(
+        app, ["preprocess", "--config-dir", str(cfg), "--out-dir", str(tmp_path)]
+    )
     assert result.exit_code == 5
     assert "operator_confirmed" in result.output

@@ -171,8 +171,10 @@ def test_missing_gate(tmp_path, cfgs):
 
 
 def test_full_processing_refused_until_aoi_confirmed(tmp_path, cfgs):
+    aoi = cfgs.project.aoi.model_copy(update={"operator_confirmed": False})
+    unconfirmed = cfgs.model_copy(update={"project": cfgs.project.model_copy(update={"aoi": aoi})})
     with pytest.raises(GateError, match="operator_confirmed"):
-        check_preconditions(cfgs, tmp_path)
+        check_preconditions(unconfirmed, tmp_path)
 
 
 def _fake_gate():

@@ -1,0 +1,2675 @@
+{
+  "created_utc": "2026-10-22T10:18:36+00:00",
+  "n_tasks": 72,
+  "plan": [
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2005,
+      "start": "2004-11-01",
+      "end_inclusive": "2005-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2005",
+      "file_prefix": "indus_delta/m3/landsat_dry_2005_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2005,
+      "start": "2005-09-01",
+      "end_inclusive": "2005-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2005",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2005_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2006,
+      "start": "2005-11-01",
+      "end_inclusive": "2006-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2006",
+      "file_prefix": "indus_delta/m3/landsat_dry_2006_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2006,
+      "start": "2006-09-01",
+      "end_inclusive": "2006-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2006",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2006_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2007,
+      "start": "2006-11-01",
+      "end_inclusive": "2007-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2007",
+      "file_prefix": "indus_delta/m3/landsat_dry_2007_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2007,
+      "start": "2007-09-01",
+      "end_inclusive": "2007-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2007",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2007_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2008,
+      "start": "2007-11-01",
+      "end_inclusive": "2008-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2008",
+      "file_prefix": "indus_delta/m3/landsat_dry_2008_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2008,
+      "start": "2008-09-01",
+      "end_inclusive": "2008-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2008",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2008_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2009,
+      "start": "2008-11-01",
+      "end_inclusive": "2009-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2009",
+      "file_prefix": "indus_delta/m3/landsat_dry_2009_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2009,
+      "start": "2009-09-01",
+      "end_inclusive": "2009-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2009",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2009_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2010,
+      "start": "2009-11-01",
+      "end_inclusive": "2010-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2010",
+      "file_prefix": "indus_delta/m3/landsat_dry_2010_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2010,
+      "start": "2010-09-01",
+      "end_inclusive": "2010-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2010",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2010_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2011,
+      "start": "2010-11-01",
+      "end_inclusive": "2011-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2011",
+      "file_prefix": "indus_delta/m3/landsat_dry_2011_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2011,
+      "start": "2011-09-01",
+      "end_inclusive": "2011-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2011",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2011_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2012,
+      "start": "2011-11-01",
+      "end_inclusive": "2012-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2012",
+      "file_prefix": "indus_delta/m3/landsat_dry_2012_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2012,
+      "start": "2012-09-01",
+      "end_inclusive": "2012-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2012",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2012_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2013,
+      "start": "2012-11-01",
+      "end_inclusive": "2013-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2013",
+      "file_prefix": "indus_delta/m3/landsat_dry_2013_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2013,
+      "start": "2013-09-01",
+      "end_inclusive": "2013-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2013",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2013_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2014,
+      "start": "2013-11-01",
+      "end_inclusive": "2014-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2014",
+      "file_prefix": "indus_delta/m3/landsat_dry_2014_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2014,
+      "start": "2014-09-01",
+      "end_inclusive": "2014-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2014",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2014_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2015,
+      "start": "2014-11-01",
+      "end_inclusive": "2015-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2015",
+      "file_prefix": "indus_delta/m3/landsat_dry_2015_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2015,
+      "start": "2015-09-01",
+      "end_inclusive": "2015-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2015",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2015_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2016,
+      "start": "2015-11-01",
+      "end_inclusive": "2016-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2016",
+      "file_prefix": "indus_delta/m3/landsat_dry_2016_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2016,
+      "start": "2016-09-01",
+      "end_inclusive": "2016-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2016",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2016_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2017,
+      "start": "2016-11-01",
+      "end_inclusive": "2017-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2017",
+      "file_prefix": "indus_delta/m3/landsat_dry_2017_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2017,
+      "start": "2017-09-01",
+      "end_inclusive": "2017-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2017",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2017_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2018,
+      "start": "2017-11-01",
+      "end_inclusive": "2018-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2018",
+      "file_prefix": "indus_delta/m3/landsat_dry_2018_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2018,
+      "start": "2018-09-01",
+      "end_inclusive": "2018-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2018",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2018_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2019,
+      "start": "2018-11-01",
+      "end_inclusive": "2019-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2019",
+      "file_prefix": "indus_delta/m3/landsat_dry_2019_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2019,
+      "start": "2019-09-01",
+      "end_inclusive": "2019-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2019",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2019_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2020,
+      "start": "2019-11-01",
+      "end_inclusive": "2020-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2020",
+      "file_prefix": "indus_delta/m3/landsat_dry_2020_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2020,
+      "start": "2020-09-01",
+      "end_inclusive": "2020-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2020",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2020_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2021,
+      "start": "2020-11-01",
+      "end_inclusive": "2021-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2021",
+      "file_prefix": "indus_delta/m3/landsat_dry_2021_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2021,
+      "start": "2021-09-01",
+      "end_inclusive": "2021-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2021",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2021_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2022,
+      "start": "2021-11-01",
+      "end_inclusive": "2022-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2022",
+      "file_prefix": "indus_delta/m3/landsat_dry_2022_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2022,
+      "start": "2022-09-01",
+      "end_inclusive": "2022-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2022",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2022_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2023,
+      "start": "2022-11-01",
+      "end_inclusive": "2023-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2023",
+      "file_prefix": "indus_delta/m3/landsat_dry_2023_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2023,
+      "start": "2023-09-01",
+      "end_inclusive": "2023-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2023",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2023_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2024,
+      "start": "2023-11-01",
+      "end_inclusive": "2024-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2024",
+      "file_prefix": "indus_delta/m3/landsat_dry_2024_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2024,
+      "start": "2024-09-01",
+      "end_inclusive": "2024-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2024",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2024_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2025,
+      "start": "2024-11-01",
+      "end_inclusive": "2025-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2025",
+      "file_prefix": "indus_delta/m3/landsat_dry_2025_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2025,
+      "start": "2025-09-01",
+      "end_inclusive": "2025-10-31",
+      "completeness": "complete",
+      "description": "landsat_post_monsoon_2025",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2025_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "dry",
+      "label_year": 2026,
+      "start": "2025-11-01",
+      "end_inclusive": "2026-03-31",
+      "completeness": "complete",
+      "description": "landsat_dry_2026",
+      "file_prefix": "indus_delta/m3/landsat_dry_2026_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "landsat",
+      "season": "post_monsoon",
+      "label_year": 2026,
+      "start": "2026-09-01",
+      "end_inclusive": "2026-10-31",
+      "completeness": "partial",
+      "description": "landsat_post_monsoon_2026_partial",
+      "file_prefix": "indus_delta/m3/landsat_post_monsoon_2026_partial_epsg32642_30m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        30.0,
+        0.0,
+        332595.0,
+        0.0,
+        -30.0,
+        2681085.0
+      ],
+      "dimensions": [
+        668,
+        668
+      ],
+      "pixels": 446224,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "dry",
+      "label_year": 2020,
+      "start": "2019-11-01",
+      "end_inclusive": "2020-03-31",
+      "completeness": "complete",
+      "description": "sentinel2_dry_2020",
+      "file_prefix": "indus_delta/m3/sentinel2_dry_2020_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "post_monsoon",
+      "label_year": 2020,
+      "start": "2020-09-01",
+      "end_inclusive": "2020-10-31",
+      "completeness": "complete",
+      "description": "sentinel2_post_monsoon_2020",
+      "file_prefix": "indus_delta/m3/sentinel2_post_monsoon_2020_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "dry",
+      "label_year": 2021,
+      "start": "2020-11-01",
+      "end_inclusive": "2021-03-31",
+      "completeness": "complete",
+      "description": "sentinel2_dry_2021",
+      "file_prefix": "indus_delta/m3/sentinel2_dry_2021_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "post_monsoon",
+      "label_year": 2021,
+      "start": "2021-09-01",
+      "end_inclusive": "2021-10-31",
+      "completeness": "complete",
+      "description": "sentinel2_post_monsoon_2021",
+      "file_prefix": "indus_delta/m3/sentinel2_post_monsoon_2021_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "dry",
+      "label_year": 2022,
+      "start": "2021-11-01",
+      "end_inclusive": "2022-03-31",
+      "completeness": "complete",
+      "description": "sentinel2_dry_2022",
+      "file_prefix": "indus_delta/m3/sentinel2_dry_2022_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "post_monsoon",
+      "label_year": 2022,
+      "start": "2022-09-01",
+      "end_inclusive": "2022-10-31",
+      "completeness": "complete",
+      "description": "sentinel2_post_monsoon_2022",
+      "file_prefix": "indus_delta/m3/sentinel2_post_monsoon_2022_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "dry",
+      "label_year": 2023,
+      "start": "2022-11-01",
+      "end_inclusive": "2023-03-31",
+      "completeness": "complete",
+      "description": "sentinel2_dry_2023",
+      "file_prefix": "indus_delta/m3/sentinel2_dry_2023_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "post_monsoon",
+      "label_year": 2023,
+      "start": "2023-09-01",
+      "end_inclusive": "2023-10-31",
+      "completeness": "complete",
+      "description": "sentinel2_post_monsoon_2023",
+      "file_prefix": "indus_delta/m3/sentinel2_post_monsoon_2023_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "dry",
+      "label_year": 2024,
+      "start": "2023-11-01",
+      "end_inclusive": "2024-03-31",
+      "completeness": "complete",
+      "description": "sentinel2_dry_2024",
+      "file_prefix": "indus_delta/m3/sentinel2_dry_2024_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "post_monsoon",
+      "label_year": 2024,
+      "start": "2024-09-01",
+      "end_inclusive": "2024-10-31",
+      "completeness": "complete",
+      "description": "sentinel2_post_monsoon_2024",
+      "file_prefix": "indus_delta/m3/sentinel2_post_monsoon_2024_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "dry",
+      "label_year": 2025,
+      "start": "2024-11-01",
+      "end_inclusive": "2025-03-31",
+      "completeness": "complete",
+      "description": "sentinel2_dry_2025",
+      "file_prefix": "indus_delta/m3/sentinel2_dry_2025_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "post_monsoon",
+      "label_year": 2025,
+      "start": "2025-09-01",
+      "end_inclusive": "2025-10-31",
+      "completeness": "complete",
+      "description": "sentinel2_post_monsoon_2025",
+      "file_prefix": "indus_delta/m3/sentinel2_post_monsoon_2025_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "dry",
+      "label_year": 2026,
+      "start": "2025-11-01",
+      "end_inclusive": "2026-03-31",
+      "completeness": "complete",
+      "description": "sentinel2_dry_2026",
+      "file_prefix": "indus_delta/m3/sentinel2_dry_2026_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel2",
+      "season": "post_monsoon",
+      "label_year": 2026,
+      "start": "2026-09-01",
+      "end_inclusive": "2026-10-31",
+      "completeness": "partial",
+      "description": "sentinel2_post_monsoon_2026_partial",
+      "file_prefix": "indus_delta/m3/sentinel2_post_monsoon_2026_partial_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332600.0,
+        0.0,
+        -10.0,
+        2681070.0
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "blue",
+        "green",
+        "red",
+        "nir",
+        "swir1",
+        "swir2",
+        "ndvi",
+        "ndmi",
+        "mndwi",
+        "ndwi_mcfeeters",
+        "mvi",
+        "cmri",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "dry",
+      "label_year": 2020,
+      "start": "2019-11-01",
+      "end_inclusive": "2020-03-31",
+      "completeness": "complete",
+      "description": "sentinel1_dry_2020",
+      "file_prefix": "indus_delta/m3/sentinel1_dry_2020_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "post_monsoon",
+      "label_year": 2020,
+      "start": "2020-09-01",
+      "end_inclusive": "2020-10-31",
+      "completeness": "complete",
+      "description": "sentinel1_post_monsoon_2020",
+      "file_prefix": "indus_delta/m3/sentinel1_post_monsoon_2020_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "dry",
+      "label_year": 2021,
+      "start": "2020-11-01",
+      "end_inclusive": "2021-03-31",
+      "completeness": "complete",
+      "description": "sentinel1_dry_2021",
+      "file_prefix": "indus_delta/m3/sentinel1_dry_2021_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "post_monsoon",
+      "label_year": 2021,
+      "start": "2021-09-01",
+      "end_inclusive": "2021-10-31",
+      "completeness": "complete",
+      "description": "sentinel1_post_monsoon_2021",
+      "file_prefix": "indus_delta/m3/sentinel1_post_monsoon_2021_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "dry",
+      "label_year": 2022,
+      "start": "2021-11-01",
+      "end_inclusive": "2022-03-31",
+      "completeness": "complete",
+      "description": "sentinel1_dry_2022",
+      "file_prefix": "indus_delta/m3/sentinel1_dry_2022_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "post_monsoon",
+      "label_year": 2022,
+      "start": "2022-09-01",
+      "end_inclusive": "2022-10-31",
+      "completeness": "complete",
+      "description": "sentinel1_post_monsoon_2022",
+      "file_prefix": "indus_delta/m3/sentinel1_post_monsoon_2022_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "dry",
+      "label_year": 2023,
+      "start": "2022-11-01",
+      "end_inclusive": "2023-03-31",
+      "completeness": "complete",
+      "description": "sentinel1_dry_2023",
+      "file_prefix": "indus_delta/m3/sentinel1_dry_2023_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "post_monsoon",
+      "label_year": 2023,
+      "start": "2023-09-01",
+      "end_inclusive": "2023-10-31",
+      "completeness": "complete",
+      "description": "sentinel1_post_monsoon_2023",
+      "file_prefix": "indus_delta/m3/sentinel1_post_monsoon_2023_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "dry",
+      "label_year": 2024,
+      "start": "2023-11-01",
+      "end_inclusive": "2024-03-31",
+      "completeness": "complete",
+      "description": "sentinel1_dry_2024",
+      "file_prefix": "indus_delta/m3/sentinel1_dry_2024_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "post_monsoon",
+      "label_year": 2024,
+      "start": "2024-09-01",
+      "end_inclusive": "2024-10-31",
+      "completeness": "complete",
+      "description": "sentinel1_post_monsoon_2024",
+      "file_prefix": "indus_delta/m3/sentinel1_post_monsoon_2024_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "dry",
+      "label_year": 2025,
+      "start": "2024-11-01",
+      "end_inclusive": "2025-03-31",
+      "completeness": "complete",
+      "description": "sentinel1_dry_2025",
+      "file_prefix": "indus_delta/m3/sentinel1_dry_2025_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "post_monsoon",
+      "label_year": 2025,
+      "start": "2025-09-01",
+      "end_inclusive": "2025-10-31",
+      "completeness": "complete",
+      "description": "sentinel1_post_monsoon_2025",
+      "file_prefix": "indus_delta/m3/sentinel1_post_monsoon_2025_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "dry",
+      "label_year": 2026,
+      "start": "2025-11-01",
+      "end_inclusive": "2026-03-31",
+      "completeness": "complete",
+      "description": "sentinel1_dry_2026",
+      "file_prefix": "indus_delta/m3/sentinel1_dry_2026_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    },
+    {
+      "series": "sentinel1",
+      "season": "post_monsoon",
+      "label_year": 2026,
+      "start": "2026-09-01",
+      "end_inclusive": "2026-10-31",
+      "completeness": "partial",
+      "description": "sentinel1_post_monsoon_2026_partial",
+      "file_prefix": "indus_delta/m3/sentinel1_post_monsoon_2026_partial_epsg32642_10m",
+      "crs": "EPSG:32642",
+      "crs_transform": [
+        10.0,
+        0.0,
+        332605.69277440594,
+        0.0,
+        -10.0,
+        2681066.484661129
+      ],
+      "dimensions": [
+        2001,
+        2001
+      ],
+      "pixels": 4004001,
+      "bands": [
+        "VV",
+        "VH",
+        "valid_obs"
+      ]
+    }
+  ],
+  "submitted": null
+}

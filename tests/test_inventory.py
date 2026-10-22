@@ -13,6 +13,13 @@ from indus_delta.inventory import (
 )
 
 
+def _no_pass(cfgs):
+    """The MOCK Sentinel-1 records are ASCENDING; test with no orbit pass chosen yet."""
+    s1 = cfgs.preprocessing.sentinel1.model_copy(update={"orbit_pass": None})
+    pp = cfgs.preprocessing.model_copy(update={"sentinel1": s1})
+    return cfgs.model_copy(update={"preprocessing": pp})
+
+
 def _raw():
     return [
         {
@@ -65,7 +72,7 @@ def _raw():
 
 
 def test_build_records_assigns_seasons_and_flags(cfgs):
-    df = build_records(_raw(), cfgs).set_index("image_id")
+    df = build_records(_raw(), _no_pass(cfgs)).set_index("image_id")
     assert (df.loc["MOCK_L8_A", "season"], df.loc["MOCK_L8_A", "label_year"]) == ("dry", 2020)
     assert df.loc["MOCK_L8_A", "usable"] and not df.loc["MOCK_L8_B", "usable"]
     assert not df.loc["MOCK_L7_late", "in_primary_series"]
@@ -109,7 +116,7 @@ def test_missing_required_dataset_fails(cfgs):
 
 
 def test_s1_orbit_summary(cfgs):
-    s = s1_orbit_summary(build_records(_raw(), cfgs))
+    s = s1_orbit_summary(build_records(_raw(), _no_pass(cfgs)))
     row = s.iloc[0]
     assert (row.orbit_pass, row.relative_orbit, row.year, row.n_scenes, row.n_compatible) == (
         "ASCENDING",

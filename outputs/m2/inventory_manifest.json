@@ -1,18 +1,18 @@
 {
   "milestone": "M2-inventory",
   "command": "indus-delta inventory",
-  "created_utc": "2026-10-22T07:32:16+00:00",
-  "status": "WARN",
-  "git_revision": "b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty",
+  "created_utc": "2026-10-22T10:11:41+00:00",
+  "status": "PASS",
+  "git_revision": "7439d24b7b00bb250fa92dee89bcecc9b8588988-dirty",
   "config_sha256": {
-    "project.yaml": "70d8b38c12e3fac392af5fc49d769707a7af3b042ac97fa52ac804fe7d5c3078",
+    "project.yaml": "38575f2f50a83b722e80fbaebb2a33df3cb889bf1e23a1b479336e7323b0504e",
     "datasets.yaml": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
     "indices.yaml": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
-    "preprocessing.yaml": "29d7872be8c3f559aa96a2b3d69adf2de6d14f4adaefe59c97812db93932b542",
+    "preprocessing.yaml": "f98fd5e44f5788f171291cff8994a70644f9a6f98f2b76d4503b152e9b0530e0",
     "classification.yaml": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
     "layers.yaml": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
     "site_selection.yaml": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
-    "handover.yaml": "ed1d13868e86bddaf8211927c3a1d1b5e377f09344c0a07e93d1c10ce2894414"
+    "handover.yaml": "5d1540d7dcd4a63f5095295ee3e34a5845c647f0f42a8eaca887efac120d6438"
   },
   "software": {
     "python": "3.12.10",
@@ -46,13 +46,13 @@
   "outputs": [
     {
       "path": "outputs\\m2\\image_inventory.csv",
-      "sha256": "2746a022cfd34c4d51ce62d7e13371548adcf6585ec98fbec9ee88dd3767fd52",
-      "bytes": 317770
+      "sha256": "4c8faee7477ae3d09d1237ed29d97c332e397b787ac07f3d5e051a61c72ebda0",
+      "bytes": 319946
     },
     {
       "path": "outputs\\m2\\inventory_summary.csv",
-      "sha256": "8791aa58cfe5110e41a1f0c4e0158921158b2a6a8e48ac17ac00f3a3a8aa1a97",
-      "bytes": 9293
+      "sha256": "402441e83cf0503b28008a1a04af08902bcbddde7f79274d625a276520679807",
+      "bytes": 9284
     },
     {
       "path": "outputs\\m2\\missing_observations.csv",
@@ -61,13 +61,13 @@
     },
     {
       "path": "outputs\\m2\\s1_orbit_summary.csv",
-      "sha256": "8fd7fa04fb4fd5f55cc2060422edc28e1d0cd40dacd81dd00e1f1eaa516a788b",
-      "bytes": 545
+      "sha256": "5a6602b3df29129f27df3c95396453589b61c4d2e49b7f8d48af695a47f591a0",
+      "bytes": 531
     },
     {
       "path": "outputs\\m2\\inventory_checks.json",
-      "sha256": "94d1a171acc8e9cf638a973d8c59ab437fa65e556210913868a5f28816309ac7",
-      "bytes": 1720
+      "sha256": "8e1ded009d84b8f37d626d306a694a6be64fecd0a1debb284cd0585ffb2d4b58",
+      "bytes": 1528
     }
   ]
 }

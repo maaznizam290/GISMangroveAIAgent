@@ -11,8 +11,13 @@
 Still open from M1 (operator):
 
 - [ ] U1: second independent source for the reference point
-- [ ] U2/U3: AOI decision based on documented hydrological evidence, then
-      `aoi.operator_confirmed: true`
+- [x] AOI chosen by the operator (2026-10-22): **10 km buffer** (314.1 km2, 20.9 km2
+      rarely/never inundated vs 0.1 km2 in the 5 km buffer), `operator_confirmed: true`.
+      M1, inventory (PASS) and preview (PASS) rerun for it; `orbit_pass: DESCENDING`.
+      `preprocess` dry run: 72 composites planned (44 Landsat at 668x668 px, 14 Sentinel-2
+      and 14 Sentinel-1 at 2001x2001 px); not submitted
+- [ ] U2/U3: the AOI choice rests on land-surface availability, not on documented
+      hydrological evidence; freshwater influence remains unresolved
 
 ## M2: dataset verification and inventory (partly done)
 

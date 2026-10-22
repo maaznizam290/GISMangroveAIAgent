@@ -66,7 +66,9 @@ sentinel1:
   resolution_meters: 10
   # null = choose the pass with most acquisitions over the AOI from the inventory, then fix
   # it here. Mixing passes changes the viewing geometry.
-  orbit_pass: null
+  # Set 2026-10-22: DESCENDING (relative orbit 78) has 201 usable 2020-2026 scenes vs 191
+  # for ASCENDING (s1_orbit_summary.csv, 5 km inventory); the passed preview used it too.
+  orbit_pass: DESCENDING
   # Values are already dB in Earth Engine (thermal noise removal, calibration, terrain
   # correction, 10*log10). No speckle filter in the baseline.
   speckle_filter: none

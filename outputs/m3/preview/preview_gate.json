@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "created_utc": "2026-10-22T08:42:05+00:00",
-  "config_sha256": "634eb62aafadaef56543d160d3741c556f583203943bae58f0d204a2d8edb98d",
+  "created_utc": "2026-10-22T10:12:20+00:00",
+  "config_sha256": "4a0719d29a216a38291b8981bc1fdc3063a31bcc1c01627fe4e233f2d56f6753",
   "checks": [
     {
       "name": "preview_window",
@@ -227,11 +227,6 @@
       "name": "sentinel2_index_cmri_bounds",
       "status": "PASS",
       "detail": "0 values outside [-2.0, 2.0]"
-    },
-    {
-      "name": "sentinel1_orbit_pass",
-      "status": "WARN",
-      "detail": "orbit_pass not configured; preview used DESCENDING (acquisitions by pass: {'ASCENDING': 12, 'DESCENDING': 13}). Fix it in configs/preprocessing.yaml before full processing."
     },
     {
       "name": "sentinel1_images",
