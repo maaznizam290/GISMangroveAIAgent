@@ -40,5 +40,6 @@ def landsat_water_frequency(cfgs: Configs, region: ee.Geometry, year: int) -> ee
 
     water = col.map(detect)
     n_valid = water.count().rename("n_valid")
-    freq = water.sum().divide(n_valid).rename("water_frequency")
+    # Both operands are integer images; Earth Engine would divide them as integers (0 or 1).
+    freq = water.sum().toFloat().divide(n_valid).rename("water_frequency")
     return freq.addBands(n_valid)

@@ -12,7 +12,7 @@ from rasterio.transform import Affine
 from indus_delta.checks import Check
 from indus_delta.config import Configs
 from indus_delta.grid import is_aligned
-from indus_delta.spectral import compute_index, index_bounds
+from indus_delta.spectral import compute_index, index_bounds, index_rounding_bound
 
 
 @dataclass(frozen=True)
@@ -119,14 +119,24 @@ def check_preview(path: Path, exp: PreviewExpectation, cfgs: Configs) -> list[Ch
             got = np.where(valid, data[name], np.nan)
             both = np.isfinite(ref) & np.isfinite(got)
             mask_mismatch = int((np.isfinite(ref) != np.isfinite(got))[valid].sum())
-            diff = np.abs(ref[both] - got[both]) / np.maximum(1.0, np.abs(ref[both]))
+            scale = np.maximum(1.0, np.abs(ref[both]))
+            err = np.abs(ref[both] - got[both])
+            diff = err / scale
             maxdiff = float(diff.max()) if diff.size else 0.0
-            ok = maxdiff <= itol and mask_mismatch <= max(1, 0.001 * valid.sum())
+            # Earth Engine computes the index before the bands are stored as float32; where
+            # a denominator is near zero that rounding alone exceeds the tolerance. Allow
+            # twice the propagated float32 bound on top of the tolerance.
+            rounding = 2 * index_rounding_bound(name, bands, cfgs.indices)[both]
+            over_tol = int((diff > itol).sum())
+            beyond = int((err > itol * scale + rounding).sum())
+            ok = beyond == 0 and mask_mismatch <= max(1, 0.001 * valid.sum())
             add(
                 f"index_{name}_recomputed",
                 ok,
                 f"max relative difference {maxdiff:.2e} (tolerance {itol:g}); "
-                f"{mask_mismatch} pixels masked in one implementation only",
+                f"{over_tol} pixels above the tolerance, {beyond} of them beyond float32 "
+                f"rounding of the inputs; {mask_mismatch} pixels masked in one "
+                "implementation only",
             )
             bounds = index_bounds(name, cfgs.indices)
             if bounds and both.any():

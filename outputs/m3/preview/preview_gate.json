@@ -1,0 +1,477 @@
+{
+  "status": "PASS",
+  "created_utc": "2026-10-22T08:42:05+00:00",
+  "config_sha256": "634eb62aafadaef56543d160d3741c556f583203943bae58f0d204a2d8edb98d",
+  "checks": [
+    {
+      "name": "preview_window",
+      "status": "PASS",
+      "detail": "dry 2026: 2025-11-01..2026-03-31 (complete)"
+    },
+    {
+      "name": "landsat_images",
+      "status": "PASS",
+      "detail": "18 images 2025-11-08..2026-03-24 from ['landsat8_l2', 'landsat9_l2']"
+    },
+    {
+      "name": "landsat_native_crs",
+      "status": "PASS",
+      "detail": "native EPSG:32642, transform [30, 0, 238485, 0, -30, 2833215]; grid offset (15.0, 15.0)"
+    },
+    {
+      "name": "landsat_crs",
+      "status": "PASS",
+      "detail": "file CRS EPSG:32642, expected EPSG:32642"
+    },
+    {
+      "name": "landsat_pixel_size",
+      "status": "PASS",
+      "detail": "file pixel size (30.0, 30.0), expected 30.0"
+    },
+    {
+      "name": "landsat_grid_matches_request",
+      "status": "PASS",
+      "detail": "file 101x101 (30.0, 0.0, 341085.0, 0.0, -30.0, 2672565.0), requested 101x101 (30.0, 0.0, 341085.0, 0.0, -30.0, 2672565.0)"
+    },
+    {
+      "name": "landsat_grid_aligned_to_native",
+      "status": "PASS",
+      "detail": "pixel edges at offset (15.0, 15.0) (mod 30.0 m) of the native grid"
+    },
+    {
+      "name": "landsat_band_names",
+      "status": "PASS",
+      "detail": "bands ['blue', 'green', 'red', 'nir', 'swir1', 'swir2', 'ndvi', 'ndmi', 'mndwi', 'ndwi_mcfeeters', 'mvi', 'cmri', 'valid_obs']"
+    },
+    {
+      "name": "landsat_nodata",
+      "status": "PASS",
+      "detail": "nodata -9999.0, expected -9999.0"
+    },
+    {
+      "name": "landsat_valid_fraction",
+      "status": "PASS",
+      "detail": "100.0% of preview pixels valid (minimum 80%)"
+    },
+    {
+      "name": "landsat_valid_obs",
+      "status": "PASS",
+      "detail": "valid observations per pixel: min 5, median 13, max 16"
+    },
+    {
+      "name": "landsat_reflectance_range",
+      "status": "PASS",
+      "detail": "values outside [0.0, 1.0]: {'blue': 0, 'green': 0, 'red': 0, 'nir': 0, 'swir1': 0, 'swir2': 0}"
+    },
+    {
+      "name": "landsat_index_ndvi_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 5.73e-08 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "landsat_index_ndvi_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-1.0, 1.0]"
+    },
+    {
+      "name": "landsat_index_ndmi_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 6.07e-08 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "landsat_index_ndmi_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-1.0, 1.0]"
+    },
+    {
+      "name": "landsat_index_mndwi_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 5.62e-08 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "landsat_index_mndwi_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-1.0, 1.0]"
+    },
+    {
+      "name": "landsat_index_ndwi_mcfeeters_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 5.80e-08 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "landsat_index_ndwi_mcfeeters_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-1.0, 1.0]"
+    },
+    {
+      "name": "landsat_index_mvi_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 2.74e-04 (tolerance 0.0001); 3 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "landsat_index_cmri_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 1.04e-07 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "landsat_index_cmri_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-2.0, 2.0]"
+    },
+    {
+      "name": "sentinel2_images",
+      "status": "PASS",
+      "detail": "32 images 2025-11-03..2026-03-28 from ['sentinel2_sr']"
+    },
+    {
+      "name": "sentinel2_native_crs",
+      "status": "PASS",
+      "detail": "native EPSG:32642, transform [10, 0, 300000, 0, -10, 2700000]; grid offset (0.0, 0.0)"
+    },
+    {
+      "name": "sentinel2_crs",
+      "status": "PASS",
+      "detail": "file CRS EPSG:32642, expected EPSG:32642"
+    },
+    {
+      "name": "sentinel2_pixel_size",
+      "status": "PASS",
+      "detail": "file pixel size (10.0, 10.0), expected 10.0"
+    },
+    {
+      "name": "sentinel2_grid_matches_request",
+      "status": "PASS",
+      "detail": "file 301x301 (10.0, 0.0, 341100.0, 0.0, -10.0, 2672570.0), requested 301x301 (10.0, 0.0, 341100.0, 0.0, -10.0, 2672570.0)"
+    },
+    {
+      "name": "sentinel2_grid_aligned_to_native",
+      "status": "PASS",
+      "detail": "pixel edges at offset (0.0, 0.0) (mod 10.0 m) of the native grid"
+    },
+    {
+      "name": "sentinel2_band_names",
+      "status": "PASS",
+      "detail": "bands ['blue', 'green', 'red', 'nir', 'swir1', 'swir2', 'ndvi', 'ndmi', 'mndwi', 'ndwi_mcfeeters', 'mvi', 'cmri', 'valid_obs']"
+    },
+    {
+      "name": "sentinel2_nodata",
+      "status": "PASS",
+      "detail": "nodata -9999.0, expected -9999.0"
+    },
+    {
+      "name": "sentinel2_valid_fraction",
+      "status": "PASS",
+      "detail": "100.0% of preview pixels valid (minimum 80%)"
+    },
+    {
+      "name": "sentinel2_valid_obs",
+      "status": "PASS",
+      "detail": "valid observations per pixel: min 25, median 29, max 31"
+    },
+    {
+      "name": "sentinel2_reflectance_range",
+      "status": "PASS",
+      "detail": "values outside [0.0, 1.0]: {'blue': 0, 'green': 0, 'red': 0, 'nir': 0, 'swir1': 0, 'swir2': 0}"
+    },
+    {
+      "name": "sentinel2_index_ndvi_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 6.12e-08 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "sentinel2_index_ndvi_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-1.0, 1.0]"
+    },
+    {
+      "name": "sentinel2_index_ndmi_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 6.53e-08 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "sentinel2_index_ndmi_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-1.0, 1.0]"
+    },
+    {
+      "name": "sentinel2_index_mndwi_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 6.01e-08 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "sentinel2_index_mndwi_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-1.0, 1.0]"
+    },
+    {
+      "name": "sentinel2_index_ndwi_mcfeeters_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 6.49e-08 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "sentinel2_index_ndwi_mcfeeters_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-1.0, 1.0]"
+    },
+    {
+      "name": "sentinel2_index_mvi_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 1.32e-04 (tolerance 0.0001); 2 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "sentinel2_index_cmri_recomputed",
+      "status": "PASS",
+      "detail": "max relative difference 1.18e-07 (tolerance 0.0001); 0 pixels above the tolerance, 0 of them beyond float32 rounding of the inputs; 0 pixels masked in one implementation only"
+    },
+    {
+      "name": "sentinel2_index_cmri_bounds",
+      "status": "PASS",
+      "detail": "0 values outside [-2.0, 2.0]"
+    },
+    {
+      "name": "sentinel1_orbit_pass",
+      "status": "WARN",
+      "detail": "orbit_pass not configured; preview used DESCENDING (acquisitions by pass: {'ASCENDING': 12, 'DESCENDING': 13}). Fix it in configs/preprocessing.yaml before full processing."
+    },
+    {
+      "name": "sentinel1_images",
+      "status": "PASS",
+      "detail": "13 images 2025-11-06..2026-03-30 from ['sentinel1']"
+    },
+    {
+      "name": "sentinel1_native_crs",
+      "status": "PASS",
+      "detail": "native EPSG:32642, transform [10, 0, 185485.69277440594, 0, -10, 2782406.484661129]; grid offset (5.692774405935779, 6.484661128837615)"
+    },
+    {
+      "name": "sentinel1_crs",
+      "status": "PASS",
+      "detail": "file CRS EPSG:32642, expected EPSG:32642"
+    },
+    {
+      "name": "sentinel1_pixel_size",
+      "status": "PASS",
+      "detail": "file pixel size (10.0, 10.0), expected 10.0"
+    },
+    {
+      "name": "sentinel1_grid_matches_request",
+      "status": "PASS",
+      "detail": "file 301x301 (10.0, 0.0, 341105.69277440594, 0.0, -10.0, 2672566.484661129), requested 301x301 (10.0, 0.0, 341105.69277440594, 0.0, -10.0, 2672566.484661129)"
+    },
+    {
+      "name": "sentinel1_grid_aligned_to_native",
+      "status": "PASS",
+      "detail": "pixel edges at offset (5.692774405935779, 6.484661128837615) (mod 10.0 m) of the native grid"
+    },
+    {
+      "name": "sentinel1_band_names",
+      "status": "PASS",
+      "detail": "bands ['VV', 'VH', 'valid_obs']"
+    },
+    {
+      "name": "sentinel1_nodata",
+      "status": "PASS",
+      "detail": "nodata -9999.0, expected -9999.0"
+    },
+    {
+      "name": "sentinel1_valid_fraction",
+      "status": "PASS",
+      "detail": "100.0% of preview pixels valid (minimum 80%)"
+    },
+    {
+      "name": "sentinel1_valid_obs",
+      "status": "PASS",
+      "detail": "valid observations per pixel: min 13, median 13, max 13"
+    },
+    {
+      "name": "sentinel1_VV_db_range",
+      "status": "PASS",
+      "detail": "0 values outside the sanity range [-50.0, 20.0] dB; median -19.0 dB"
+    },
+    {
+      "name": "sentinel1_VH_db_range",
+      "status": "PASS",
+      "detail": "0 values outside the sanity range [-50.0, 20.0] dB; median -29.7 dB"
+    }
+  ],
+  "metadata": {
+    "window": {
+      "season": "dry",
+      "label_year": 2026,
+      "start": "2025-11-01",
+      "end_inclusive": "2026-03-31",
+      "completeness": "complete"
+    },
+    "box_half_size_m": 1500.0,
+    "tide_status": "unavailable",
+    "landsat_harmonisation": "none",
+    "products": {
+      "landsat": {
+        "file": "landsat_dry_2026_preview_epsg32642_30m.tif",
+        "scale_m": 30.0,
+        "grid_offset": [
+          15.0,
+          15.0
+        ],
+        "native_projection": {
+          "type": "Projection",
+          "crs": "EPSG:32642",
+          "transform": [
+            30,
+            0,
+            238485,
+            0,
+            -30,
+            2833215
+          ]
+        },
+        "composite": {
+          "n_images": 18,
+          "image_ids": [
+            "1_LC08_152043_20251116",
+            "1_LC08_152043_20251202",
+            "1_LC08_152043_20251218",
+            "1_LC08_152043_20260103",
+            "1_LC08_152043_20260119",
+            "1_LC08_152043_20260204",
+            "1_LC08_152043_20260220",
+            "1_LC08_152043_20260308",
+            "1_LC08_152043_20260324",
+            "2_LC09_152043_20251108",
+            "2_LC09_152043_20251124",
+            "2_LC09_152043_20251210",
+            "2_LC09_152043_20251226",
+            "2_LC09_152043_20260111",
+            "2_LC09_152043_20260127",
+            "2_LC09_152043_20260212",
+            "2_LC09_152043_20260228",
+            "2_LC09_152043_20260316"
+          ],
+          "datasets": [
+            "landsat8_l2",
+            "landsat9_l2"
+          ],
+          "first_date": "2025-11-08",
+          "last_date": "2026-03-24"
+        }
+      },
+      "sentinel2": {
+        "file": "sentinel2_dry_2026_preview_epsg32642_10m.tif",
+        "scale_m": 10.0,
+        "grid_offset": [
+          0.0,
+          0.0
+        ],
+        "native_projection": {
+          "type": "Projection",
+          "crs": "EPSG:32642",
+          "transform": [
+            10,
+            0,
+            300000,
+            0,
+            -10,
+            2700000
+          ]
+        },
+        "composite": {
+          "n_images": 32,
+          "image_ids": [
+            "20251103T060031_20251103T061209_T42QUM",
+            "20251105T060301_20251105T060300_T42QUM",
+            "20251108T055949_20251108T061130_T42QUM",
+            "20251113T060121_20251113T060118_T42QUM",
+            "20251118T060029_20251118T061145_T42QUM",
+            "20251123T060201_20251123T060200_T42QUM",
+            "20251125T060301_20251125T060301_T42QUM",
+            "20251128T060059_20251128T060628_T42QUM",
+            "20251203T060231_20251203T060228_T42QUM",
+            "20251208T060139_20251208T060548_T42QUM",
+            "20251213T060251_20251213T060249_T42QUM",
+            "20251218T060149_20251218T060148_T42QUM",
+            "20251223T060301_20251223T060256_T42QUM",
+            "20251228T060149_20251228T061004_T42QUM",
+            "20260102T060251_20260102T060245_T42QUM",
+            "20260104T060311_20260104T060306_T42QUM",
+            "20260107T060129_20260107T060804_T42QUM",
+            "20260112T060231_20260112T060226_T42QUM",
+            "20260117T060059_20260117T060502_T42QUM",
+            "20260122T060141_20260122T060140_T42QUM",
+            "20260127T060019_20260127T060602_T42QUM",
+            "20260201T060051_20260201T060052_T42QUM",
+            "20260206T055929_20260206T060836_T42QUM",
+            "20260211T060001_20260211T061137_T42QUM",
+            "20260216T055819_20260216T060530_T42QUM",
+            "20260221T055851_20260221T061122_T42QUM",
+            "20260226T055719_20260226T061139_T42QUM",
+            "20260303T055741_20260303T061122_T42QUM",
+            "20260308T055629_20260308T061018_T42QUM",
+            "20260313T055641_20260313T060838_T42QUM",
+            "20260315T060311_20260315T061203_T42QUM",
+            "20260328T055629_20260328T061053_T42QUM"
+          ],
+          "datasets": [
+            "sentinel2_sr"
+          ],
+          "first_date": "2025-11-03",
+          "last_date": "2026-03-28"
+        }
+      },
+      "sentinel1": {
+        "file": "sentinel1_dry_2026_preview_epsg32642_10m.tif",
+        "scale_m": 10.0,
+        "grid_offset": [
+          5.692774405935779,
+          6.484661128837615
+        ],
+        "native_projection": {
+          "type": "Projection",
+          "crs": "EPSG:32642",
+          "transform": [
+            10,
+            0,
+            185485.69277440594,
+            0,
+            -10,
+            2782406.484661129
+          ]
+        },
+        "composite": {
+          "n_images": 13,
+          "image_ids": [
+            "S1A_IW_GRDH_1SDV_20251106T012633_20251106T012702_061750_07B7BA_A72C",
+            "S1A_IW_GRDH_1SDV_20251118T012632_20251118T012701_061925_07BE83_BFB1",
+            "S1A_IW_GRDH_1SDV_20251130T012631_20251130T012700_062100_07C557_247E",
+            "S1A_IW_GRDH_1SDV_20251212T012630_20251212T012659_062275_07CC2A_2A17",
+            "S1A_IW_GRDH_1SDV_20251224T012629_20251224T012657_062450_07D2F7_5878",
+            "S1A_IW_GRDH_1SDV_20260105T012628_20260105T012656_062625_07D9BA_ACB7",
+            "S1A_IW_GRDH_1SDV_20260117T012627_20260117T012655_062800_07E075_0D85",
+            "S1A_IW_GRDH_1SDV_20260129T012626_20260129T012655_062975_07E6C3_287D",
+            "S1A_IW_GRDH_1SDV_20260210T012625_20260210T012654_063150_07ED4C_7B1E",
+            "S1A_IW_GRDH_1SDV_20260222T012625_20260222T012653_063325_07F3E5_A39C",
+            "S1A_IW_GRDH_1SDV_20260306T012624_20260306T012653_063500_07FA8D_2FDC",
+            "S1A_IW_GRDH_1SDV_20260318T012624_20260318T012653_063675_080122_3239",
+            "S1A_IW_GRDH_1SDV_20260330T012625_20260330T012653_063850_0807A9_ED9C"
+          ],
+          "datasets": [],
+          "first_date": "2025-11-06",
+          "last_date": "2026-03-30"
+        }
+      }
+    },
+    "sentinel2_effective_resolution_m": {
+      "ndvi": 10.0,
+      "ndmi": 20.0,
+      "mndwi": 20.0,
+      "ndwi_mcfeeters": 10.0,
+      "mvi": 20.0,
+      "cmri": 10.0
+    },
+    "sentinel1_orbit_pass": "DESCENDING",
+    "files": [
+      "landsat_dry_2026_preview_epsg32642_30m.tif",
+      "sentinel2_dry_2026_preview_epsg32642_10m.tif",
+      "sentinel1_dry_2026_preview_epsg32642_10m.tif"
+    ]
+  }
+}

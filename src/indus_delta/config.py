@@ -662,7 +662,7 @@ class SiteSelectionConfig(_Strict):
 
 class QgisConfig(_Strict):
     enabled: bool
-    python: str
+    python: str | None = None
     project_name: str
 
 

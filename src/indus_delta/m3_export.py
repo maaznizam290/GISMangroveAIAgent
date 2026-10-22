@@ -50,6 +50,22 @@ def export_destination() -> tuple[str | None, str | None]:
     return bucket, folder
 
 
+def export_file_prefix(item: dict, bucket: str | None) -> str:
+    """Cloud Storage keeps the folder structure of the prefix; a Drive folder is flat, so
+    only the file name is used there."""
+    return item["file_prefix"] if bucket else item["file_prefix"].rsplit("/", 1)[-1]
+
+
+def band_names(cfgs: Configs, series: str) -> list[str]:
+    """Band order of an exported composite (the same lists the export selects)."""
+    from indus_delta.earthengine import composite as comp
+
+    return comp.s1_band_names(cfgs) if series == "sentinel1" else comp.optical_band_names(cfgs)
+
+
+WATER_BANDS = ["water_frequency", "n_valid"]
+
+
 def check_preconditions(cfgs: Configs, preview_dir: Path) -> dict:
     if not cfgs.project.aoi.operator_confirmed:
         raise GateError(
@@ -98,6 +114,7 @@ def plan_exports(cfgs: Configs, gate: dict, series: list[str], today: date) -> l
                     "crs_transform": transform_list(tf),
                     "dimensions": [width, height],
                     "pixels": width * height,
+                    "bands": band_names(cfgs, s),
                 }
             )
     return plan
@@ -139,7 +156,7 @@ def submit_exports(cfgs: Configs, plan: list[dict], gate: dict) -> list[dict]:
         kwargs = dict(
             image=img,
             description=item["description"],
-            fileNamePrefix=item["file_prefix"],
+            fileNamePrefix=export_file_prefix(item, bucket),
             crs=item["crs"],
             crsTransform=item["crs_transform"],
             dimensions=f"{item['dimensions'][0]}x{item['dimensions'][1]}",
@@ -201,6 +218,7 @@ def plan_water_exports(cfgs: Configs, gate: dict, years: list[int]) -> list[dict
             "crs_transform": transform_list(tf),
             "dimensions": [width, height],
             "pixels": width * height,
+            "bands": WATER_BANDS,
         }
         for y in years
     ]
@@ -226,7 +244,7 @@ def submit_water_exports(cfgs: Configs, plan: list[dict]) -> list[dict]:
         kwargs = dict(
             image=img,
             description=item["description"],
-            fileNamePrefix=item["file_prefix"],
+            fileNamePrefix=export_file_prefix(item, bucket),
             crs=item["crs"],
             crsTransform=item["crs_transform"],
             dimensions=f"{item['dimensions'][0]}x{item['dimensions'][1]}",
@@ -242,3 +260,119 @@ def submit_water_exports(cfgs: Configs, plan: list[dict]) -> list[dict]:
         task.start()
         results.append({**item, "status": "submitted", "task_id": task.id})
     return results
+
+
+# --------------------------------------------------------------------------- import downloads
+
+
+def _export_problems(path: Path, item: dict, bands: list[str]) -> list[str]:
+    """Differences between a downloaded export and the grid and bands it was planned with."""
+    import rasterio
+    from rasterio.transform import Affine
+
+    with rasterio.open(path) as src:
+        problems = []
+        epsg = int(item["crs"].split(":")[1])
+        if src.crs is None or src.crs.to_epsg() != epsg:
+            problems.append(f"CRS {src.crs}, planned {item['crs']}")
+        if [src.width, src.height] != list(item["dimensions"]):
+            problems.append(f"size {src.width}x{src.height}, planned {item['dimensions']}")
+        if not src.transform.almost_equals(Affine(*item["crs_transform"])):
+            problems.append(
+                f"transform {tuple(src.transform)[:6]}, planned {item['crs_transform']}"
+            )
+        if src.count != len(bands):
+            problems.append(f"{src.count} bands, planned {len(bands)} {bands}")
+        named = [d for d in src.descriptions if d]
+        if named and list(src.descriptions) != bands:
+            problems.append(f"band names {list(src.descriptions)}, planned {bands}")
+    return problems
+
+
+def import_exports(
+    cfgs: Configs,
+    out_root: Path,
+    download_dir: Path,
+    command: str = "indus-delta import-exports",
+):
+    """Check files downloaded from Drive / Cloud Storage against the export plans and copy
+    them, with band names and nodata recorded, to where `classify` (composites_dir) and
+    `layers` (tidal_inundation.input_dir) read them. Files that do not match their plan are
+    reported and not imported."""
+    import shutil
+
+    import rasterio
+
+    from indus_delta.checks import Check, worst
+    from indus_delta.manifest import write_manifest
+
+    if not download_dir.is_dir():
+        raise FileNotFoundError(f"download folder {download_dir} does not exist")
+    plans = [
+        (out_root / "m3" / "export_plan.json", cfgs.classification.composites_dir, None),
+        (
+            out_root / "m5" / "water_export_plan.json",
+            cfgs.layers.tidal_inundation.input_dir,
+            WATER_BANDS,
+        ),
+    ]
+    nodata = cfgs.preprocessing.composites.nodata_value
+    found = {p.name: p for p in sorted(download_dir.rglob("*.tif"))}
+    checks: list[Check] = []
+    imported: list[Path] = []
+    used_plans: list[Path] = []
+    for plan_path, dest_dir, fixed_bands in plans:
+        if not plan_path.is_file():
+            continue
+        submitted = json.loads(plan_path.read_text(encoding="utf-8")).get("submitted") or []
+        submitted = [s for s in submitted if s.get("status") == "submitted"]
+        if submitted:
+            used_plans.append(plan_path)
+        for item in submitted:
+            stem = item["file_prefix"].rsplit("/", 1)[-1]
+            name = f"{stem}.tif"
+            src = found.get(name)
+            if src is None:
+                tiles = [n for n in found if n.startswith(f"{stem}-")]
+                checks.append(
+                    Check(
+                        f"import_{stem}",
+                        "WARN",
+                        f"exported in {len(tiles)} tiles; mosaic them into {name} first"
+                        if tiles
+                        else f"{name} not in {download_dir} (task still running, or not "
+                        "downloaded yet)",
+                    )
+                )
+                continue
+            bands = item.get("bands") or fixed_bands or band_names(cfgs, item["series"])
+            problems = _export_problems(src, item, bands)
+            if problems:
+                checks.append(Check(f"import_{stem}", "FAIL", f"{src}: " + "; ".join(problems)))
+                continue
+            dest_dir.mkdir(parents=True, exist_ok=True)
+            dest = dest_dir / name
+            shutil.copy2(src, dest)
+            with rasterio.open(dest, "r+") as dst:
+                dst.nodata = nodata
+                for i, b in enumerate(bands, start=1):
+                    dst.set_band_description(i, b)
+            imported.append(dest)
+            checks.append(Check(f"import_{stem}", "PASS", f"{src.name} -> {dest}"))
+    if not used_plans:
+        raise GateError(
+            "no submitted exports recorded; run `indus-delta preprocess --start` (and "
+            "`water-frequency --start`) first"
+        )
+    status = worst(checks)
+    manifest = out_root / "m3" / "import_manifest.json"
+    write_manifest(
+        manifest,
+        milestone="M3-import",
+        command=command,
+        config_sha256=cfgs.sha256,
+        inputs=[{"download_dir": str(download_dir), "plans": [str(p) for p in used_plans]}],
+        outputs=imported,
+        status=status,
+    )
+    return status, checks, manifest

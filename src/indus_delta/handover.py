@@ -18,6 +18,7 @@ import json
 import logging
 import os
 import shutil
+import stat
 import subprocess
 import tempfile
 from dataclasses import asdict, dataclass, field
@@ -334,6 +335,22 @@ def style_for(key: str, cfgs: Configs) -> dict:
     return STYLE_SPECS.get(key, {})
 
 
+def resolve_qgis_python(configured: str | None) -> str | None:
+    """Interpreter with PyQGIS: $QGIS_PYTHON, then qgis.python from the config, then the
+    python-qgis launcher of a standard Windows QGIS install. None when none exists."""
+    for cand in (os.environ.get("QGIS_PYTHON"), configured):
+        if cand and (Path(cand).is_file() or shutil.which(cand)):
+            return cand
+    if os.name == "nt":
+        roots = [os.environ.get("PROGRAMFILES", r"C:\Program Files"), r"C:\OSGeo4W"]
+        for root in roots:
+            hits = sorted(glob.glob(os.path.join(root, "QGIS*", "bin", "python-qgis*.bat")))
+            hits += sorted(glob.glob(os.path.join(root, "bin", "python-qgis*.bat")))
+            if hits:
+                return hits[-1]
+    return None
+
+
 def build_qgis_project(spec: dict, pkg: Path, python: str) -> dict:
     spec_path = pkg / "qgis" / "project_spec.json"
     spec_path.parent.mkdir(parents=True, exist_ok=True)
@@ -531,6 +548,17 @@ def unresolved_assumptions(protocol: Path) -> str:
 # --------------------------------------------------------------------------- orchestration
 
 
+def _rmtree(path: Path) -> None:
+    """shutil.rmtree that also removes entries carrying the Windows read-only attribute
+    (RemoveDirectory refuses them with 'Access is denied')."""
+
+    def clear_readonly(func, p, exc):
+        os.chmod(p, stat.S_IWRITE)
+        func(p)
+
+    shutil.rmtree(path, onexc=clear_readonly)
+
+
 def build_handover(
     cfgs: Configs,
     out_root: Path,
@@ -543,7 +571,7 @@ def build_handover(
     epsg = cfgs.project.crs.analysis_epsg
     pkg = out_root / ho.package_dir
     if pkg.exists():
-        shutil.rmtree(pkg)
+        _rmtree(pkg)
     for sub in ("rasters", "vectors", "tables", "docs", "qgis", "config"):
         (pkg / sub).mkdir(parents=True)
     items: list[Item] = []
@@ -705,7 +733,14 @@ def build_handover(
     qgis_item = Item("qgis_project", "generated", True, "PyQGIS")
     items.append(qgis_item)
     qgis_result: dict = {}
-    if ho.qgis.enabled:
+    qgis_python = resolve_qgis_python(ho.qgis.python) if ho.qgis.enabled else None
+    if ho.qgis.enabled and qgis_python is None:
+        # Not a failed check: the project is simply not delivered (handover INCOMPLETE).
+        qgis_item.note = (
+            f"no PyQGIS interpreter found (qgis.python={ho.qgis.python!r}); install QGIS and "
+            "set QGIS_PYTHON or qgis.python in configs/handover.yaml"
+        )
+    elif ho.qgis.enabled:
         project_path = pkg / "qgis" / ho.qgis.project_name
         # PyQGIS resolves the relative layer paths against the project file location.
         spec = {
@@ -734,7 +769,7 @@ def build_handover(
             layer["path"] = str((pkg / "qgis" / rel).resolve()) + (
                 "|" + layer["path"].split("|", 1)[1] if "|" in layer["path"] else ""
             )
-        qgis_result = build_qgis_project(spec, pkg, ho.qgis.python)
+        qgis_result = build_qgis_project(spec, pkg, qgis_python)
         qgis_item.checks = validate_qgis(qgis_result, expected, epsg, project_path)
         if "error" not in qgis_result:
             qgis_item.target, qgis_item.status = f"qgis/{ho.qgis.project_name}", "delivered"

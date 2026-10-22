@@ -43,11 +43,16 @@ def _mock_optical(tmp_path, cfgs, corrupt=None):
     rng = np.random.default_rng(0)
     tf, w, h = aligned_box(342606.68, 2671064.28, 300, 30, (15, 15))
     base = dict(blue=0.05, green=0.08, red=0.06, nir=0.30, swir1=0.15, swir2=0.08)
-    bands = {
-        r: (v + rng.uniform(-0.01, 0.01, (h, w))).astype("float32").astype(float)
-        for r, v in base.items()
-    }
+    bands = {r: v + rng.uniform(-0.01, 0.01, (h, w)) for r, v in base.items()}
+    if corrupt in ("near_zero_mvi", "mvi_formula"):
+        # Like water: SWIR1 ~ Green, so the MVI denominator is close to zero.
+        bands["swir1"][:5] = bands["green"][:5] + rng.uniform(1e-5, 3e-5, (5, w))
+    else:
+        bands = {r: a.astype("float32").astype(float) for r, a in bands.items()}
+    # Indices from the unrounded bands; the file stores float32, as Earth Engine's does.
     idx = {n: compute_index(n, bands, cfgs.indices) for n in cfgs.indices.indices}
+    if corrupt == "mvi_formula":
+        idx["mvi"] = idx["mvi"] * 1.001
     obs = np.full((h, w), 5.0)
     if corrupt == "index":
         idx["ndvi"] = idx["ndvi"] + 0.05
@@ -77,6 +82,22 @@ def test_wrong_index_fails(tmp_path, cfgs):
     s = _statuses(check_preview(path, exp, cfgs))
     assert s["landsat_index_ndvi_recomputed"] == "FAIL"
     assert s["landsat_index_ndmi_recomputed"] == "PASS"
+
+
+def test_float32_rounding_near_zero_denominator_passes(tmp_path, cfgs):
+    path, exp = _mock_optical(tmp_path, cfgs, corrupt="near_zero_mvi")
+    checks = {c.name: c for c in check_preview(path, exp, cfgs)}
+    mvi = checks["landsat_index_mvi_recomputed"]
+    assert mvi.status == "PASS", mvi.detail
+    # Rounding must actually push some pixels over the plain tolerance, or this tests nothing.
+    assert " 0 pixels above the tolerance" not in mvi.detail, mvi.detail
+
+
+def test_small_formula_difference_still_fails(tmp_path, cfgs):
+    path, exp = _mock_optical(tmp_path, cfgs, corrupt="mvi_formula")
+    s = _statuses(check_preview(path, exp, cfgs))
+    assert s["landsat_index_mvi_recomputed"] == "FAIL"
+    assert s["landsat_index_ndvi_recomputed"] == "PASS"
 
 
 def test_out_of_range_reflectance_fails(tmp_path, cfgs):

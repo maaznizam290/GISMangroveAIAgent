@@ -539,15 +539,14 @@ dependencies = [
     { name = "pyyaml" },
     { name = "rasterio" },
     { name = "rio-cogeo" },
+    { name = "scikit-learn" },
     { name = "scipy" },
     { name = "shapely" },
+    { name = "truststore" },
     { name = "typer" },
 ]
 
 [package.optional-dependencies]
-classification = [
-    { name = "scikit-learn" },
-]
 dashboard = [
     { name = "plotly" },
     { name = "streamlit" },
@@ -573,13 +572,14 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0,<7" },
     { name = "rasterio", specifier = ">=1.4,<2" },
     { name = "rio-cogeo", specifier = ">=7.0,<8" },
-    { name = "scikit-learn", marker = "extra == 'classification'", specifier = ">=1.7,<2" },
+    { name = "scikit-learn", specifier = ">=1.7,<2" },
     { name = "scipy", specifier = ">=1.16,<2" },
     { name = "shapely", specifier = ">=2.1,<3" },
     { name = "streamlit", marker = "extra == 'dashboard'", specifier = ">=1.50,<2" },
+    { name = "truststore", specifier = ">=0.10,<1" },
     { name = "typer", specifier = ">=0.16,<1" },
 ]
-provides-extras = ["classification", "dashboard"]
+provides-extras = ["dashboard"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -1556,6 +1556,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/00/dc/6c58154c1c65f758ea979e7139cb76993a9cfc662d14e9be3c4a667cfb77/threadpoolctl-3.7.0.tar.gz", hash = "sha256:61348cfb77d53b9242e0017029244b559b810c142ced65b4e21eeca1843959a7", size = 31961, upload-time = "2026-09-15T15:46:20.263Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/43/3f/f88a53f60a472b46f4023f56d204dd7de33d34c5d2acbfa0d70a674e639e/threadpoolctl-3.7.0-py3-none-any.whl", hash = "sha256:cd8b60b5641b45c67bbf73c64c843235fc2d8a480c87389f52f5dbee893b86be", size = 26362, upload-time = "2026-09-15T15:46:19.168Z" },
+]
+
+[[package]]
+name = "truststore"
+version = "0.10.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/9f/c5201d42a484c061e528825fc8e2d565f5abd50a4ced6fb7d29c4ec99b2b/truststore-0.10.5.tar.gz", hash = "sha256:30d36967ccaded5cbb38d602c433f53600036c79d502f4533a49b60a03bbefcd", size = 28091, upload-time = "2026-10-12T22:27:31.808Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/51/e9/3a7820be2bb0fe53b6bc9c3be26d3d1158004e4c3ab953aa6840b955b1e9/truststore-0.10.5-py3-none-any.whl", hash = "sha256:9aaaedaefaf06d8b206278cf8b5012bc897f485a874503501e12d776df78951c", size = 19017, upload-time = "2026-10-12T22:27:30.377Z" },
 ]
 
 [[package]]

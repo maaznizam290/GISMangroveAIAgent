@@ -37,6 +37,11 @@ def main(verbose: bool = typer.Option(False, "--verbose", "-v")) -> None:
     from indus_delta.envfile import load_env_file
 
     load_env_file()
+    # Verify HTTPS (Earth Engine, catalog, M1 downloads) against the OS trust store, so
+    # TLS-inspecting antivirus or proxies with a locally trusted root do not break requests.
+    import truststore
+
+    truststore.inject_into_ssl()
     logging.basicConfig(
         level=logging.INFO if verbose else logging.WARNING,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
@@ -217,6 +222,33 @@ def preprocess(
     write_plan(plan_path, plan, submitted)
     n = sum(1 for r in submitted if r["status"] == "submitted")
     typer.echo(f"{n} export tasks submitted, {len(submitted) - n} skipped. Record: {plan_path}")
+
+
+@app.command("import-exports")
+def import_exports(
+    config_dir: Path = ConfigDir,
+    out_dir: Path = OutDir,
+    from_dir: Path = typer.Option(
+        ..., "--from", help="Folder with the GeoTIFFs downloaded from Drive / Cloud Storage."
+    ),
+) -> None:
+    """[M3/M5] Check downloaded exports against their plans (CRS, grid, bands) and copy them
+    to the folders `classify` and `layers` read. Mismatching files are not imported."""
+    from indus_delta.gate import GateError
+    from indus_delta.m3_export import import_exports as _import
+
+    cfgs = _load(config_dir)
+    try:
+        status, checks, manifest = _import(
+            cfgs, out_dir or cfgs.project.project.output_dir, from_dir
+        )
+    except (GateError, FileNotFoundError) as exc:
+        typer.secho(f"Import refused: {exc}", fg="red", err=True)
+        raise typer.Exit(5) from exc
+    _print(checks)
+    n = sum(c.status == "PASS" for c in checks)
+    typer.echo(f"\n{n} of {len(checks)} planned files imported; status {status}. {manifest}")
+    raise typer.Exit(1 if status == "FAIL" else 0)
 
 
 Series = typer.Option("landsat", "--series", help="landsat or sentinel2")

@@ -1,0 +1,83 @@
+{
+  "milestone": "M3-preview",
+  "command": "indus-delta preview",
+  "created_utc": "2026-10-22T08:42:11+00:00",
+  "status": "PASS",
+  "git_revision": "221e347ef815d3909d4c45251e1fbd17f24a0698-dirty",
+  "config_sha256": {
+    "project.yaml": "70d8b38c12e3fac392af5fc49d769707a7af3b042ac97fa52ac804fe7d5c3078",
+    "datasets.yaml": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
+    "indices.yaml": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
+    "preprocessing.yaml": "29d7872be8c3f559aa96a2b3d69adf2de6d14f4adaefe59c97812db93932b542",
+    "classification.yaml": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
+    "layers.yaml": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
+    "site_selection.yaml": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
+    "handover.yaml": "5d1540d7dcd4a63f5095295ee3e34a5845c647f0f42a8eaca887efac120d6438"
+  },
+  "software": {
+    "python": "3.12.10",
+    "indus-delta-mangrove-agent": "0.1.0",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "shapely": "2.2.0",
+    "pyproj": "3.8.0",
+    "geopandas": "1.2.0",
+    "pyogrio": "0.13.0",
+    "rasterio": "1.5.2",
+    "matplotlib": "3.11.2",
+    "pydantic": "2.14.1",
+    "earthengine-api": "1.7.49",
+    "gdal": "3.12.2",
+    "proj": "9.8.1"
+  },
+  "inputs": [
+    {
+      "datasets": {
+        "landsat5_l2": "LANDSAT/LT05/C02/T1_L2",
+        "landsat7_l2": "LANDSAT/LE07/C02/T1_L2",
+        "landsat8_l2": "LANDSAT/LC08/C02/T1_L2",
+        "landsat9_l2": "LANDSAT/LC09/C02/T1_L2",
+        "sentinel2_sr": "COPERNICUS/S2_SR_HARMONIZED",
+        "cloud_score_plus": "GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED",
+        "sentinel1_grd": "COPERNICUS/S1_GRD",
+        "jrc_gsw": "JRC/GSW1_4/GlobalSurfaceWater",
+        "jrc_gsw_yearly": "JRC/GSW1_4/YearlyHistory",
+        "jrc_gsw_monthly": "JRC/GSW1_4/MonthlyHistory",
+        "cgmd_extent30": "projects/mangrovedatahub2/assets/CGMD-Extent30"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "path": "outputs\\m3\\preview\\landsat_dry_2026_preview_epsg32642_30m.tif",
+      "sha256": "81291f0108349080a600a84334f7a49185fde3a308d9767da06f967216305a8e",
+      "bytes": 458038
+    },
+    {
+      "path": "outputs\\m3\\preview\\sentinel2_dry_2026_preview_epsg32642_10m.tif",
+      "sha256": "a195b012dfd1f28c29415de81a7e06cc27c2500b4d8edae55d1cc45e854559e0",
+      "bytes": 3308142
+    },
+    {
+      "path": "outputs\\m3\\preview\\sentinel1_dry_2026_preview_epsg32642_10m.tif",
+      "sha256": "5f9ed1af0801a61cf0b3f6c9cfa29a4f1a59d486bb81a73f187ccee34b3ef41b",
+      "bytes": 709788
+    },
+    {
+      "path": "outputs\\m3\\preview\\preview_gate.json",
+      "sha256": "7f9f68713abeec57799818c8c5e20dad55e9788c8d56f948ccd35a7cd4a3f9d2",
+      "bytes": 17505
+    },
+    {
+      "path": "outputs\\m3\\preview\\preview_report.json",
+      "sha256": "e42328aa4d54eff32967b4c19c78b2e9fcd90c37768445e374b7e806f4abc9a9",
+      "bytes": 17370
+    },
+    {
+      "path": "outputs\\m3\\preview\\preview_quicklook.png",
+      "sha256": "98c1f7ff2c4116601a2b8de554bd647a55a600ed829c2570492799d05b89636e",
+      "bytes": 940042
+    }
+  ]
+}

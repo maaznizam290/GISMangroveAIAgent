@@ -27,11 +27,13 @@ Still open from M1 (operator):
       fraction, usability, S1 pass/orbit/polarisation compatibility, tide status. Outputs
       `image_inventory.csv`, `inventory_summary.csv`, `missing_observations.csv` and
       `s1_orbit_summary.csv`, and it fails visibly if a required dataset returns no images
-- [ ] **Run `inventory`. Blocked: no Earth Engine credentials in the build environment**
+- [x] **`inventory` run on real data** (2026-10-22 07:32 UTC, status WARN: every image and
+      coverage check PASS; WARN only because the AOI is unconfirmed). Rerun it if the AOI
+      changes
 - [ ] Choose the Sentinel-1 orbit pass from `s1_orbit_summary.csv` and fix it in config
 - [ ] Supply GMW v4.1 (uploaded asset or local rasters plus DOI) or decide to proceed without it
 
-## M3: seasonal windows and preprocessing (implemented, not run)
+## M3: seasonal windows and preprocessing (preview run and passed; full run not started)
 
 - [x] Season assignment and windows (dry Nov–Mar labelled by end year; post-monsoon Sep–Oct)
       with complete/partial/not-started status
@@ -45,7 +47,15 @@ Still open from M1 (operator):
 - [x] `preprocess`: plans per-season exports and submits them only with `--start`. It is
       refused unless the AOI is confirmed **and** the preview gate passed for the current
       configuration
-- [ ] **Run `preview`. Blocked: no Earth Engine credentials**
+- [x] **`preview` run on real data** (2026-10-22, dry 2026, 5 km AOI config): gate PASS.
+      Landsat 18 images (L8/L9), Sentinel-2 32, Sentinel-1 13 (DESCENDING, chosen by the
+      preview because `orbit_pass` is unset: WARN). 100% valid pixels; every index
+      recomputed in NumPy; quicklook inspected (creeks, vegetated islands and the
+      settlement line up across the three sensors). The gate must be rerun after the AOI
+      or `orbit_pass` changes (it is bound to those configs)
+- [x] `import-exports`: checks downloaded export files against their plan (CRS, grid,
+      band count/names) and copies them, with band names and nodata, to `composites_dir`
+      and `tidal_inundation.input_dir`
 - [ ] Inspect the preview quicklook and gate; resolve U17 (SCL dark-area class) and U18
       (Cloud Score+ threshold)
 - [ ] Full-scale processing: not started, and must not start before the items above
@@ -126,6 +136,32 @@ Still open from M1 (operator):
 - [x] Site selection updates metrics, class proportions and exclusion reasons
 - [x] Tests: data loading, chart calculations, site filtering and class proportions, plus
       `AppTest` runs on empty and mock outputs; rendered and inspected in Chromium
+
+## Review and fixes (2026-10-22, Windows run)
+
+- **HTTPS failed behind TLS-inspecting antivirus (Avast).** Python did not trust the
+  antivirus root, so `ee.Initialize` failed with `CERTIFICATE_VERIFY_FAILED`. The CLI now
+  verifies against the OS trust store (`truststore`); `check-ee` passes. `uv` needs
+  `--system-certs` on such machines.
+- **Preview MVI check failed on real data (2.7e-4 > 1e-4).** Analysis of the downloaded
+  preview: only 3 of 10 201 Landsat and 2 of 90 601 Sentinel-2 pixels exceeded the
+  tolerance, all where SWIR1 ≈ Green (near-zero MVI denominator), and every difference was
+  within the propagated float32 rounding of the stored bands (max 0.66 and 0.90 of the
+  bound); elsewhere the implementations agree within 3e-6. The check now allows twice that
+  bound on top of the tolerance and reports how many pixels needed it; a 0.1% formula error
+  still fails (tests).
+- **Water frequency would have been 0 or 1 only:** `sum / count` of two integer images is
+  integer division in Earth Engine. Cast to float before dividing.
+- **Handover returned FAIL instead of INCOMPLETE without QGIS** (Linux interpreter path on
+  Windows). The interpreter is now `$QGIS_PYTHON`, `qgis.python`, or an auto-detected Windows
+  QGIS install; without one the project is reported missing.
+- **Handover crashed on rerun on Windows**: read-only folders could not be removed. Fixed.
+- **scikit-learn was an optional extra**, so a plain `uv sync` (and the Docker image) could
+  not run `classify`, `select-sites` or the tests. It is now a core dependency.
+- **Drive exports used a path-like file name prefix**; Drive folders are flat, so only the
+  file name is used there (Cloud Storage keeps the folder structure).
+- **No step connected the downloaded exports to `classify` / `layers`**; added
+  `import-exports`.
 
 ## Errors and findings during M7–M8
 

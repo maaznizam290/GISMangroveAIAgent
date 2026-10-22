@@ -17,7 +17,7 @@ Classes: **1** production dependency, **2** scientific or implementation referen
 | geopandas/geopandas | 1 | BSD-3-Clause | 1.2.0 (2026-09-28) | ≥3.11 | Vector I/O and GeoPackage (M1) |
 | rasterio/rasterio | 1 | BSD-3-Clause | 1.5.2 (2026-09-30) | ≥3.12 | Raster I/O and COG export (M1). Bundles GDAL 3.12.2 in its wheel |
 | OSGeo/gdal | 1 (indirect) | MIT | 3.13.3 (2026-08-18) | ≥3.8 | Used through the rasterio and pyogrio wheels. The PyPI `GDAL` package is source-only, so it is not installed directly |
-| scikit-learn/scikit-learn | 1 | BSD-3-Clause | 1.9.1 (2026-09-10) | ≥3.11 | Random Forest baseline and metrics (M4). Optional extra (locked, not installed by default) |
+| scikit-learn/scikit-learn | 1 | BSD-3-Clause | 1.9.1 (2026-09-10) | ≥3.11 | Random Forest baseline and metrics (M4). Core dependency (since 2026-10-22; was an optional extra) |
 | shapely/shapely | 1 | BSD-3-Clause | 2.2.0 (2026-10-07) | ≥3.11 | Geometry (M1) |
 | pyproj4/pyproj | 1 | MIT | 3.8.0 (2026-09-05) | ≥3.12 | CRS checks and transforms (M1). PROJ 9.8.1 |
 | streamlit/streamlit | 1 (dashboard) | Apache-2.0 | 1.66.1 (2026-10-21) | ≥3.11 | Dashboard (M8) |
@@ -59,8 +59,7 @@ run time are recorded in each run manifest:
 
 ## Lockfile
 
-`uv.lock` pins 148 packages for Python ≥ 3.12, including the `classification` and
-`dashboard` extras (for example scikit-learn 1.9.1, streamlit 1.66.1, geemap 0.38.9,
-plotly 7.1.0). `uv sync` installs only the core and dev groups. The
-extras are installed with `uv sync --extra classification` or `--extra dashboard` when their
-milestones start, and are not yet exercised by tests.
+`uv.lock` pins the core, dev and `dashboard` packages for Python ≥ 3.12 (for example
+scikit-learn 1.9.1, streamlit 1.66.1, plotly 7.1.0). scikit-learn and truststore (HTTPS
+verification against the OS trust store) are core dependencies; the dashboard is installed
+with `uv sync --extra dashboard`.

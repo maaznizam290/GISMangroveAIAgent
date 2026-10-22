@@ -15,8 +15,8 @@ must be discovered from validated maps.**
 | Milestone | Scope | State |
 |---|---|---|
 | **M1** | Config schema, CRS checks, AOI, hydrological-context review, preview map, study protocol | **Done. Gate status WARN: operator decisions needed (see below)** |
-| M2 | Dataset verification and image inventory | **Partly done.** Catalog verification run on real data; inventory implemented but **not run (no Earth Engine credentials)** |
-| M3 | Seasonal windows, masking, scaling, composites, indices, small-area preview gate, gated full-scale exports | **Implemented and unit-tested; not run (no Earth Engine credentials).** Full-scale processing is blocked by design |
+| M2 | Dataset verification and image inventory | **Done on real data** (catalog check and inventory, 2026-10-22). Open: Sentinel-1 orbit pass, GMW v4.1 source |
+| M3 | Seasonal windows, masking, scaling, composites, indices, small-area preview gate, gated full-scale exports | **Preview run on real data: gate PASS** (2026-10-22). Full-scale exports not started: refused until the AOI is confirmed |
 | M4 | Random Forest baseline, independent and spatially separated validation, accuracy tables, validation gate | **Implemented; tested on mock data only.** Not run: no composites and no reference samples |
 | M5 | Separate mangrove, tidal-inundation, soil-salinity-proxy, freshwater-influence-proxy and field-salinity layers; trends | **Implemented; tested on mock data only.** Not run |
 | M6 | 500 m plots, Site A/B eligibility and ranking, refused until validation passes | **Implemented; tested on mock data only.** No sites have been selected |
@@ -64,9 +64,16 @@ Requires Python ≥ 3.12 (tested on 3.13) and [uv](https://docs.astral.sh/uv/).
 Current rasterio, pyproj, numpy and scipy releases do not support 3.11.
 
 ```bash
-uv sync                      # installs the locked core + dev environment (uv.lock)
+uv sync --extra dashboard    # locked core + dev environment + dashboard (uv.lock)
 uv run indus-delta --help
 ```
+
+Behind TLS-inspecting antivirus or a proxy (e.g. Avast HTTPS scanning), `uv` reports
+`invalid peer certificate: UnknownIssuer`: add `--system-certs` to `uv sync` / `uv lock`.
+The CLI itself verifies HTTPS against the operating-system trust store (`truststore`), so
+Earth Engine and the catalog work on such machines without extra settings.
+`uv sync` replaces `indus-delta.exe`; on Windows stop a running `indus-delta dashboard`
+first (otherwise: "process cannot access the file").
 
 Docker (untested in the build environment): `docker compose run --rm pipeline m1`.
 
@@ -81,6 +88,7 @@ Docker (untested in the build environment): `docker compose run --rm pipeline m1
 | `indus-delta inventory [--dataset KEY ...]` | Per-image inventory over the primary AOI: `image_inventory.csv`, `inventory_summary.csv`, `missing_observations.csv`, `s1_orbit_summary.csv` | yes |
 | `indus-delta preview` | Small-area dry run (3 km box): Landsat, Sentinel-2 and Sentinel-1 seasonal composites, downloaded and checked; writes `outputs/m3/preview/preview_gate.json` | yes |
 | `indus-delta preprocess [--series ...] [--start]` | Plans full-AOI seasonal exports; submits them only with `--start`. Refused until the AOI is confirmed and the preview gate passed | yes, for `--start` |
+| `indus-delta import-exports --from DIR` | Checks GeoTIFFs downloaded from Drive / Cloud Storage against `export_plan.json` / `water_export_plan.json` (CRS, grid, bands) and copies them, with band names and nodata, to `outputs/m3/composites/` and `outputs/m5/inputs/` | no |
 | `indus-delta classify --year Y [--series S]` | Random Forest land cover, independent validation, accuracy tables, validation gate | no (needs exported composites and samples) |
 | `indus-delta validate --year Y` | Shows the stored gate and accuracy of an epoch | no |
 | `indus-delta calibrate-water --year Y` | Water-index threshold from reference samples; you record it in `layers.yaml` | no |
@@ -98,9 +106,10 @@ Exit codes: 0 = pass, warn or incomplete, 1 = failed check, 2 = invalid configur
 Recommended order once credentials exist:
 `check-ee`, then `inventory`, then fix `sentinel1.orbit_pass` from `s1_orbit_summary.csv`,
 then `preview`, then inspect `preview_quicklook.png` and `preview_gate.json`, then confirm
-the AOI, then `preprocess` (plan), then `preprocess --start`. Then download the composites to
-`outputs/m3/composites/`, add samples to `data/reference/`, and run `classify`,
-`calibrate-water`, `water-frequency --start`, `layers`, `trends` and finally `select-sites`.
+the AOI, then `preprocess` (plan), then `preprocess --start`. When the tasks have finished,
+download the files and run `import-exports --from <download folder>`, add samples to
+`data/reference/`, and run `classify`, `calibrate-water`, `water-frequency --start` (then
+`import-exports` again), `layers`, `trends` and finally `select-sites`.
 
 ### Operator inputs (none exist yet)
 
@@ -203,9 +212,10 @@ The handover is **COMPLETE** only when every required deliverable is present and
 check passes.
 
 The QGIS project is built with PyQGIS, which runs outside the project environment. On
-Ubuntu: `sudo apt install python3-qgis qgis-providers`, then set `qgis.python` in
-`configs/handover.yaml` (default `/usr/bin/python3.12`). Without it the project is reported
-missing and the handover stays INCOMPLETE.
+Windows, install QGIS (standalone installer or OSGeo4W): its `python-qgis*.bat` launcher is
+found automatically. On Ubuntu: `sudo apt install python3-qgis qgis-providers`. Elsewhere set
+`QGIS_PYTHON` or `qgis.python` in `configs/handover.yaml`. Without an interpreter the project
+is reported missing and the handover stays INCOMPLETE.
 
 ## Dashboard (M8)
 

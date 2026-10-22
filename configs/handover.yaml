@@ -9,6 +9,8 @@ write_shapefiles: false
 qgis:
   enabled: true
   # PyQGIS runs outside the project environment (system Python with python3-qgis).
+  # $QGIS_PYTHON overrides this; on Windows a standard QGIS install (python-qgis*.bat)
+  # is found automatically. Without an interpreter the handover is INCOMPLETE.
   python: /usr/bin/python3.12
   project_name: indus_delta_handover.qgz
 

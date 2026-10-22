@@ -69,6 +69,36 @@ def compute_index(name: str, bands: dict[str, np.ndarray], cfg: IndicesConfig) -
     raise TypeError(f"unsupported index type for {name}")
 
 
+FLOAT32_EPS = float(np.finfo(np.float32).eps)
+
+
+def index_rounding_bound(
+    name: str, bands: dict[str, np.ndarray], cfg: IndicesConfig, eps: float = FLOAT32_EPS
+) -> np.ndarray:
+    """First-order worst-case change of compute_index when every input band (and the stored
+    index) is rounded to float32. It grows as a denominator approaches zero (e.g. MVI where
+    SWIR1 ~ Green), which tells storage rounding apart from a formula difference."""
+    idx = cfg.indices[name]
+    if isinstance(idx, DifferenceOfIndices):
+        return index_rounding_bound(idx.minuend, bands, cfg, eps) + index_rounding_bound(
+            idx.subtrahend, bands, cfg, eps
+        )
+    if isinstance(idx, NormalizedDifference):
+        terms = (idx.a, idx.b), (idx.a, idx.b)
+    elif isinstance(idx, RatioOfDifferences):
+        terms = idx.numerator, idx.denominator
+    else:
+        raise TypeError(f"unsupported index type for {name}")
+    (n1, n2), (d1, d2) = terms
+    u = eps / 2
+    r = compute_index(name, bands, cfg)
+    den = bands[d1] - bands[d2] if isinstance(idx, RatioOfDifferences) else bands[d1] + bands[d2]
+    spread = (
+        np.abs(bands[n1]) + np.abs(bands[n2]) + np.abs(r) * (np.abs(bands[d1]) + np.abs(bands[d2]))
+    )
+    return _safe_ratio(u * spread, np.abs(den), cfg.min_abs_denominator) + u * np.abs(r)
+
+
 def index_bounds(name: str, cfg: IndicesConfig) -> tuple[float, float] | None:
     """Mathematical range of an index, where one exists (normalized differences: [-1, 1] for
     non-negative inputs; CMRI: [-2, 2]). MVI is unbounded."""

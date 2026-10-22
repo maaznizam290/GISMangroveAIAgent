@@ -41,6 +41,44 @@ Generated from the delivered files.
 | indus_delta_handover.gpkg:coarse_indus_centerline | coarse_indus_centerline | vector field | source |  |  |  |  |  | EPSG:32642 | str |
 | indus_delta_handover.gpkg:coarse_indus_centerline | coarse_indus_centerline | vector field | note |  |  |  |  |  | EPSG:32642 | str |
 | indus_delta_handover.gpkg:coarse_indus_centerline | coarse_indus_centerline | vector field | geometry |  |  |  |  |  | EPSG:32642 | geometry |
+| tables/image_inventory.csv | image_inventory | table column | dataset |  |  |  |  |  |  | str |
+| tables/image_inventory.csv | image_inventory | table column | series |  |  |  |  |  |  | str |
+| tables/image_inventory.csv | image_inventory | table column | sensor |  |  |  |  |  |  | str |
+| tables/image_inventory.csv | image_inventory | table column | image_id |  |  |  |  |  |  | str |
+| tables/image_inventory.csv | image_inventory | table column | acquired_utc |  |  |  |  |  |  | str |
+| tables/image_inventory.csv | image_inventory | table column | date |  |  |  |  |  |  | str |
+| tables/image_inventory.csv | image_inventory | table column | season |  |  |  |  |  |  | str |
+| tables/image_inventory.csv | image_inventory | table column | label_year |  |  |  |  |  |  | float64 |
+| tables/image_inventory.csv | image_inventory | table column | scene_cloud_pct |  |  |  |  |  |  | float64 |
+| tables/image_inventory.csv | image_inventory | table column | valid_fraction |  |  |  |  |  |  | float64 |
+| tables/image_inventory.csv | image_inventory | table column | compatible |  |  |  |  |  |  | bool |
+| tables/image_inventory.csv | image_inventory | table column | usable |  |  |  |  |  |  | bool |
+| tables/image_inventory.csv | image_inventory | table column | in_primary_series |  |  |  |  |  |  | bool |
+| tables/image_inventory.csv | image_inventory | table column | tile |  |  |  |  |  |  | str |
+| tables/image_inventory.csv | image_inventory | table column | orbit_pass |  |  |  |  |  |  | float64 |
+| tables/image_inventory.csv | image_inventory | table column | relative_orbit |  |  |  |  |  |  | float64 |
+| tables/image_inventory.csv | image_inventory | table column | polarisations |  |  |  |  |  |  | float64 |
+| tables/image_inventory.csv | image_inventory | table column | resolution_m |  |  |  |  |  |  | float64 |
+| tables/image_inventory.csv | image_inventory | table column | tide_status |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | series |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | season |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | label_year |  |  |  |  |  |  | int64 |
+| tables/inventory_summary.csv | inventory_summary | table column | window_start |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | window_end_exclusive |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | completeness |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | data_end |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | n_images |  |  |  |  |  |  | int64 |
+| tables/inventory_summary.csv | inventory_summary | table column | n_usable |  |  |  |  |  |  | int64 |
+| tables/inventory_summary.csv | inventory_summary | table column | median_valid_fraction |  |  |  |  |  |  | float64 |
+| tables/inventory_summary.csv | inventory_summary | table column | first_date |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | last_date |  |  |  |  |  |  | str |
+| tables/inventory_summary.csv | inventory_summary | table column | sensors |  |  |  |  |  |  | str |
+| tables/missing_observations.csv | missing_observations | table column | series |  |  |  |  |  |  | str |
+| tables/missing_observations.csv | missing_observations | table column | season |  |  |  |  |  |  | str |
+| tables/missing_observations.csv | missing_observations | table column | label_year |  |  |  |  |  |  | int64 |
+| tables/missing_observations.csv | missing_observations | table column | n_images |  |  |  |  |  |  | int64 |
+| tables/missing_observations.csv | missing_observations | table column | n_usable |  |  |  |  |  |  | int64 |
+| tables/missing_observations.csv | missing_observations | table column | reason |  |  |  |  |  |  | str |
 | tables/catalog_verification.csv | catalog_verification | table column | dataset |  |  |  |  |  |  | str |
 | tables/catalog_verification.csv | catalog_verification | table column | check |  |  |  |  |  |  | str |
 | tables/catalog_verification.csv | catalog_verification | table column | status |  |  |  |  |  |  | str |

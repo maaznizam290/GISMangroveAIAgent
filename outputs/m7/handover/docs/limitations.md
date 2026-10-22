@@ -1,6 +1,6 @@
 # Limitations
 
-Handover status: **FAIL**.
+Handover status: **INCOMPLETE**.
 
 ## Deliverables not available
 
@@ -21,13 +21,10 @@ Handover status: **FAIL**.
 * annual_metrics (m5/annual_metrics.csv)
 * site_metrics (m6/{series}_{year}/site_metrics.csv)
 * classification_accuracy (m4/{series}_{year}/classification_accuracy.csv)
-* image_inventory (m2/image_inventory.csv)
 * candidate_site_scores (m6/{series}_{year}/candidate_site_scores.csv)
 * confusion_matrix (m4/{series}_{year}/confusion_matrix.csv)
 * selection_criteria (m6/{series}_{year}/selection_criteria.csv)
 * site_comparison (m6/{series}_{year}/site_comparison.csv)
-* inventory_summary (m2/inventory_summary.csv)
-* missing_observations (m2/missing_observations.csv)
 * accuracy_report (m4/{series}_{year}/accuracy_report.md)
 * selection_report (m6/{series}_{year}/selection_report.md)
 * preview_quicklook (m3/preview/preview_quicklook.png)

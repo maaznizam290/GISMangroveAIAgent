@@ -1,9 +1,9 @@
 {
-  "status": "FAIL",
+  "status": "INCOMPLETE",
   "series": "landsat",
   "label_year": 2026,
-  "created_utc": "2026-10-22T06:42:22+00:00",
-  "git_revision": "b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty",
+  "created_utc": "2026-10-22T08:37:29+00:00",
+  "git_revision": "221e347ef815d3909d4c45251e1fbd17f24a0698-dirty",
   "missing_required": [
     "composite_dry",
     "composite_post_monsoon",
@@ -22,13 +22,10 @@
     "annual_metrics",
     "site_metrics",
     "classification_accuracy",
-    "image_inventory",
     "candidate_site_scores",
     "confusion_matrix",
     "selection_criteria",
     "site_comparison",
-    "inventory_summary",
-    "missing_observations",
     "accuracy_report",
     "selection_report",
     "preview_quicklook",
@@ -447,10 +444,21 @@
       "kind": "table",
       "required": true,
       "source": "m2/image_inventory.csv",
-      "target": null,
-      "status": "missing",
+      "target": "tables/image_inventory.csv",
+      "status": "delivered",
       "note": "",
-      "checks": []
+      "checks": [
+        {
+          "name": "table_columns",
+          "status": "PASS",
+          "detail": "tables/image_inventory.csv: columns ok"
+        },
+        {
+          "name": "table_identical",
+          "status": "PASS",
+          "detail": "tables/image_inventory.csv: 1722 rows, identical to source"
+        }
+      ]
     },
     {
       "id": "candidate_site_scores",
@@ -497,20 +505,42 @@
       "kind": "table",
       "required": true,
       "source": "m2/inventory_summary.csv",
-      "target": null,
-      "status": "missing",
+      "target": "tables/inventory_summary.csv",
+      "status": "delivered",
       "note": "",
-      "checks": []
+      "checks": [
+        {
+          "name": "table_columns",
+          "status": "PASS",
+          "detail": "tables/inventory_summary.csv: columns ok"
+        },
+        {
+          "name": "table_identical",
+          "status": "PASS",
+          "detail": "tables/inventory_summary.csv: 72 rows, identical to source"
+        }
+      ]
     },
     {
       "id": "missing_observations",
       "kind": "table",
       "required": true,
       "source": "m2/missing_observations.csv",
-      "target": null,
-      "status": "missing",
+      "target": "tables/missing_observations.csv",
+      "status": "delivered",
       "note": "",
-      "checks": []
+      "checks": [
+        {
+          "name": "table_columns",
+          "status": "PASS",
+          "detail": "tables/missing_observations.csv: columns ok"
+        },
+        {
+          "name": "table_identical",
+          "status": "PASS",
+          "detail": "tables/missing_observations.csv: 3 rows, identical to source"
+        }
+      ]
     },
     {
       "id": "catalog_verification",
@@ -638,14 +668,8 @@
       "source": "PyQGIS",
       "target": null,
       "status": "missing",
-      "note": "",
-      "checks": [
-        {
-          "name": "qgis_project",
-          "status": "FAIL",
-          "detail": "could not run PyQGIS with /usr/bin/python3.12: [WinError 2] The system cannot find the file specified"
-        }
-      ]
+      "note": "no PyQGIS interpreter found (qgis.python='/usr/bin/python3.12'); install QGIS and set QGIS_PYTHON or qgis.python in configs/handover.yaml",
+      "checks": []
     }
   ]
 }

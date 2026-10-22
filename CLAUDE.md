@@ -12,7 +12,8 @@
 - Do not start costly Earth Engine exports automatically. Do a small-area dry run first.
 
 ## Engineering
-- Python ≥ 3.12, uv-managed: `uv sync`, `uv run pytest`, `uv run ruff check src tests`,
+- Python ≥ 3.12, uv-managed: `uv sync --extra dashboard` (add `--system-certs` behind
+  TLS-inspecting antivirus/proxies), `uv run pytest`, `uv run ruff check src tests`,
   `uv run ruff format src tests`.
 - Network tests: `uv run pytest -m network`. Earth Engine tests are marked `ee`.
 - Distances and areas are computed in EPSG:32642 only.

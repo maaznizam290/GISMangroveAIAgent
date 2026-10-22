@@ -1,6 +1,6 @@
 # Handover validation: landsat 2026
 
-Status: **FAIL**
+Status: **INCOMPLETE**
 
 Missing required deliverables:
 
@@ -21,13 +21,10 @@ Missing required deliverables:
 * annual_metrics
 * site_metrics
 * classification_accuracy
-* image_inventory
 * candidate_site_scores
 * confusion_matrix
 * selection_criteria
 * site_comparison
-* inventory_summary
-* missing_observations
 * accuracy_report
 * selection_report
 * preview_quicklook
@@ -61,13 +58,13 @@ Missing required deliverables:
 | annual_metrics | table | yes | missing | 0/0 |  |
 | site_metrics | table | yes | missing | 0/0 |  |
 | classification_accuracy | table | yes | missing | 0/0 |  |
-| image_inventory | table | yes | missing | 0/0 |  |
+| image_inventory | table | yes | delivered | 2/2 |  |
 | candidate_site_scores | table | yes | missing | 0/0 |  |
 | confusion_matrix | table | yes | missing | 0/0 |  |
 | selection_criteria | table | yes | missing | 0/0 |  |
 | site_comparison | table | yes | missing | 0/0 |  |
-| inventory_summary | table | yes | missing | 0/0 |  |
-| missing_observations | table | yes | missing | 0/0 |  |
+| inventory_summary | table | yes | delivered | 2/2 |  |
+| missing_observations | table | yes | delivered | 2/2 |  |
 | catalog_verification | table | yes | delivered | 2/2 |  |
 | trend_tests | table | no | missing | 0/0 |  |
 | aoi_review | document | yes | delivered | 1/1 |  |
@@ -77,4 +74,4 @@ Missing required deliverables:
 | preview_quicklook | document | yes | missing | 0/0 |  |
 | model_metadata | document | yes | missing | 0/0 |  |
 | catalog_records | document | yes | delivered | 1/1 |  |
-| qgis_project | generated | yes | missing | 0/1 | could not run PyQGIS with /usr/bin/python3.12: [WinError 2] The system cannot find the file specified |
+| qgis_project | generated | yes | missing | 0/0 |  |
