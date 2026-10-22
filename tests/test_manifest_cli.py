@@ -42,11 +42,20 @@ def test_cli_bad_config_dir(tmp_path):
     assert result.exit_code == 2
 
 
-def test_later_milestones_do_not_pretend_to_run():
-    # export is still a placeholder (M7).
-    result = runner.invoke(app, ["export"])
-    assert result.exit_code == 3
-    assert "no processing was run" in result.output
+def test_every_milestone_command_is_registered():
+    names = {c.name for c in app.registered_commands}
+    assert {
+        "m1",
+        "catalog-check",
+        "inventory",
+        "preview",
+        "preprocess",
+        "classify",
+        "layers",
+        "select-sites",
+        "handover",
+        "dashboard",
+    } <= names
 
 
 def test_check_ee_without_project_fails_cleanly(monkeypatch):

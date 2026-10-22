@@ -20,8 +20,8 @@ must be discovered from validated maps.**
 | M4 | Random Forest baseline, independent and spatially separated validation, accuracy tables, validation gate | **Implemented; tested on mock data only.** Not run: no composites and no reference samples |
 | M5 | Separate mangrove, tidal-inundation, soil-salinity-proxy, freshwater-influence-proxy and field-salinity layers; trends | **Implemented; tested on mock data only.** Not run |
 | M6 | 500 m plots, Site A/B eligibility and ranking, refused until validation passes | **Implemented; tested on mock data only.** No sites have been selected |
-| M7 | GIS handover (COG/GPKG, QGIS project, data dictionary, methods) | Not started |
-| M8 | Streamlit dashboard on real outputs | Not started |
+| M7 | GIS handover: COG rasters, one GeoPackage, the five required tables, QGIS project with print layout, data dictionary, methods report, limitations, processing history; every file validated against its source | **Implemented; run on real data: INCOMPLETE** (all 41 checks on the delivered M1/M2 items pass; M3–M6 deliverables do not exist yet) |
+| M8 | Streamlit dashboard (overview, map explorer, trends, site comparison, validation, data and exports) | **Implemented; runs on the real outputs** (shows "not available yet" for stages that have not run) |
 
 See [docs/milestones.md](docs/milestones.md) for the full checklist and
 [docs/study_protocol.md](docs/study_protocol.md) for the method and the list of
@@ -87,11 +87,13 @@ Docker (untested in the build environment): `docker compose run --rm pipeline m1
 | `indus-delta water-frequency --year Y [--start]` | Annual Landsat water-frequency exports (gated) | yes, for `--start` |
 | `indus-delta layers --year Y` | Separate M5 layers; unavailable layers are reported | no |
 | `indus-delta trends` | `annual_metrics.csv`, `trend_tests.csv` | no |
-| `indus-delta select-sites --year Y` | Site A / Site B ranking; refused until validation passes and the rules are confirmed | no |
-| `indus-delta export` | Placeholder (M7); exit code 3 | |
+| `indus-delta select-sites --year Y` | Site A / Site B ranking with explicit eligibility and comparability criteria (`selection_criteria.csv`, `site_comparison.csv`); refused until validation passes and the rules are confirmed | no |
+| `indus-delta change --from-year A --to-year B` | Class transitions and mangrove gain/loss between two validated epochs | no |
+| `indus-delta handover --year Y` | Builds and validates the GIS handover package in `outputs/m7/handover/` | no (QGIS project needs PyQGIS) |
+| `indus-delta dashboard` | Launches the Streamlit dashboard on the outputs folder | no |
 
-Exit codes: 0 = pass or warn, 1 = failed check, 2 = invalid configuration,
-3 = not implemented, 4 = Earth Engine unavailable, 5 = refused by a gate.
+Exit codes: 0 = pass, warn or incomplete, 1 = failed check, 2 = invalid configuration,
+4 = Earth Engine unavailable, 5 = refused by a gate or missing inputs.
 
 Recommended order once credentials exist:
 `check-ee`, then `inventory`, then fix `sentinel1.orbit_pass` from `s1_orbit_summary.csv`,
@@ -134,6 +136,8 @@ No credentials are stored in the repository. `.env` is git-ignored.
   verification level each has reached (`pending`, `catalog_verified` or `verified`).
 * `configs/indices.yaml`: band-role mappings per sensor and index formulas, including the
   CMRI/NDWI convention.
+* `configs/handover.yaml`: deliverables (sources, required or optional, native resolution,
+  QGIS group and style).
 * `configs/classification.yaml`, `configs/layers.yaml`, `configs/site_selection.yaml`:
   classes, RF and validation settings, layer definitions and site rules. Acceptance criteria
   and site rules must be confirmed (`operator_confirmed: true`) before the gates pass.
@@ -166,10 +170,61 @@ uv run pytest -m ee          # authenticated Earth Engine tests (need EE_PROJECT
 uv run ruff check src tests
 ```
 
-## Dashboard
+## GIS handover (M7)
 
-The dashboard is planned for M8, once a functioning small-area run exists. Instructions for
-launching it and connecting it to outputs will be added here then.
+`uv run indus-delta handover --year 2026` writes `outputs/m7/handover/`:
+
+| Folder | Content |
+|---|---|
+| `rasters/` | Cloud Optimized GeoTIFFs (EPSG:32642, native grid, never upsampled), each carrying band names, units, nodata, layer type, validation status, source file and source SHA-256 |
+| `vectors/indus_delta_handover.gpkg` | AOI, reference point, samples, candidate plots, Site A, Site B, alternatives, reference water layers |
+| `tables/` | `annual_metrics.csv`, `site_metrics.csv`, `classification_accuracy.csv`, `image_inventory.csv`, `candidate_site_scores.csv`, plus supporting tables |
+| `qgis/` | `indus_delta_handover.qgz` (relative paths, styled layers in groups, "Handover overview" layout with legend, scale bar and source notes) and a PNG export of the layout |
+| `docs/` | methods report, data dictionary, limitations (with all unresolved assumptions), processing history, software versions, study protocol, uncertainty guide, run reports |
+| root | `handover_validation.md/json` (every check) and `handover_manifest.json` (SHA-256 of every file) |
+
+Every delivered file is checked against its source:
+
+* **Rasters:** CRS, dimensions, transform, no upsampling, nodata, structural COG validity
+  (`rio-cogeo`), required metadata, band names and units, identical pixel content.
+* **Vectors:** CRS, feature counts, geometry validity, fields, and 500 m plot size.
+* **Tables:** required columns and byte-identical copies.
+* **QGIS project:** reopened in a clean QGIS session, which must report every layer valid,
+  EPSG:32642, relative paths and the expected layout items.
+
+The handover is **COMPLETE** only when every required deliverable is present and every
+check passes.
+
+The QGIS project is built with PyQGIS, which runs outside the project environment. On
+Ubuntu: `sudo apt install python3-qgis qgis-providers`, then set `qgis.python` in
+`configs/handover.yaml` (default `/usr/bin/python3.12`). Without it the project is reported
+missing and the handover stays INCOMPLETE.
+
+## Dashboard (M8)
+
+```bash
+uv sync --extra dashboard
+uv run indus-delta dashboard                       # http://localhost:8501
+uv run indus-delta dashboard --out-dir /path/to/outputs --port 8502
+```
+
+The dashboard reads only the files the pipeline wrote, in `outputs/` by default
+(environment variables `INDUS_DELTA_OUTPUTS` and `INDUS_DELTA_CONFIGS` override this). Run
+the pipeline commands first; each tab shows "not available yet" for stages that have not
+produced output.
+
+| Tab | Shows |
+|---|---|
+| Overview | Periods, processing and validation status per milestone, reference-point and AOI warnings, catalog verification, image availability |
+| Map explorer | AOI, reference point, candidate sites and one raster layer at a time, with legend, layer type (classified/proxy/measured), status, units and native pixel size; side-by-side years when several epochs exist |
+| Historical trends | Mangrove area and cover per year: Landsat and Sentinel as separate series, unvalidated years hollow, missing years marked; trend tests; gain and loss |
+| Site comparison | Choose Site A and Site B (selected or alternatives); metrics in separate panels, class proportions, exclusion reasons |
+| Classification validation | Gate status, overall accuracy with CI, kappa, per-class user's/producer's accuracy, confusion matrix, sample counts |
+| Data & exports | Download CSV, GeoTIFF and GeoPackage outputs |
+
+The map uses Plotly's MapLibre renderer with a blank base, so it works offline. The
+optional OpenStreetMap basemap needs internet. Controls change the display only; they
+never rerun satellite processing.
 
 ## Licence and data credits
 

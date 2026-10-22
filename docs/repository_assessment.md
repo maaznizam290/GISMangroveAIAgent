@@ -13,7 +13,7 @@ Classes: **1** production dependency, **2** scientific or implementation referen
 | Repository | Class | Licence | Latest release (PyPI) | Python | Use in this project |
 |---|---|---|---|---|---|
 | google/earthengine-api | 1 | Apache-2.0 | 1.7.49 (2026-10-19) | ≥3.11 | Main processing engine. Installed; authentication check in M1, processing from M2 |
-| gee-community/geemap | 1 (dashboard) | MIT | 0.38.9 (2026-10-01) | ≥3.12 | Interactive maps for the dashboard (M8). Optional extra (locked, not installed by default) |
+| gee-community/geemap | 3 | MIT | 0.38.9 (2026-10-01) | ≥3.12 | **Not used.** Its value is live Earth Engine layers (needs credentials); the dashboard shows local pipeline outputs with Plotly MapLibre instead |
 | geopandas/geopandas | 1 | BSD-3-Clause | 1.2.0 (2026-09-28) | ≥3.11 | Vector I/O and GeoPackage (M1) |
 | rasterio/rasterio | 1 | BSD-3-Clause | 1.5.2 (2026-09-30) | ≥3.12 | Raster I/O and COG export (M1). Bundles GDAL 3.12.2 in its wheel |
 | OSGeo/gdal | 1 (indirect) | MIT | 3.13.3 (2026-08-18) | ≥3.8 | Used through the rasterio and pyogrio wheels. The PyPI `GDAL` package is source-only, so it is not installed directly |
@@ -31,7 +31,14 @@ Classes: **1** production dependency, **2** scientific or implementation referen
 | pyTMD/pyTMD | 3 | MIT | 3.0.9 (2026-07-02) | ~=3.9 | Candidate tide-prediction library (assumption U10). Tide-model *files* have their own licences, to be checked separately |
 | apache/airflow | 3 | Apache-2.0 (project licence; not re-checked) | not checked | not checked | Later-stage scheduling only. Not an MVP dependency |
 | docker/compose | 3 | Apache-2.0 (project licence; not re-checked) | n/a | n/a | `compose.yaml` convenience only |
-| randyzwitch/streamlit-folium | 3 | MIT | 0.27.4 (2026-08-03) | ≥3.11 | Possible map widget for the dashboard |
+| randyzwitch/streamlit-folium | 3 | MIT | 0.27.4 (2026-08-03) | ≥3.11 | **Tried and dropped:** folium loads Leaflet from a CDN at view time, which fails offline (and in the build sandbox) |
+
+## Added during M7–M8
+
+| Component | Class | Licence | Version | Use |
+|---|---|---|---|---|
+| cogeotiff/rio-cogeo | 1 | BSD-3-Clause | 7.0.4 (Python ≥ 3.11) | Structural COG validation of handover rasters |
+| QGIS / PyQGIS (Ubuntu `python3-qgis`) | 1 (optional system dependency) | GPL-2.0+ | 3.34.4 | Builds and reopens the handover QGIS project in a separate process; not imported by the package |
 
 ## Python version decision
 

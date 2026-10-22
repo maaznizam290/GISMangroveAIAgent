@@ -96,6 +96,51 @@ Still open from M1 (operator):
 - [ ] **Run. Blocked on M4 and M5**
 - [ ] Operator: confirm the rules and weights in `configs/site_selection.yaml`
 
+## M7: GIS handover (implemented; real run INCOMPLETE)
+
+- [x] M6 extended: explicit `selection_criteria.csv` (every eligibility and comparability
+      rule, threshold and confirmation state) and `site_comparison.csv` (Site A vs Site B
+      metrics and differences)
+- [x] Change layer: class transitions and mangrove gain/loss between validated epochs
+- [x] `configs/handover.yaml`: deliverable registry (required or optional, native resolution)
+- [x] COG rasters with provenance tags; one GeoPackage; required tables; generated data
+      dictionary, methods report, limitations, processing history, software versions;
+      SHA-256 manifest
+- [x] QGIS project built with PyQGIS 3.34 (styled groups, print layout with map, legend,
+      scale bar and source notes, relative paths), reopened and validated in a clean session
+- [x] Validation of every delivered file against its source (CRS, dimensions, transform,
+      no upsampling, nodata, structural COG validity, metadata, units, identical content;
+      vector CRS, counts, validity, plot size; table columns and identity)
+- [x] **Real run 2026-10-22: INCOMPLETE.** The delivered M1/M2 items (JRC review raster,
+      AOI layers, catalog tables, AOI review) and the QGIS project pass all 41 checks.
+      Every M3–M6 deliverable is missing because those stages have not run
+- [x] Mock pipeline: COMPLETE, with all QGIS checks passing (tests)
+
+## M8: dashboard (implemented)
+
+- [x] Six tabs; reads pipeline outputs only; "not available yet" states; warnings for
+      proxies, unvalidated layers, the provisional reference point and the unconfirmed AOI
+- [x] Charts: Landsat and Sentinel separate, unvalidated hollow, missing years marked;
+      small multiples for site metrics (no shared or dual axis); validated categorical
+      palette (blue, orange, aqua); table views beside charts
+- [x] Site selection updates metrics, class proportions and exclusion reasons
+- [x] Tests: data loading, chart calculations, site filtering and class proportions, plus
+      `AppTest` runs on empty and mock outputs; rendered and inspected in Chromium
+
+## Errors and findings during M7–M8
+
+- **The COG check was too weak.** The `LAYOUT=COG` tag survives edits that break the
+  layout, so it was replaced by structural validation with `rio-cogeo`.
+- **The QGIS layout had defects the checks did not catch:** the map overran the notes,
+  8-digit hex colours were misread, and the legend listed hidden layers. They were found by
+  rendering the layout and fixed (`zoomToExtent`, `r,g,b,a` colours, a map-filtered legend).
+- **The folium map needed a CDN at view time.** It failed in the sandbox and would fail
+  offline, so the map was switched to Plotly MapLibre and folium dependencies were dropped.
+- **Chart edge cases:** a series with no validated values got an empty legend entry, and a
+  validated year without a value was drawn. Both fixed and tested.
+- **Stray output folder:** `classify` created its output folder before checking its inputs.
+  Fixed and tested.
+
 ## Errors and findings during M4–M6
 
 - **Spatial separation can starve training.** With validation points spread across the

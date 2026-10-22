@@ -141,7 +141,6 @@ def run_classification(
 ) -> tuple[str, list[Check], Path]:
     cl = cfgs.classification
     out = epoch_dir(out_root, series, year)
-    out.mkdir(parents=True, exist_ok=True)
     aoi = aoi_mod.build_aoi(cfgs.project)
     checks: list[Check] = []
 
@@ -167,6 +166,8 @@ def run_classification(
 
     # ---- features and model
     stack = load_stack(cfgs, series, year)
+    # Inputs are all present; only now create the output directory.
+    out.mkdir(parents=True, exist_ok=True)
     if stack.partial_seasons:
         checks.append(
             Check(

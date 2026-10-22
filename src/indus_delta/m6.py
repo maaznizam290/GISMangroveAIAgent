@@ -235,6 +235,78 @@ def choose_pair(scored: pd.DataFrame, plots: gpd.GeoDataFrame, cfgs: Configs) ->
     }
 
 
+def criteria_table(cfgs: Configs) -> pd.DataFrame:
+    """Every eligibility and comparability rule, with its threshold and confirmation state."""
+    ss = cfgs.site_selection
+    a, b, c = ss.site_a, ss.site_b, ss.comparability
+    rows = [
+        ("both", "eligibility", "valid_pixel_fraction", ">=", ss.min_valid_pixel_fraction),
+        ("site_a", "eligibility", "mangrove_cover", "<=", a.max_mangrove_cover),
+        ("site_a", "eligibility", "eligible_bare_fraction", ">=", a.min_eligible_bare_fraction),
+        ("site_a", "eligibility", "salinity_percentile_mean", ">=", a.min_salinity_percentile_mean),
+        ("site_b", "eligibility", "mangrove_cover", ">=", b.min_mangrove_cover),
+        ("site_b", "eligibility", "high_vigour_fraction", ">=", b.min_high_vigour_fraction),
+        ("site_b", "eligibility", "channel_distance_km_min", "<=", b.max_channel_distance_km),
+        (
+            "pair",
+            "comparability (preferred)",
+            "inundation_frequency_difference",
+            "<=",
+            c.max_inundation_difference,
+        ),
+        ("pair", "comparability (required)", "separation_km", ">=", c.min_separation_km),
+    ]
+    rows += [("site_a", "score weight", k, "=", v) for k, v in a.weights.items()]
+    rows += [("site_b", "score weight", k, "=", v) for k, v in b.weights.items()]
+    df = pd.DataFrame(rows, columns=["applies_to", "kind", "metric", "operator", "value"])
+    df["plot_size_m"] = ss.plot_size_m
+    df["operator_confirmed"] = ss.operator_confirmed
+    return df
+
+
+COMPARISON_METRICS = (
+    "mangrove_cover",
+    "salinity_percentile_mean",
+    "eligible_bare_fraction",
+    "high_vigour_fraction",
+    "inundation_frequency_mean",
+    "n_valid_observations_mean",
+    "channel_distance_km_min",
+    "classification_margin_mean",
+    "valid_pixel_fraction",
+)
+
+
+def site_comparison(scored: pd.DataFrame, pair: dict | None, cfgs: Configs) -> pd.DataFrame:
+    """Site A vs Site B side by side; differences are reported, not hidden."""
+    if not pair:
+        return pd.DataFrame(columns=["metric", "site_a", "site_b", "difference", "note"])
+    a = scored.set_index("plot_id").loc[pair["site_a"]]
+    b = scored.set_index("plot_id").loc[pair["site_b"]]
+    lim = cfgs.site_selection.comparability.max_inundation_difference
+    rows = []
+    for m in COMPARISON_METRICS:
+        va, vb = a.get(m, np.nan), b.get(m, np.nan)
+        note = ""
+        if m == "inundation_frequency_mean" and np.isfinite(va) and np.isfinite(vb):
+            note = (
+                "within preferred limit"
+                if abs(va - vb) <= lim
+                else f"exceeds preferred limit {lim}"
+            )
+        rows.append({"metric": m, "site_a": va, "site_b": vb, "difference": va - vb, "note": note})
+    rows.append(
+        {
+            "metric": "separation_km",
+            "site_a": np.nan,
+            "site_b": np.nan,
+            "difference": pair["separation_km"],
+            "note": "centre-to-centre",
+        }
+    )
+    return pd.DataFrame(rows)
+
+
 def run_site_selection(
     cfgs: Configs, out_root: Path, series: str, year: int, command: str = "indus-delta select-sites"
 ) -> tuple[str, list[Check], Path]:
@@ -316,6 +388,10 @@ def run_site_selection(
     site_metrics = pd.concat(site_rows, ignore_index=True) if site_rows else pd.DataFrame()
     sm_path = out / "site_metrics.csv"
     site_metrics.to_csv(sm_path, index=False)
+    crit_path = out / "selection_criteria.csv"
+    criteria_table(cfgs).to_csv(crit_path, index=False)
+    cmp_path = out / "site_comparison.csv"
+    site_comparison(scored, choice["pair"], cfgs).to_csv(cmp_path, index=False)
     gpkg = write_layers(out / "sites.gpkg", layers_out)
     checks.append(
         Check("selection", "PASS" if status == "SELECTED" else "WARN", json.dumps(choice))
@@ -330,7 +406,7 @@ def run_site_selection(
         command=command,
         config_sha256=cfgs.sha256,
         inputs=[{"layers": sorted(have), "validation_gate": gate["config_sha256"]}],
-        outputs=[scores_path, sm_path, gpkg, report],
+        outputs=[scores_path, sm_path, crit_path, cmp_path, gpkg, report],
         status=status,
     )
     return status, checks, out

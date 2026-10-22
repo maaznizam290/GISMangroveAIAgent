@@ -1,0 +1,73 @@
+# M7 GIS handover package (schema: indus_delta.config.HandoverConfig)
+# Sources are relative to the outputs root; {series}, {year} and {from_year} are filled in
+# for the handover epoch; {composites_dir} is classification.composites_dir. "required" items must exist for the handover to be COMPLETE.
+config_version: "0.1.0"
+package_dir: m7/handover
+vector_package: indus_delta_handover.gpkg
+write_shapefiles: false
+
+qgis:
+  enabled: true
+  # PyQGIS runs outside the project environment (system Python with python3-qgis).
+  python: /usr/bin/python3.12
+  project_name: indus_delta_handover.qgz
+
+rasters:
+  - {id: jrc_occurrence_review, source: m1/jrc_gsw14_occurrence_review_epsg32642_30m.tif, required: true, native_resolution_m: 30, group: Inputs, style: occurrence,
+     layer_type: reference, status: external_product, units: "percent of valid observations", description: "JRC Global Surface Water v1.4 occurrence 1984-2021 (M1 AOI review extent)"}
+  - {id: composite_dry, source: "{composites_dir}/{series}_dry_{year}*_epsg32642_*m.tif", required: true, native_resolution_m: 30, group: Inputs, style: none,
+     layer_type: composite, status: preprocessed, units: "reflectance (0-1); indices unitless; valid_obs count", description: "Dry-season median composite (bands, indices, valid_obs)"}
+  - {id: composite_post_monsoon, source: "{composites_dir}/{series}_post_monsoon_{year}*_epsg32642_*m.tif", required: true, native_resolution_m: 30, group: Inputs, style: none,
+     layer_type: composite, status: preprocessed, units: "reflectance (0-1); indices unitless; valid_obs count", description: "Post-monsoon median composite (bands, indices, valid_obs)"}
+  - {id: landcover, source: "m4/{series}_{year}/landcover.tif", required: true, native_resolution_m: 30, group: Classification, style: landcover}
+  - {id: classification_uncertainty, source: "m4/{series}_{year}/classification_uncertainty.tif", required: true, native_resolution_m: 30, group: Classification, style: margin}
+  - {id: mangrove, source: "m5/{series}_{year}/mangrove.tif", required: true, native_resolution_m: 30, group: Analytical layers, style: mangrove}
+  - {id: tidal_inundation, source: "m5/{series}_{year}/tidal_inundation.tif", required: true, native_resolution_m: 30, group: Analytical layers, style: frequency}
+  - {id: soil_salinity_proxy, source: "m5/{series}_{year}/soil_salinity_proxy.tif", required: true, native_resolution_m: 30, group: Analytical layers, style: percentile}
+  - {id: freshwater_influence_proxy, source: "m5/{series}_{year}/freshwater_influence_proxy.tif", required: true, native_resolution_m: 30, group: Analytical layers, style: distance}
+  - {id: mangrove_change, source: "m5/change_{series}_{from_year}_{year}.tif", required: false, native_resolution_m: 30, group: Analytical layers, style: change}
+
+vectors:
+  - {id: reference_location, source: m1/m1_aoi.gpkg, layer: reference_location, required: true, group: Reference, style: point}
+  - {id: aoi_primary, source: m1/m1_aoi.gpkg, layer: aoi_primary, required: true, group: Reference, style: aoi}
+  - {id: aoi_alternatives, source: m1/m1_aoi.gpkg, layer: aoi_alternatives, required: false, group: Reference, style: aoi_alt}
+  - {id: jrc_water_components, source: m1/m1_aoi.gpkg, layer: jrc_water_components_touching_primary_aoi, required: false, group: Reference, style: water}
+  - {id: coarse_indus_centerline, source: m1/m1_aoi.gpkg, layer: coarse_indus_centerline, required: false, group: Reference, style: river}
+  - {id: training_samples, source: "m4/{series}_{year}/samples.gpkg", layer: training_samples, required: true, group: Classification, style: point}
+  - {id: validation_samples, source: "m4/{series}_{year}/samples.gpkg", layer: validation_samples, required: true, group: Classification, style: point_val}
+  - {id: candidate_plots, source: "m6/{series}_{year}/sites.gpkg", layer: candidate_plots, required: true, group: Sites, style: plots}
+  - {id: site_a, source: "m6/{series}_{year}/sites.gpkg", layer: site_a, required: true, group: Sites, style: site_a}
+  - {id: site_b, source: "m6/{series}_{year}/sites.gpkg", layer: site_b, required: true, group: Sites, style: site_b}
+  - {id: water_salinity_field, source: "m5/{series}_{year}/water_salinity_field.gpkg", layer: water_salinity_field, required: false, group: Reference, style: point}
+
+tables:
+  - {id: annual_metrics, source: m5/annual_metrics.csv, required: true, columns: [series, label_year, mangrove_area_km2, validation_status]}
+  - {id: site_metrics, source: "m6/{series}_{year}/site_metrics.csv", required: true, columns: [role, plot_id]}
+  - {id: classification_accuracy, source: "m4/{series}_{year}/classification_accuracy.csv", required: true, columns: [class_name, users_accuracy, producers_accuracy, f1, iou]}
+  - {id: image_inventory, source: m2/image_inventory.csv, required: true, columns: [dataset, image_id, date, season, label_year, valid_fraction, usable]}
+  - {id: candidate_site_scores, source: "m6/{series}_{year}/candidate_site_scores.csv", required: true, columns: [plot_id, site_a_eligible, site_a_exclusion_reasons, site_b_eligible, site_b_exclusion_reasons]}
+  - {id: confusion_matrix, source: "m4/{series}_{year}/confusion_matrix.csv", required: true, columns: []}
+  - {id: selection_criteria, source: "m6/{series}_{year}/selection_criteria.csv", required: true, columns: [applies_to, metric, operator, value]}
+  - {id: site_comparison, source: "m6/{series}_{year}/site_comparison.csv", required: true, columns: [metric, site_a, site_b, difference]}
+  - {id: inventory_summary, source: m2/inventory_summary.csv, required: true, columns: [series, season, label_year, n_usable, completeness]}
+  - {id: missing_observations, source: m2/missing_observations.csv, required: true, columns: [series, season, label_year, reason]}
+  - {id: catalog_verification, source: m2/catalog_verification.csv, required: true, columns: [dataset, check, status, detail]}
+  - {id: trend_tests, source: m5/trend_tests.csv, required: false, columns: []}
+
+documents:
+  - {id: aoi_review, source: m1/m1_aoi_review.md, required: true}
+  - {id: aoi_preview_map, source: m1/m1_aoi_preview.png, required: true}
+  - {id: accuracy_report, source: "m4/{series}_{year}/accuracy_report.md", required: true}
+  - {id: selection_report, source: "m6/{series}_{year}/selection_report.md", required: true}
+  - {id: preview_quicklook, source: m3/preview/preview_quicklook.png, required: true}
+  - {id: model_metadata, source: "m4/{series}_{year}/model/random_forest_metadata.json", required: true}
+  - {id: catalog_records, source: m2/catalog_records.json, required: true}
+
+# Colours for the land-cover classes (QGIS paletted renderer).
+landcover_colours:
+  mangrove: "#1b7837"
+  water: "#2166ac"
+  mudflat: "#bf812d"
+  bare_saline_flat_candidate: "#f6e8c3"
+  non_mangrove_vegetation: "#a6dba0"
+  built_up: "#d6604d"

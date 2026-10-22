@@ -84,15 +84,6 @@ def m1(
     raise typer.Exit(1 if result.status == "FAIL" else 0)
 
 
-def _later(milestone: str) -> None:
-    typer.secho(
-        f"Not implemented yet (planned for {milestone}); no processing was run.",
-        fg="yellow",
-        err=True,
-    )
-    raise typer.Exit(3)
-
-
 def _ee_or_exit(project: str | None) -> None:
     from indus_delta.ee_auth import EEUnavailableError, initialize
 
@@ -397,6 +388,24 @@ def trends(config_dir: Path = ConfigDir, out_dir: Path = OutDir) -> None:
     )
 
 
+@app.command("change")
+def change(
+    config_dir: Path = ConfigDir,
+    out_dir: Path = OutDir,
+    series: str = Series,
+    from_year: int = typer.Option(..., "--from-year"),
+    to_year: int = typer.Option(..., "--to-year"),
+) -> None:
+    """[M5] Class transitions and mangrove gain/loss between two validated epochs."""
+    from indus_delta.m5 import run_change
+
+    cfgs = _load(config_dir)
+    path, summary = _gated(
+        run_change, cfgs, out_dir or cfgs.project.project.output_dir, series, from_year, to_year
+    )
+    typer.echo(f"{path}: {summary}")
+
+
 @app.command("select-sites")
 def select_sites(
     config_dir: Path = ConfigDir, out_dir: Path = OutDir, series: str = Series, year: int = Year
@@ -414,7 +423,62 @@ def select_sites(
     typer.echo(f"\nSelection outcome: {status}. Files in {path}")
 
 
-@app.command("export")
-def export() -> None:
-    """[M7] GIS handover package."""
-    _later("M7")
+@app.command("handover")
+def handover(
+    config_dir: Path = ConfigDir, out_dir: Path = OutDir, series: str = Series, year: int = Year
+) -> None:
+    """[M7] Build and validate the GIS handover package (COG, GeoPackage, tables, QGIS
+    project, reports). Status COMPLETE only when every required deliverable is present and
+    every check passes."""
+    from indus_delta.handover import build_handover
+
+    cfgs = _load(config_dir)
+    status, items, pkg = build_handover(
+        cfgs, out_dir or cfgs.project.project.output_dir, series, year
+    )
+    for it in items:
+        bad = [c for c in it.checks if c.status == "FAIL"]
+        mark = (
+            "FAIL"
+            if bad
+            else ("ok" if it.status == "delivered" else "MISSING" if it.required else "absent")
+        )
+        typer.echo(f"[{mark}] {it.kind:9s} {it.id}" + (f": {bad[0].detail}" if bad else ""))
+    typer.echo(f"\nHandover status: {status}. Package: {pkg} (see handover_validation.md)")
+    raise typer.Exit({"COMPLETE": 0, "INCOMPLETE": 0, "FAIL": 1}[status])
+
+
+@app.command("dashboard")
+def dashboard(
+    config_dir: Path = ConfigDir,
+    out_dir: Path = OutDir,
+    port: int = typer.Option(8501, "--port"),
+) -> None:
+    """[M8] Launch the Streamlit dashboard on the pipeline outputs (display only)."""
+    import os
+    import subprocess
+    import sys
+
+    cfgs = _load(config_dir)
+    env = {
+        **os.environ,
+        "INDUS_DELTA_OUTPUTS": str(out_dir or cfgs.project.project.output_dir),
+        "INDUS_DELTA_CONFIGS": str(config_dir),
+    }
+    app_path = Path(__file__).with_name("dashboard") / "app.py"
+    raise typer.Exit(
+        subprocess.call(
+            [
+                sys.executable,
+                "-m",
+                "streamlit",
+                "run",
+                str(app_path),
+                "--server.port",
+                str(port),
+                "--server.headless",
+                "true",
+            ],
+            env=env,
+        )
+    )

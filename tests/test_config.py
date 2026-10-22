@@ -18,13 +18,17 @@ def test_repository_configs_validate(cfgs):
     assert cfgs.project.crs.analysis_epsg == 32642
     assert cfgs.project.aoi.mode == "buffer"
     assert set(cfgs.sha256) == {
-        "project.yaml",
-        "datasets.yaml",
-        "indices.yaml",
-        "preprocessing.yaml",
-        "classification.yaml",
-        "layers.yaml",
-        "site_selection.yaml",
+        f"{n}.yaml"
+        for n in (
+            "project",
+            "datasets",
+            "indices",
+            "preprocessing",
+            "classification",
+            "layers",
+            "site_selection",
+            "handover",
+        )
     }
     assert len(cfgs.combined_sha256()) == 64
 

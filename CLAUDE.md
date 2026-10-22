@@ -29,6 +29,10 @@
   `m5.py` (layers), `trends.py`, `m6.py` (site selection), `layer_io.py` (provenance tags)
 - Never bypass the validation gate or edit layer `derived_from` tags by hand; never create
   reference samples or freshwater sources.
+- M7–M8: `handover.py` (package and validation), `qgis_builder.py` (standalone PyQGIS script,
+  run with the system Python; must not import indus_delta), `dashboard/` (Streamlit app
+  reading outputs only; `data.py` and `charts.py` are pure and tested)
+- The dashboard must never show values the pipeline did not write.
 - `src/indus_delta/earthengine/`: all Earth Engine calls (prep, composite, inventory, download)
 - Full-scale processing must go through the gate (`m3_export.check_preconditions`); never
   bypass it or start exports without `--start`.

@@ -18,6 +18,7 @@ dependencies = [
     "geopandas>=1.1,<2",
     "pyogrio>=0.11,<1",
     "rasterio>=1.4,<2",
+    "rio-cogeo>=7.0,<8",
     "matplotlib>=3.10,<4",
     "typer>=0.16,<1",
     "earthengine-api>=1.6,<2",
@@ -26,7 +27,7 @@ dependencies = [
 [project.optional-dependencies]
 # Later milestones. Pinned in uv.lock, installed with `uv sync --extra <name>`; untested in M1.
 classification = ["scikit-learn>=1.7,<2"]
-dashboard = ["streamlit>=1.50,<2", "plotly>=6,<8", "geemap>=0.36,<1", "streamlit-folium>=0.25,<1"]
+dashboard = ["streamlit>=1.50,<2", "plotly>=6,<8"]
 
 [project.scripts]
 indus-delta = "indus_delta.cli:app"

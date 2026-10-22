@@ -162,3 +162,22 @@ def test_report_explains_comparability_tradeoff(full_run):
     report = (sel[2] / "selection_report.md").read_text()
     # MOCK scene: the strongest Site A plots flood far less often than the mangrove plots.
     assert "comparability preference applied" in report
+
+
+def test_criteria_and_comparison_tables(full_run):
+    *_, sel = full_run
+    crit = pd.read_csv(sel[2] / "selection_criteria.csv")
+    assert {"site_a", "site_b", "pair", "both"} <= set(crit.applies_to)
+    assert crit["operator_confirmed"].all()
+    cmp_ = pd.read_csv(sel[2] / "site_comparison.csv").set_index("metric")
+    row = cmp_.loc["inundation_frequency_mean"]
+    assert row.difference == pytest.approx(row.site_a - row.site_b)
+    assert cmp_.loc["separation_km", "difference"] >= 1.0
+
+
+def test_classify_does_not_create_output_without_inputs(tmp_path, cfgs):
+    from indus_delta.samples import SamplesUnavailable
+
+    with pytest.raises(SamplesUnavailable):
+        run_classification(cfgs, tmp_path, "landsat", 2026)
+    assert not (tmp_path / "m4").exists()

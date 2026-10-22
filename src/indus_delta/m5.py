@@ -467,3 +467,63 @@ def composite_exists(cfgs: Configs, series: str, season: str, year: int) -> bool
         return True
     except FileNotFoundError:
         return False
+
+
+# --------------------------------------------------------------------------- change
+
+
+def change_layers(
+    lc_from: np.ndarray, lc_to: np.ndarray, mangrove_code: int, nodata_class: int
+) -> dict[str, np.ndarray]:
+    """Class transitions (from*10 + to) and mangrove gain (+1) / loss (-1) / stable (0)."""
+    valid = (lc_from != nodata_class) & (lc_to != nodata_class)
+    transition = np.where(valid, lc_from * 10 + lc_to, np.nan)
+    m0, m1 = lc_from == mangrove_code, lc_to == mangrove_code
+    gain_loss = np.where(valid, m1.astype(int) - m0.astype(int), np.nan)
+    return {"class_transition": transition, "mangrove_gain_loss": gain_loss}
+
+
+def run_change(
+    cfgs: Configs, out_root: Path, series: str, from_year: int, to_year: int
+) -> tuple[Path, dict]:
+    """Change between two validated epochs on the same grid."""
+    from indus_delta.m4 import epoch_dir, require_validation_pass
+
+    for y in (from_year, to_year):
+        require_validation_pass(cfgs, out_root, series, y)
+    cl = cfgs.classification
+    a, ga, _ = read_layer(epoch_dir(out_root, series, from_year) / "landcover.tif")
+    b, gb, _ = read_layer(epoch_dir(out_root, series, to_year) / "landcover.tif")
+    if not ga.same_as(gb):
+        raise LayerUnavailable("the two land-cover maps are on different grids")
+    la = np.nan_to_num(a["landcover_class"], nan=cl.nodata_class).astype(int)
+    lb = np.nan_to_num(b["landcover_class"], nan=cl.nodata_class).astype(int)
+    bands = change_layers(la, lb, cl.code_of("mangrove"), cl.nodata_class)
+    px = ga.pixel_area_m2 / 1e6
+    summary = {
+        "from_year": from_year,
+        "to_year": to_year,
+        "mangrove_gain_km2": float((bands["mangrove_gain_loss"] == 1).sum() * px),
+        "mangrove_loss_km2": float((bands["mangrove_gain_loss"] == -1).sum() * px),
+        "mangrove_stable_km2": float(
+            ((la == cl.code_of("mangrove")) & (lb == cl.code_of("mangrove"))).sum() * px
+        ),
+    }
+    path = write_layer(
+        out_root / "m5" / f"change_{series}_{from_year}_{to_year}.tif",
+        bands,
+        ga,
+        LayerMeta(
+            "mangrove_change",
+            "derived",
+            "derived_from_validated_maps",
+            f"Land-cover change {from_year} to {to_year}: class_transition = "
+            "from_code*10 + to_code; mangrove_gain_loss = +1 gain, -1 loss, "
+            "0 no change. Errors of both maps compound in the change map.",
+            derived_from=[f"landcover_{series}_{from_year}", f"landcover_{series}_{to_year}"],
+            units={"class_transition": "code", "mangrove_gain_loss": "code"},
+            extra={k: str(v) for k, v in summary.items()},
+        ),
+        nodata=NODATA_F,
+    )
+    return path, summary

@@ -657,6 +657,75 @@ class SiteSelectionConfig(_Strict):
         return self
 
 
+# --------------------------------------------------------------------------- handover.yaml
+
+
+class QgisConfig(_Strict):
+    enabled: bool
+    python: str
+    project_name: str
+
+
+class RasterDeliverable(_Strict):
+    id: str
+    source: str
+    required: bool
+    native_resolution_m: Annotated[float, Field(gt=0)]
+    group: str
+    style: str
+    layer_type: str | None = None
+    status: str | None = None
+    units: str | None = None
+    description: str | None = None
+
+
+class VectorDeliverable(_Strict):
+    id: str
+    source: str
+    layer: str
+    required: bool
+    group: str
+    style: str
+
+
+class TableDeliverable(_Strict):
+    id: str
+    source: str
+    required: bool
+    columns: list[str]
+
+
+class DocumentDeliverable(_Strict):
+    id: str
+    source: str
+    required: bool
+
+
+class HandoverConfig(_Strict):
+    config_version: str
+    package_dir: Path
+    vector_package: str
+    write_shapefiles: bool
+    qgis: QgisConfig
+    rasters: list[RasterDeliverable]
+    vectors: list[VectorDeliverable]
+    tables: list[TableDeliverable]
+    documents: list[DocumentDeliverable]
+    landcover_colours: dict[str, str]
+
+    @model_validator(mode="after")
+    def _unique_ids(self) -> HandoverConfig:
+        ids = [
+            d.id
+            for group in (self.rasters, self.vectors, self.tables, self.documents)
+            for d in group
+        ]
+        dup = {i for i in ids if ids.count(i) > 1}
+        if dup:
+            raise ValueError(f"duplicate deliverable ids {sorted(dup)}")
+        return self
+
+
 # --------------------------------------------------------------------------- loading
 
 
@@ -668,6 +737,7 @@ class Configs(_Strict):
     classification: ClassificationConfig
     layers: LayersConfig
     site_selection: SiteSelectionConfig
+    handover: HandoverConfig
     sha256: dict[str, str]
 
     def combined_sha256(self) -> str:
@@ -704,6 +774,7 @@ def load_configs(config_dir: Path = DEFAULT_CONFIG_DIR) -> Configs:
         "classification": config_dir / "classification.yaml",
         "layers": config_dir / "layers.yaml",
         "site_selection": config_dir / "site_selection.yaml",
+        "handover": config_dir / "handover.yaml",
     }
     cfgs = Configs(
         project=_validate(ProjectConfig, paths["project"]),
@@ -713,6 +784,7 @@ def load_configs(config_dir: Path = DEFAULT_CONFIG_DIR) -> Configs:
         classification=_validate(ClassificationConfig, paths["classification"]),
         layers=_validate(LayersConfig, paths["layers"]),
         site_selection=_validate(SiteSelectionConfig, paths["site_selection"]),
+        handover=_validate(HandoverConfig, paths["handover"]),
         sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths.values()},
     )
     _cross_check(cfgs)
@@ -774,5 +846,9 @@ def _cross_check(cfgs: Configs) -> None:
         errors.append("freshwater_influence_proxy.turbidity_band is not a composite band")
     if ly.tidal_inundation.optical_index not in idx.indices:
         errors.append("tidal_inundation.optical_index is not a configured index")
+    lc_names = set(cfgs.handover.landcover_colours)
+    trainable = {c.name for c in cl.classes if c.code != cl.nodata_class}
+    if lc_names != trainable:
+        errors.append(f"handover.landcover_colours must cover exactly {sorted(trainable)}")
     if errors:
         raise ConfigError("configuration cross-check failed:\n" + "\n".join(errors))
