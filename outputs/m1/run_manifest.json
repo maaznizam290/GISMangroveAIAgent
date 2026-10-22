@@ -1,16 +1,21 @@
 {
   "milestone": "M1",
   "command": "indus-delta m1",
-  "created_utc": "2026-10-22T05:07:38+00:00",
+  "created_utc": "2026-10-22T06:40:38+00:00",
   "status": "WARN",
-  "git_revision": "d81412605eff36dcc54d684df71ec0829c8593d6",
+  "git_revision": "b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty",
   "config_sha256": {
-    "configs/project.yaml": "ed080e11856db8c1ca522b1ee8c8a438fb387f82cf11a7980d0dca4919eeaa0a",
-    "configs/datasets.yaml": "0f8293b4c156b7ad51e9ca42f65790c1faae9a7baa8a24f10eec65c00fa5086c",
-    "configs/indices.yaml": "6ad540c5799ea570eadecdece95bfe017942dfe5181c642c90c630ed0e592d08"
+    "project.yaml": "70d8b38c12e3fac392af5fc49d769707a7af3b042ac97fa52ac804fe7d5c3078",
+    "datasets.yaml": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
+    "indices.yaml": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
+    "preprocessing.yaml": "29d7872be8c3f559aa96a2b3d69adf2de6d14f4adaefe59c97812db93932b542",
+    "classification.yaml": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
+    "layers.yaml": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
+    "site_selection.yaml": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
+    "handover.yaml": "ed1d13868e86bddaf8211927c3a1d1b5e377f09344c0a07e93d1c10ce2894414"
   },
   "software": {
-    "python": "3.13.16",
+    "python": "3.12.10",
     "indus-delta-mangrove-agent": "0.1.0",
     "numpy": "2.5.4",
     "pandas": "3.0.6",
@@ -57,29 +62,29 @@
   ],
   "outputs": [
     {
-      "path": "outputs/m1/jrc_gsw14_occurrence_review_epsg32642_30m.tif",
-      "sha256": "e90fc735c0c1c928c98640a4ac2404e69c1ebc7d1863894b1fce20216502401c",
-      "bytes": 2004456
+      "path": "outputs\\m1\\jrc_gsw14_occurrence_review_epsg32642_30m.tif",
+      "sha256": "7518352644ef8014edcec895f648f329c4040e84c19d23ce33a629b7469a5f60",
+      "bytes": 2024442
     },
     {
-      "path": "outputs/m1/m1_aoi.gpkg",
-      "sha256": "6619390832b348096ad0e970e6af26fc92cfb0e1487f7b7e8fe5f701abdd3eec",
+      "path": "outputs\\m1\\m1_aoi.gpkg",
+      "sha256": "ebda630eb7b80709519687714c5ebf21884aa3ec7d3c2faa5443f379ac4b07c0",
       "bytes": 2682880
     },
     {
-      "path": "outputs/m1/m1_aoi_preview.png",
-      "sha256": "21ce14deb0a1af8864b56f283050a994b9f221b837927a4df11beb73d1702a69",
-      "bytes": 1625077
+      "path": "outputs\\m1\\m1_aoi_preview.png",
+      "sha256": "676c6256a8c48fbf677432b2bfb457b924b221d6fccf09f9781e7e8f57f688f5",
+      "bytes": 1496188
     },
     {
-      "path": "outputs/m1/m1_aoi_review.json",
-      "sha256": "8be437b4a52e3ba2fcd253fdf8c9e1ed89102391acf851af9a30dac79f811365",
-      "bytes": 9582
+      "path": "outputs\\m1\\m1_aoi_review.json",
+      "sha256": "170510fd9d8ca0dd5315dc1c72a8160e13e6766e039580da77dafdf0f51151dd",
+      "bytes": 9919
     },
     {
-      "path": "outputs/m1/m1_aoi_review.md",
-      "sha256": "cdd4685807b89cb2132a8fec5bbb27fe1ccadd8ea2df952c6f2661ad15aacb06",
-      "bytes": 6273
+      "path": "outputs\\m1\\m1_aoi_review.md",
+      "sha256": "1d2feb40b616b359b073addd24c34a8c96c4235f02c1c56e0e6453375dd9fcab",
+      "bytes": 6428
     }
   ]
 }

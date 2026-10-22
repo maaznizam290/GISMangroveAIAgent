@@ -1,6 +1,6 @@
 # Methods report: landsat 2026
 
-Generated from the pipeline outputs. Handover status: **INCOMPLETE**. Every section reports only steps that ran; steps that did not run are named as such.
+Generated from the pipeline outputs. Handover status: **FAIL**. Every section reports only steps that ran; steps that did not run are named as such.
 
 ## Study area and CRS
 
@@ -41,5 +41,5 @@ Not run (requires a passed validation gate and confirmed selection rules).
 
 | manifest | milestone | command | created_utc | status | git_revision | n_outputs |
 |---|---|---|---|---|---|---|
-| m1/run_manifest.json | M1 | indus-delta m1 | 2026-10-22T05:07:38+00:00 | WARN | d81412605eff36dcc54d684df71ec0829c8593d6 | 5 |
-| m2/catalog_manifest.json | M2-catalog | indus-delta catalog-check | 2026-10-22T05:27:02+00:00 | FAIL | 7173fc3d8c3c09c8d80ceb2fbc0fe6d53ac6d043 | 2 |
+| m1\run_manifest.json | M1 | indus-delta m1 | 2026-10-22T06:40:38+00:00 | WARN | b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty | 5 |
+| m2\catalog_manifest.json | M2-catalog | indus-delta catalog-check | 2026-10-22T06:41:24+00:00 | FAIL | b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty | 2 |

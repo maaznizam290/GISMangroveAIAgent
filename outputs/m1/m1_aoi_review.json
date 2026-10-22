@@ -24,7 +24,7 @@
     {
       "name": "crs_round_trip",
       "status": "PASS",
-      "detail": "reference point -> (342606.68 E, 2671064.28 N) m; round-trip error 3.93e-10 m"
+      "detail": "reference point -> (342606.68 E, 2671064.28 N) m; round-trip error 0.00e+00 m"
     },
     {
       "name": "crs_scale_factor",
@@ -39,7 +39,7 @@
     {
       "name": "dataset_ids_verified",
       "status": "WARN",
-      "detail": "8 dataset entries pending Earth Engine verification (M2 inventory): landsat5_l2, landsat7_l2, landsat8_l2, landsat9_l2, sentinel2_sr, sentinel1_grd, jrc_gsw, gmw_v4"
+      "detail": "not in the Earth Engine catalog or unchecked: gmw_v4; not yet confirmed by an authenticated inventory: landsat5_l2, landsat7_l2, landsat8_l2, landsat9_l2, sentinel2_sr, cloud_score_plus, sentinel1_grd, jrc_gsw, jrc_gsw_yearly, jrc_gsw_monthly, gmw_v4"
     },
     {
       "name": "aoi_geometry_valid",
@@ -177,7 +177,7 @@
     {
       "aoi_id": "buffer_20000m",
       "role": "alternative",
-      "area_km2": 1256.5109003731097,
+      "area_km2": 1256.51090037311,
       "valid_fraction": 1.0,
       "occurrence_class_km2": {
         "rarely_or_never": 256.3866,

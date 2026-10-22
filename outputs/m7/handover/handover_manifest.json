@@ -1,171 +1,151 @@
 {
-  "status": "INCOMPLETE",
-  "created_utc": "2026-10-22T06:18:47+00:00",
+  "status": "FAIL",
+  "created_utc": "2026-10-22T06:42:22+00:00",
   "command": "indus-delta handover",
   "config_sha256": {
-    "project.yaml": "a1ada330b21f992f667ce8089e5071cf30828d5c559f7f7d38b6f4880ba9788e",
-    "datasets.yaml": "28338fa55650bfa6aff3c97f4f65375e5d81120d8038c153f3316598031302ff",
-    "indices.yaml": "6ad540c5799ea570eadecdece95bfe017942dfe5181c642c90c630ed0e592d08",
-    "preprocessing.yaml": "b517bfc232a7961b222635976c930c5addd1175657f86e9c1d0dbf6c8af068e6",
-    "classification.yaml": "7ee56bc6241bc303620d44445d72effd27f4ca9d91ec4a1cf40419d2c357135a",
-    "layers.yaml": "dc28cdadc78b2083e27964c4d0088351820cc1b501ed06f5316a4a3b279a5319",
-    "site_selection.yaml": "f0fd7c39fa74b7c99936dee5f10e98b7a93a1b3ecdd27c016b54b461e44b8e52",
-    "handover.yaml": "317c59461ff830f0e2807bfb0f1f07c6e93f64a8f177bb9e71a20665bbccfa0e"
+    "project.yaml": "70d8b38c12e3fac392af5fc49d769707a7af3b042ac97fa52ac804fe7d5c3078",
+    "datasets.yaml": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
+    "indices.yaml": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
+    "preprocessing.yaml": "29d7872be8c3f559aa96a2b3d69adf2de6d14f4adaefe59c97812db93932b542",
+    "classification.yaml": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
+    "layers.yaml": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
+    "site_selection.yaml": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
+    "handover.yaml": "ed1d13868e86bddaf8211927c3a1d1b5e377f09344c0a07e93d1c10ce2894414"
   },
   "files": [
     {
-      "path": "README.md",
-      "sha256": "b74fa5778ef5a49dc66dcbe1cd183df76680522bb416467bb68027348d77055a",
-      "bytes": 1727
+      "path": "config\\classification.yaml",
+      "sha256": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
+      "bytes": 3732
     },
     {
-      "path": "config/classification.yaml",
-      "sha256": "7ee56bc6241bc303620d44445d72effd27f4ca9d91ec4a1cf40419d2c357135a",
-      "bytes": 3659
+      "path": "config\\datasets.yaml",
+      "sha256": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
+      "bytes": 7663
     },
     {
-      "path": "config/datasets.yaml",
-      "sha256": "28338fa55650bfa6aff3c97f4f65375e5d81120d8038c153f3316598031302ff",
-      "bytes": 7497
+      "path": "config\\handover.yaml",
+      "sha256": "ed1d13868e86bddaf8211927c3a1d1b5e377f09344c0a07e93d1c10ce2894414",
+      "bytes": 6905
     },
     {
-      "path": "config/handover.yaml",
-      "sha256": "317c59461ff830f0e2807bfb0f1f07c6e93f64a8f177bb9e71a20665bbccfa0e",
-      "bytes": 6832
+      "path": "config\\indices.yaml",
+      "sha256": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
+      "bytes": 2504
     },
     {
-      "path": "config/indices.yaml",
-      "sha256": "6ad540c5799ea570eadecdece95bfe017942dfe5181c642c90c630ed0e592d08",
-      "bytes": 2445
+      "path": "config\\layers.yaml",
+      "sha256": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
+      "bytes": 3189
     },
     {
-      "path": "config/layers.yaml",
-      "sha256": "dc28cdadc78b2083e27964c4d0088351820cc1b501ed06f5316a4a3b279a5319",
-      "bytes": 3122
+      "path": "config\\preprocessing.yaml",
+      "sha256": "29d7872be8c3f559aa96a2b3d69adf2de6d14f4adaefe59c97812db93932b542",
+      "bytes": 4895
     },
     {
-      "path": "config/preprocessing.yaml",
-      "sha256": "b517bfc232a7961b222635976c930c5addd1175657f86e9c1d0dbf6c8af068e6",
-      "bytes": 4783
+      "path": "config\\project.yaml",
+      "sha256": "70d8b38c12e3fac392af5fc49d769707a7af3b042ac97fa52ac804fe7d5c3078",
+      "bytes": 4823
     },
     {
-      "path": "config/project.yaml",
-      "sha256": "a1ada330b21f992f667ce8089e5071cf30828d5c559f7f7d38b6f4880ba9788e",
-      "bytes": 4722
+      "path": "config\\site_selection.yaml",
+      "sha256": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
+      "bytes": 1386
     },
     {
-      "path": "config/site_selection.yaml",
-      "sha256": "f0fd7c39fa74b7c99936dee5f10e98b7a93a1b3ecdd27c016b54b461e44b8e52",
-      "bytes": 1354
+      "path": "docs\\catalog_records.json",
+      "sha256": "0615996c8e02c0e9f6d7982600e3f5f9e8628f332927c38bd58413ea5bc112ff",
+      "bytes": 8084
     },
     {
-      "path": "docs/catalog_records.json",
-      "sha256": "5f3bbddcac47981781c04b33a7823f441a799ef41bb5a44e7dbf937c70c9f9ce",
-      "bytes": 7888
+      "path": "docs\\data_dictionary.csv",
+      "sha256": "c5ccd264ed591a107ebe4654156fee845344e7bd88ba3b3c9768882bf76f8aa5",
+      "bytes": 4580
     },
     {
-      "path": "docs/data_dictionary.csv",
-      "sha256": "aa08792edb5290ca4e6be6bacedef0a8b496440d1f2a0911304bd4ed0358921d",
-      "bytes": 4538
+      "path": "docs\\data_dictionary.md",
+      "sha256": "46e8c84c5eacbb06f0151e7a5fccf0ef5f27ad7f9a3496dca0d153bec16c6e5e",
+      "bytes": 5697
     },
     {
-      "path": "docs/data_dictionary.md",
-      "sha256": "da407c0ba63ab30d64b1a87eaddc942018e835bdcad75b73b62b38ac642a6833",
-      "bytes": 5651
+      "path": "docs\\limitations.md",
+      "sha256": "b33113665e20dc76cef059235f9184fc0312c44d9aa093c32471a1c53500a8ca",
+      "bytes": 13458
     },
     {
-      "path": "docs/limitations.md",
-      "sha256": "5c6c13deeb420ee9b5cc27f97d1cb956c0a993acfb111ddb78df761e7dda247d",
-      "bytes": 13296
+      "path": "docs\\m1_aoi_preview.png",
+      "sha256": "676c6256a8c48fbf677432b2bfb457b924b221d6fccf09f9781e7e8f57f688f5",
+      "bytes": 1496188
     },
     {
-      "path": "docs/m1_aoi_preview.png",
-      "sha256": "21ce14deb0a1af8864b56f283050a994b9f221b837927a4df11beb73d1702a69",
-      "bytes": 1625077
+      "path": "docs\\m1_aoi_review.md",
+      "sha256": "1d2feb40b616b359b073addd24c34a8c96c4235f02c1c56e0e6453375dd9fcab",
+      "bytes": 6428
     },
     {
-      "path": "docs/m1_aoi_review.md",
-      "sha256": "cdd4685807b89cb2132a8fec5bbb27fe1ccadd8ea2df952c6f2661ad15aacb06",
-      "bytes": 6273
+      "path": "docs\\methods_report.md",
+      "sha256": "e6f0d941f36e7ba7523abbb6c1ebb485527bcf6b64b0a4c9ade4f130a7e097a0",
+      "bytes": 2040
     },
     {
-      "path": "docs/methods_report.md",
-      "sha256": "724723bd73c3806d66868e9bfa25afc1f330b1d3dffb662fd36ad73d77c9a820",
-      "bytes": 1989
+      "path": "docs\\processing_history.csv",
+      "sha256": "919d28909562e7f8af6263dbb274bb608ce9ac21d474753df1e7e98bc3f3cd4e",
+      "bytes": 333
     },
     {
-      "path": "docs/processing_history.csv",
-      "sha256": "c3fac4bd852af3d51c3502a666c681b9f13d6c44306782a135ccf2245a86ac0a",
-      "bytes": 318
+      "path": "docs\\repository_assessment.md",
+      "sha256": "0e4a75c4edba83ef7f56ccd9471ca368936fe32ea217d94c657e11eb7626a20d",
+      "bytes": 5543
     },
     {
-      "path": "docs/repository_assessment.md",
-      "sha256": "f5b3d659db17456ce711a85be2a9c5a6bda6c8e30a5b05e96c78795005b3f200",
-      "bytes": 5477
+      "path": "docs\\software_versions.json",
+      "sha256": "5932ecca3d74b278b3c7fc8176397dd90f842ea32d11d6b8cea916eaabe762bc",
+      "bytes": 377
     },
     {
-      "path": "docs/software_versions.json",
-      "sha256": "8f9605e66ea1a05110c88252d4480d480550f6da949b9161be9a4b181f5eafcb",
-      "bytes": 389
+      "path": "docs\\study_protocol.md",
+      "sha256": "373c345e7cada8acc803e3456bebb9560a93dd4998876d07b7a0e7628f2eadf1",
+      "bytes": 16424
     },
     {
-      "path": "docs/study_protocol.md",
-      "sha256": "dcf9eebf07bc7f5a6de7268d532947180e3e8ff63331daa24a8184b5e62828a6",
-      "bytes": 16210
-    },
-    {
-      "path": "docs/uncertainty.md",
-      "sha256": "05618c8341b55967f5b850133ac95f8423950587e0c6a525fa2d6e462a994e24",
-      "bytes": 6126
+      "path": "docs\\uncertainty.md",
+      "sha256": "a6b9b5dc5a9295807f6a1307c4fac3b15e52916d7426c488c78cb21b62684f37",
+      "bytes": 6202
     },
     {
       "path": "handover_validation.json",
-      "sha256": "5fa317348da8879434ca05866cf90e43a70dc91ad24355b69370ea2e731033b4",
-      "bytes": 18579
+      "sha256": "3b862a937a958a38b8178bedc997609b6ca0fbd8aa8fa0a8a67ce2fec181433c",
+      "bytes": 18453
     },
     {
       "path": "handover_validation.md",
-      "sha256": "d1714827d8594064a8476c66252ffa01f543fe2b0a25e415f1bb653807d85293",
-      "bytes": 3063
+      "sha256": "d35a1d64757bfff66ff705bc733ee36d2e44a26893c3166bbf3cb5812ef04fe5",
+      "bytes": 3251
     },
     {
-      "path": "qgis/handover_layout.png",
-      "sha256": "1f3ed41328bfd8e483b8f142adc5713658dd326a0df2428c311b1c96d273321e",
-      "bytes": 642998
+      "path": "qgis\\project_spec.json",
+      "sha256": "d439cbf04e92e67fac9d2d08fb756dca2777df7c5fc7f305f9e04c5e468edf8b",
+      "bytes": 4079
     },
     {
-      "path": "qgis/indus_delta_handover.qgz",
-      "sha256": "9358e930431b71769ca26859e9134b640bf5af7365ad415659b868de6691aab3",
-      "bytes": 17766
+      "path": "rasters\\jrc_occurrence_review_epsg32642.tif",
+      "sha256": "23c177a71605e5238242dc6db5b5a146ce499d262aecb805da368c7ea43f19b0",
+      "bytes": 2862202
     },
     {
-      "path": "qgis/project_spec.json",
-      "sha256": "4ee6cccfca1cd220091cb7cc5be8d9690a60c94953e88fa23061fd02a37b8dc4",
-      "bytes": 3727
+      "path": "README.md",
+      "sha256": "36bc970afbb27324d6b71147549d462c869081011f2bed6a83897639a59775b4",
+      "bytes": 1789
     },
     {
-      "path": "qgis/qgis_build_result.json",
-      "sha256": "0e30dc1d9a9cb8e39d782e871aebe966cf6da8c3d360ba1bf09c30363fc974aa",
-      "bytes": 2162
+      "path": "tables\\catalog_verification.csv",
+      "sha256": "68c77ed5602baa1b95589ea18c379cb912216f7e658a790ba87bd128a157227e",
+      "bytes": 7482
     },
     {
-      "path": "rasters/jrc_occurrence_review_epsg32642.tif",
-      "sha256": "0c92a584ca2c02c9cc5e104d424758c57680c14db728d6819a24c4d0140aea60",
-      "bytes": 2834542
-    },
-    {
-      "path": "rasters/jrc_occurrence_review_epsg32642.tif.aux.xml",
-      "sha256": "5288baafaefc837483e3f01358bafb5ba48075b07233b89b984cd7d40ea91ab5",
-      "bytes": 472
-    },
-    {
-      "path": "tables/catalog_verification.csv",
-      "sha256": "de8210dd6c42e5a7a3934c3136e574aac6078e0ececd9af26f53699bfd287445",
-      "bytes": 7399
-    },
-    {
-      "path": "vectors/indus_delta_handover.gpkg",
-      "sha256": "49df5777fdff30f0b5629380b33dc428cf93331aa545dcffcf910ef4409af939",
+      "path": "vectors\\indus_delta_handover.gpkg",
+      "sha256": "25998269a697fcdc30b8b73d21bcaa36504ad7d42b8e90cff47f5b495cda0dbd",
       "bytes": 2682880
     }
   ]

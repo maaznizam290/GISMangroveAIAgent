@@ -1,6 +1,6 @@
 # Indus Delta mangrove study: GIS handover (landsat 2026)
 
-Handover status: **INCOMPLETE** (see `handover_validation.md`).
+Handover status: **FAIL** (see `handover_validation.md`).
 
 Missing required deliverables:
 
@@ -32,6 +32,7 @@ Missing required deliverables:
 * selection_report
 * preview_quicklook
 * model_metadata
+* qgis_project
 
 ## Contents
 

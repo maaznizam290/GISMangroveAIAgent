@@ -1,17 +1,21 @@
 {
   "milestone": "M2-catalog",
   "command": "indus-delta catalog-check",
-  "created_utc": "2026-10-22T05:27:02+00:00",
+  "created_utc": "2026-10-22T06:41:24+00:00",
   "status": "FAIL",
-  "git_revision": "7173fc3d8c3c09c8d80ceb2fbc0fe6d53ac6d043",
+  "git_revision": "b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty",
   "config_sha256": {
-    "project.yaml": "a1ada330b21f992f667ce8089e5071cf30828d5c559f7f7d38b6f4880ba9788e",
-    "datasets.yaml": "28338fa55650bfa6aff3c97f4f65375e5d81120d8038c153f3316598031302ff",
-    "indices.yaml": "6ad540c5799ea570eadecdece95bfe017942dfe5181c642c90c630ed0e592d08",
-    "preprocessing.yaml": "b517bfc232a7961b222635976c930c5addd1175657f86e9c1d0dbf6c8af068e6"
+    "project.yaml": "70d8b38c12e3fac392af5fc49d769707a7af3b042ac97fa52ac804fe7d5c3078",
+    "datasets.yaml": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
+    "indices.yaml": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
+    "preprocessing.yaml": "29d7872be8c3f559aa96a2b3d69adf2de6d14f4adaefe59c97812db93932b542",
+    "classification.yaml": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
+    "layers.yaml": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
+    "site_selection.yaml": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
+    "handover.yaml": "ed1d13868e86bddaf8211927c3a1d1b5e377f09344c0a07e93d1c10ce2894414"
   },
   "software": {
-    "python": "3.13.16",
+    "python": "3.12.10",
     "indus-delta-mangrove-agent": "0.1.0",
     "numpy": "2.5.4",
     "pandas": "3.0.6",
@@ -47,14 +51,14 @@
   ],
   "outputs": [
     {
-      "path": "outputs/m2/catalog_verification.csv",
-      "sha256": "de8210dd6c42e5a7a3934c3136e574aac6078e0ececd9af26f53699bfd287445",
-      "bytes": 7399
+      "path": "outputs\\m2\\catalog_verification.csv",
+      "sha256": "68c77ed5602baa1b95589ea18c379cb912216f7e658a790ba87bd128a157227e",
+      "bytes": 7482
     },
     {
-      "path": "outputs/m2/catalog_records.json",
-      "sha256": "5f3bbddcac47981781c04b33a7823f441a799ef41bb5a44e7dbf937c70c9f9ce",
-      "bytes": 7888
+      "path": "outputs\\m2\\catalog_records.json",
+      "sha256": "0615996c8e02c0e9f6d7982600e3f5f9e8628f332927c38bd58413ea5bc112ff",
+      "bytes": 8084
     }
   ]
 }

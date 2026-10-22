@@ -1,9 +1,9 @@
 {
-  "status": "INCOMPLETE",
+  "status": "FAIL",
   "series": "landsat",
   "label_year": 2026,
-  "created_utc": "2026-10-22T06:18:47+00:00",
-  "git_revision": "677da91e3e103a26d47010b0abf9966329e93c9c",
+  "created_utc": "2026-10-22T06:42:22+00:00",
+  "git_revision": "b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty",
   "missing_required": [
     "composite_dry",
     "composite_post_monsoon",
@@ -32,7 +32,8 @@
     "accuracy_report",
     "selection_report",
     "preview_quicklook",
-    "model_metadata"
+    "model_metadata",
+    "qgis_project"
   ],
   "items": [
     {
@@ -635,39 +636,14 @@
       "kind": "generated",
       "required": true,
       "source": "PyQGIS",
-      "target": "qgis/indus_delta_handover.qgz",
-      "status": "delivered",
+      "target": null,
+      "status": "missing",
       "note": "",
       "checks": [
         {
-          "name": "qgis_project_reopens",
-          "status": "PASS",
-          "detail": "QGIS 3.34.4-Prizren reopened the saved project"
-        },
-        {
-          "name": "qgis_project_crs",
-          "status": "PASS",
-          "detail": "project CRS EPSG:32642"
-        },
-        {
-          "name": "qgis_layers_load",
-          "status": "PASS",
-          "detail": "6 layers loaded; invalid []; missing []"
-        },
-        {
-          "name": "qgis_layer_crs",
-          "status": "PASS",
-          "detail": "layers not in EPSG:32642: []"
-        },
-        {
-          "name": "qgis_relative_paths",
-          "status": "PASS",
-          "detail": "7 stored datasources; absolute: []"
-        },
-        {
-          "name": "qgis_layout",
-          "status": "PASS",
-          "detail": "layout items ['QGraphicsRectItem', 'QgsLayoutItemLabel', 'QgsLayoutItemLegend', 'QgsLayoutItemMap', 'QgsLayoutItemPage', 'QgsLayoutItemScaleBar']"
+          "name": "qgis_project",
+          "status": "FAIL",
+          "detail": "could not run PyQGIS with /usr/bin/python3.12: [WinError 2] The system cannot find the file specified"
         }
       ]
     }

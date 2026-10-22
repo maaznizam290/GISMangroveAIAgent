@@ -1,6 +1,6 @@
 # Limitations
 
-Handover status: **INCOMPLETE**.
+Handover status: **FAIL**.
 
 ## Deliverables not available
 
@@ -32,6 +32,7 @@ Handover status: **INCOMPLETE**.
 * selection_report (m6/{series}_{year}/selection_report.md)
 * preview_quicklook (m3/preview/preview_quicklook.png)
 * model_metadata (m4/{series}_{year}/model/random_forest_metadata.json)
+* qgis_project (PyQGIS)
 
 ## Unresolved scientific assumptions (from the study protocol)
 

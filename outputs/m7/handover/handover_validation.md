@@ -1,6 +1,6 @@
 # Handover validation: landsat 2026
 
-Status: **INCOMPLETE**
+Status: **FAIL**
 
 Missing required deliverables:
 
@@ -32,6 +32,7 @@ Missing required deliverables:
 * selection_report
 * preview_quicklook
 * model_metadata
+* qgis_project
 
 | Item | Kind | Required | Delivered | Checks passed | Failed checks |
 |---|---|---|---|---|---|
@@ -76,4 +77,4 @@ Missing required deliverables:
 | preview_quicklook | document | yes | missing | 0/0 |  |
 | model_metadata | document | yes | missing | 0/0 |  |
 | catalog_records | document | yes | delivered | 1/1 |  |
-| qgis_project | generated | yes | delivered | 6/6 |  |
+| qgis_project | generated | yes | missing | 0/1 | could not run PyQGIS with /usr/bin/python3.12: [WinError 2] The system cannot find the file specified |

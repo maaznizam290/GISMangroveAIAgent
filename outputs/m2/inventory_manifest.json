@@ -1,0 +1,73 @@
+{
+  "milestone": "M2-inventory",
+  "command": "indus-delta inventory",
+  "created_utc": "2026-10-22T07:32:16+00:00",
+  "status": "WARN",
+  "git_revision": "b7e39d6441e26eafc47ab27da80af7ee6a37403d-dirty",
+  "config_sha256": {
+    "project.yaml": "70d8b38c12e3fac392af5fc49d769707a7af3b042ac97fa52ac804fe7d5c3078",
+    "datasets.yaml": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
+    "indices.yaml": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
+    "preprocessing.yaml": "29d7872be8c3f559aa96a2b3d69adf2de6d14f4adaefe59c97812db93932b542",
+    "classification.yaml": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
+    "layers.yaml": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
+    "site_selection.yaml": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
+    "handover.yaml": "ed1d13868e86bddaf8211927c3a1d1b5e377f09344c0a07e93d1c10ce2894414"
+  },
+  "software": {
+    "python": "3.12.10",
+    "indus-delta-mangrove-agent": "0.1.0",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "shapely": "2.2.0",
+    "pyproj": "3.8.0",
+    "geopandas": "1.2.0",
+    "pyogrio": "0.13.0",
+    "rasterio": "1.5.2",
+    "matplotlib": "3.11.2",
+    "pydantic": "2.14.1",
+    "earthengine-api": "1.7.49",
+    "gdal": "3.12.2",
+    "proj": "9.8.1"
+  },
+  "inputs": [
+    {
+      "datasets": {
+        "landsat5_l2": "LANDSAT/LT05/C02/T1_L2",
+        "landsat7_l2": "LANDSAT/LE07/C02/T1_L2",
+        "landsat8_l2": "LANDSAT/LC08/C02/T1_L2",
+        "landsat9_l2": "LANDSAT/LC09/C02/T1_L2",
+        "sentinel2_sr": "COPERNICUS/S2_SR_HARMONIZED",
+        "sentinel1_grd": "COPERNICUS/S1_GRD"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "path": "outputs\\m2\\image_inventory.csv",
+      "sha256": "2746a022cfd34c4d51ce62d7e13371548adcf6585ec98fbec9ee88dd3767fd52",
+      "bytes": 317770
+    },
+    {
+      "path": "outputs\\m2\\inventory_summary.csv",
+      "sha256": "8791aa58cfe5110e41a1f0c4e0158921158b2a6a8e48ac17ac00f3a3a8aa1a97",
+      "bytes": 9293
+    },
+    {
+      "path": "outputs\\m2\\missing_observations.csv",
+      "sha256": "1408aafce3b2092b18d070c56453b19b2806b85c87f250ec944b436065e08c41",
+      "bytes": 312
+    },
+    {
+      "path": "outputs\\m2\\s1_orbit_summary.csv",
+      "sha256": "8fd7fa04fb4fd5f55cc2060422edc28e1d0cd40dacd81dd00e1f1eaa516a788b",
+      "bytes": 545
+    },
+    {
+      "path": "outputs\\m2\\inventory_checks.json",
+      "sha256": "94d1a171acc8e9cf638a973d8c59ab437fa65e556210913868a5f28816309ac7",
+      "bytes": 1720
+    }
+  ]
+}

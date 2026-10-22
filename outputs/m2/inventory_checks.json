@@ -1,0 +1,60 @@
+{
+  "status": "WARN",
+  "data_end": {
+    "landsat": "2026-10-10",
+    "sentinel1": "2026-10-15",
+    "sentinel2": "2026-10-21"
+  },
+  "checks": [
+    {
+      "name": "images_landsat5_l2",
+      "status": "PASS",
+      "detail": "49 images over the inventory region in the requested window"
+    },
+    {
+      "name": "images_landsat7_l2",
+      "status": "PASS",
+      "detail": "323 images over the inventory region in the requested window"
+    },
+    {
+      "name": "images_landsat8_l2",
+      "status": "PASS",
+      "detail": "298 images over the inventory region in the requested window"
+    },
+    {
+      "name": "images_landsat9_l2",
+      "status": "PASS",
+      "detail": "108 images over the inventory region in the requested window"
+    },
+    {
+      "name": "images_sentinel2_sr",
+      "status": "PASS",
+      "detail": "527 images over the inventory region in the requested window"
+    },
+    {
+      "name": "images_sentinel1_grd",
+      "status": "PASS",
+      "detail": "417 images over the inventory region in the requested window"
+    },
+    {
+      "name": "coverage_landsat",
+      "status": "PASS",
+      "detail": "44/44 started season-years have usable images"
+    },
+    {
+      "name": "coverage_sentinel1",
+      "status": "PASS",
+      "detail": "14/14 started season-years have usable images"
+    },
+    {
+      "name": "coverage_sentinel2",
+      "status": "PASS",
+      "detail": "14/14 started season-years have usable images"
+    },
+    {
+      "name": "aoi_confirmed",
+      "status": "WARN",
+      "detail": "inventory region is the configured primary AOI, which the operator has not yet confirmed (M1 review)"
+    }
+  ]
+}

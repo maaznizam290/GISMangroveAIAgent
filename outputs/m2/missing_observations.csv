@@ -1,0 +1,4 @@
+series,season,label_year,n_images,n_usable,reason
+landsat,post_monsoon,2026,5,3,partial season: data end 2026-10-10 before window end
+sentinel2,post_monsoon,2026,13,13,partial season: data end 2026-10-21 before window end
+sentinel1,post_monsoon,2026,8,4,partial season: data end 2026-10-15 before window end
