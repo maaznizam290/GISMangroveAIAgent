@@ -1,0 +1,73 @@
+# M4 classification and validation (schema: indus_delta.config.ClassificationConfig)
+config_version: "0.1.0"
+
+classes:
+  - {code: 1, name: mangrove, definition: "Woody intertidal mangrove vegetation with canopy visible at the analysis resolution (species composition to be documented from field data)."}
+  - {code: 2, name: water, definition: "Open water (creek, channel, sea) at the image date."}
+  - {code: 3, name: mudflat, definition: "Wet or recently inundated unvegetated intertidal sediment."}
+  - {code: 4, name: bare_saline_flat_candidate, definition: "Dry, unvegetated, rarely flooded surface that may be saline. A candidate class: salinity is not established by the classification."}
+  - {code: 5, name: non_mangrove_vegetation, definition: "Vegetation that is not mangrove (grass, shrubs, crops, halophytes other than mangrove)."}
+  - {code: 6, name: built_up, definition: "Buildings, jetties, roads, embankments."}
+  - {code: 7, name: unclassified_or_nodata, definition: "No valid observation or not assignable. Never used as a training class."}
+nodata_class: 7
+
+# Composites exported by `indus-delta preprocess --start` and downloaded here. File names:
+# {series}_{season}_{label_year}[_partial]_epsg{epsg}_{scale}m.tif
+composites_dir: outputs/m3/composites
+
+# Feature stack: seasons x bands of the composite for one series and label year.
+features:
+  seasons: [dry, post_monsoon]
+  bands: [blue, green, red, nir, swir1, swir2, ndvi, ndmi, mndwi, mvi, cmri]
+
+# Epochs to classify: series and label years. A reference sample is used only for the
+# label_year it carries (rechecked samples are separate rows with their own year).
+epochs:
+  - {series: landsat, label_year: 2026}
+
+random_forest:
+  n_estimators: 500
+  max_features: sqrt
+  min_samples_leaf: 1
+  class_weight: balanced
+  random_state: 20261022
+  n_jobs: -1
+
+# Spatial separation between training and validation samples.
+split:
+  # independent_file: validation samples come from a separate operator file (preferred).
+  # holdout_blocks: whole spatial blocks of the reference samples are held out.
+  validation_source: independent_file
+  block_size_m: 2000
+  holdout_fraction: 0.3
+  # Training samples closer than this to any validation sample are dropped (reported).
+  min_train_validation_distance_m: 500
+  random_state: 20261022
+
+validation:
+  # stratified_random_by_map_class: validation points drawn by stratified random sampling of
+  # the map (Olofsson et al. 2014); enables area-adjusted accuracy and area estimates.
+  # non_probability: anything else; only sample-count accuracy is reported.
+  design: non_probability
+  confidence_level: 0.95
+
+# Acceptance criteria for the validation gate. Proposed defaults; they are project
+# decisions, so the gate fails until the operator confirms them.
+acceptance:
+  operator_confirmed: false
+  overall_accuracy_min: 0.85
+  # Rule of thumb (Congalton & Green): about 50 validation samples per class.
+  min_validation_samples_per_class: 50
+  # Training samples per class that must remain after the spatial-separation filter.
+  min_training_samples_per_class: 30
+  class_minimums:
+    mangrove: {users_accuracy: 0.80, producers_accuracy: 0.80}
+    water: {users_accuracy: 0.85, producers_accuracy: 0.85}
+    bare_saline_flat_candidate: {users_accuracy: 0.70, producers_accuracy: 0.70}
+    mudflat: {users_accuracy: 0.70, producers_accuracy: 0.70}
+
+samples:
+  reference_path: data/reference/reference_samples.gpkg
+  validation_path: data/reference/validation_samples.gpkg
+  required_fields: [sample_id, class_code, label_year, source, interpreter, observed_date]
+  allowed_sources: [field_survey, high_resolution_imagery, field_and_imagery]

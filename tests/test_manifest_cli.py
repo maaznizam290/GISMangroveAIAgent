@@ -43,8 +43,8 @@ def test_cli_bad_config_dir(tmp_path):
 
 
 def test_later_milestones_do_not_pretend_to_run():
-    # select-sites is still a placeholder (M6).
-    result = runner.invoke(app, ["select-sites"])
+    # export is still a placeholder (M7).
+    result = runner.invoke(app, ["export"])
     assert result.exit_code == 3
     assert "no processing was run" in result.output
 

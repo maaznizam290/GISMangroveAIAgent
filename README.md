@@ -17,9 +17,9 @@ must be discovered from validated maps.**
 | **M1** | Config schema, CRS checks, AOI, hydrological-context review, preview map, study protocol | **Done. Gate status WARN: operator decisions needed (see below)** |
 | M2 | Dataset verification and image inventory | **Partly done.** Catalog verification run on real data; inventory implemented but **not run (no Earth Engine credentials)** |
 | M3 | Seasonal windows, masking, scaling, composites, indices, small-area preview gate, gated full-scale exports | **Implemented and unit-tested; not run (no Earth Engine credentials).** Full-scale processing is blocked by design |
-| M4 | Reference samples, Random Forest baseline, spatially blocked validation | Not started |
-| M5 | Condition and vigour, inundation frequency, salinity and freshwater proxies, trends | Not started |
-| M6 | 500 m plots, Site A/B ranking (after the validation gate) | Not started |
+| M4 | Random Forest baseline, independent and spatially separated validation, accuracy tables, validation gate | **Implemented; tested on mock data only.** Not run: no composites and no reference samples |
+| M5 | Separate mangrove, tidal-inundation, soil-salinity-proxy, freshwater-influence-proxy and field-salinity layers; trends | **Implemented; tested on mock data only.** Not run |
+| M6 | 500 m plots, Site A/B eligibility and ranking, refused until validation passes | **Implemented; tested on mock data only.** No sites have been selected |
 | M7 | GIS handover (COG/GPKG, QGIS project, data dictionary, methods) | Not started |
 | M8 | Streamlit dashboard on real outputs | Not started |
 
@@ -81,7 +81,14 @@ Docker (untested in the build environment): `docker compose run --rm pipeline m1
 | `indus-delta inventory [--dataset KEY ...]` | Per-image inventory over the primary AOI: `image_inventory.csv`, `inventory_summary.csv`, `missing_observations.csv`, `s1_orbit_summary.csv` | yes |
 | `indus-delta preview` | Small-area dry run (3 km box): Landsat, Sentinel-2 and Sentinel-1 seasonal composites, downloaded and checked; writes `outputs/m3/preview/preview_gate.json` | yes |
 | `indus-delta preprocess [--series ...] [--start]` | Plans full-AOI seasonal exports; submits them only with `--start`. Refused until the AOI is confirmed and the preview gate passed | yes, for `--start` |
-| `indus-delta classify` / `validate` / `select-sites` / `export` | Placeholders; exit code 3, nothing run | |
+| `indus-delta classify --year Y [--series S]` | Random Forest land cover, independent validation, accuracy tables, validation gate | no (needs exported composites and samples) |
+| `indus-delta validate --year Y` | Shows the stored gate and accuracy of an epoch | no |
+| `indus-delta calibrate-water --year Y` | Water-index threshold from reference samples; you record it in `layers.yaml` | no |
+| `indus-delta water-frequency --year Y [--start]` | Annual Landsat water-frequency exports (gated) | yes, for `--start` |
+| `indus-delta layers --year Y` | Separate M5 layers; unavailable layers are reported | no |
+| `indus-delta trends` | `annual_metrics.csv`, `trend_tests.csv` | no |
+| `indus-delta select-sites --year Y` | Site A / Site B ranking; refused until validation passes and the rules are confirmed | no |
+| `indus-delta export` | Placeholder (M7); exit code 3 | |
 
 Exit codes: 0 = pass or warn, 1 = failed check, 2 = invalid configuration,
 3 = not implemented, 4 = Earth Engine unavailable, 5 = refused by a gate.
@@ -89,7 +96,21 @@ Exit codes: 0 = pass or warn, 1 = failed check, 2 = invalid configuration,
 Recommended order once credentials exist:
 `check-ee`, then `inventory`, then fix `sentinel1.orbit_pass` from `s1_orbit_summary.csv`,
 then `preview`, then inspect `preview_quicklook.png` and `preview_gate.json`, then confirm
-the AOI, then `preprocess` (plan), then `preprocess --start`.
+the AOI, then `preprocess` (plan), then `preprocess --start`. Then download the composites to
+`outputs/m3/composites/`, add samples to `data/reference/`, and run `classify`,
+`calibrate-water`, `water-frequency --start`, `layers`, `trends` and finally `select-sites`.
+
+### Operator inputs (none exist yet)
+
+| File | Content |
+|---|---|
+| `data/reference/reference_samples.gpkg` | Training points: `sample_id`, `class_code` (1–6), `label_year`, `source`, `interpreter`, `observed_date` |
+| `data/reference/validation_samples.gpkg` | Independent validation points, same fields, collected in separate areas (ideally stratified random by map class) |
+| `data/reference/freshwater_source.gpkg` | Documented active freshwater channel or outlet: `source_id`, `description`, `evidence`, `evidence_reference`, `valid_from` |
+| `data/reference/water_salinity_field.csv` | Field salinity/EC: `measurement_id`, `datetime_utc`, `longitude`, `latitude`, `value`, `units`, `method`, `tide_state` |
+
+See [docs/uncertainty.md](docs/uncertainty.md) for how to read the accuracy tables, the
+proxies and the site scores.
 
 ## Earth Engine authentication (manual step, required from M2)
 
@@ -113,6 +134,9 @@ No credentials are stored in the repository. `.env` is git-ignored.
   verification level each has reached (`pending`, `catalog_verified` or `verified`).
 * `configs/indices.yaml`: band-role mappings per sensor and index formulas, including the
   CMRI/NDWI convention.
+* `configs/classification.yaml`, `configs/layers.yaml`, `configs/site_selection.yaml`:
+  classes, RF and validation settings, layer definitions and site rules. Acceptance criteria
+  and site rules must be confirmed (`operator_confirmed: true`) before the gates pass.
 * `configs/preprocessing.yaml`: mask bits and classes (with the catalog's descriptions),
   Cloud Score+ threshold, Sentinel-1 filters, composite settings, inventory and preview
   parameters.

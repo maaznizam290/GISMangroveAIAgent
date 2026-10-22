@@ -22,7 +22,7 @@ Classes: **1** production dependency, **2** scientific or implementation referen
 | pyproj4/pyproj | 1 | MIT | 3.8.0 (2026-09-05) | ≥3.12 | CRS checks and transforms (M1). PROJ 9.8.1 |
 | streamlit/streamlit | 1 (dashboard) | Apache-2.0 | 1.66.1 (2026-10-21) | ≥3.11 | Dashboard (M8) |
 | plotly/plotly.py | 1 (dashboard) | MIT | 7.1.0 (2026-09-15) | ≥3.8 | Dashboard charts (M8) |
-| mmhs013/pyMannKendall | 1 (M5) | MIT | 1.4.3 (2023-01-14) | not declared | Mann–Kendall and Sen's slope. Pure Python, but no release since 2023: cross-check against `scipy.stats` before relying on it |
+| mmhs013/pyMannKendall | 2 | MIT | 1.4.3 (2023-01-14) | not declared | Reference only. **Not used:** no release since 2023, so M5 implements Mann–Kendall (Kendall's tau) and Sen's slope (`theilslopes`) with SciPy |
 | lucasjvds/MangroveAI | 2 | MIT | n/a | n/a | Deep-learning mangrove segmentation on Sentinel-2 (MagSet-2, GMW labels). Reference only; deep learning is deferred until the RF baseline is validated |
 | UCSD-E4E/ml-mangrove | 2 | **No LICENSE file found** | n/a | n/a | Drone and satellite mangrove ML. Reference for ideas only; **no code may be copied** |
 | globalmangrovewatch (org) | 2 | not checked (github.com was unreachable) | n/a | n/a | GMW methods and data distribution. The v4.1 distribution route must be verified in M2 |
@@ -54,6 +54,6 @@ run time are recorded in each run manifest:
 
 `uv.lock` pins 148 packages for Python ≥ 3.12, including the `classification` and
 `dashboard` extras (for example scikit-learn 1.9.1, streamlit 1.66.1, geemap 0.38.9,
-plotly 7.1.0, pymannkendall 1.4.3). `uv sync` installs only the core and dev groups. The
+plotly 7.1.0). `uv sync` installs only the core and dev groups. The
 extras are installed with `uv sync --extra classification` or `--extra dashboard` when their
 milestones start, and are not yet exercised by tests.

@@ -1,6 +1,6 @@
 # Study protocol: Keti Bandar mangrove, inundation, salinity-proxy and freshwater-influence study
 
-Status: **draft, M3**. Sections marked *planned* describe the intended method. They have
+Status: **draft, M6 (implemented, not run)**. Sections marked *planned* describe the intended method. They have
 not been run. Results are reported only from runs recorded in a `run_manifest.json`.
 
 ## 1. Purpose
@@ -125,7 +125,7 @@ Rules carried over from M1:
 2026 is reported as partial wherever its window is incomplete. The actual last observation
 date is always reported. Windows are produced by `indus_delta.seasons.season_window`.
 
-## 6. Land-cover classes and spectral features (planned)
+## 6. Land-cover classes and spectral features (implemented in M4; not run)
 
 Classes: 1 mangrove, 2 water, 3 mudflat, 4 bare saline-flat candidate, 5 non-mangrove
 vegetation, 6 built-up, 7 unclassified/no-data.
@@ -148,7 +148,7 @@ Rules:
 * A Random Forest is the baseline. Training and validation samples are spatially separated
   in blocks, and samples are rechecked before reuse in historical epochs.
 
-## 7. Analytical outputs (planned)
+## 7. Analytical outputs (implemented in M5; not run; see docs/uncertainty.md)
 
 * `soil_salinity_proxy`: SWIR-based features on eligible bare-soil pixels only. Mangrove,
   water, cloud, shadow and wet surfaces are excluded. Low vegetation alone never means
@@ -166,7 +166,7 @@ Rules:
 * Trends use Mann–Kendall and Sen's slope only where completeness supports them. Observed
   change is kept separate from possible explanations, and no causal claims are made.
 
-## 8. Site selection (planned, after the validation gate)
+## 8. Site selection (implemented in M6; refused until the validation gate passes)
 
 * Plots are equal 500 m × 500 m cells in EPSG:32642 (about 278 Landsat pixels each).
 * Ranking follows the brief, with these anti-circularity rules: salinity evidence must not
@@ -198,6 +198,10 @@ Rules:
 | U17 | Sentinel-2 SCL class 2 (dark area pixels) can stay unmasked | Dark wet surfaces near creeks may be dropped or kept wrongly | Inspect the preview; compare with Cloud Score+ masking | M3 |
 | U18 | A Cloud Score+ `cs_cdf` threshold of 0.6 suits this coast | Too strict loses bright mudflats; too loose keeps haze | Tune on the preview and record the value | M3 |
 | U19 | Seasons between Landsat 5's end and Landsat 8's start can be represented | Only Landsat 7 SLC-off data exist for May 2012 to March 2013 | The inventory shows the valid fractions; mark these seasons low-confidence or use epochs | M3 |
+| U21 | A water threshold calibrated on composite values at reference samples transfers to single images | The tidal-inundation frequency depends on it | Compare against JRC monthly history for 2013–2021 overlap years | M5 |
+| U22 | Brighter dry-season SWIR on eligible bare surfaces indicates stronger salinity-related surface conditions | It sets the direction of the soil-salinity proxy | Calibrate against field soil EC/salinity; until then the proxy is relative and uncalibrated | M5 |
+| U23 | The proposed acceptance criteria (OA ≥ 0.85; class minimums; ≥ 50 validation and ≥ 30 training samples per class) are adequate | The validation gate depends on them | Operator confirms or changes them in `configs/classification.yaml` | M4 |
+| U24 | The proposed site rules and weights express the study's intent | They determine Site A/B eligibility and ranking | Operator confirms or changes them in `configs/site_selection.yaml` | M6 |
 | U20 | One Sentinel-1 orbit pass gives a consistent series | Mixing passes changes viewing geometry and backscatter | Choose a pass from `s1_orbit_summary.csv` and fix `sentinel1.orbit_pass` | M3 |
 
 ## 10. Reproducibility

@@ -142,3 +142,76 @@ def write_plan(path: Path, plan: list[dict], submitted: list[dict] | None = None
         encoding="utf-8",
     )
     return path
+
+
+def plan_water_exports(cfgs: Configs, gate: dict, years: list[int]) -> list[dict]:
+    """Annual Landsat water-frequency rasters on the Landsat composite grid."""
+    if cfgs.layers.tidal_inundation.optical_threshold is None:
+        raise GateError(
+            "tidal_inundation.optical_threshold is not calibrated; run "
+            "`indus-delta calibrate-water` and record the result in configs/layers.yaml"
+        )
+    epsg = cfgs.project.crs.analysis_epsg
+    scale = cfgs.preprocessing.composites.landsat_scale_m
+    products = gate.get("metadata", {}).get("products", {})
+    if "landsat" not in products:
+        raise GateError("the passed preview has no landsat product; cannot derive its grid")
+    tf, width, height = aligned_bounds(
+        tuple(aoi_mod.build_aoi(cfgs.project).total_bounds),
+        scale,
+        tuple(products["landsat"]["grid_offset"]),
+    )
+    return [
+        {
+            "series": "landsat",
+            "label_year": y,
+            "description": f"landsat_water_frequency_{y}",
+            "file_prefix": f"indus_delta/m5/landsat_water_frequency_{y}_epsg{epsg}_{scale:g}m",
+            "crs": f"EPSG:{epsg}",
+            "crs_transform": transform_list(tf),
+            "dimensions": [width, height],
+            "pixels": width * height,
+        }
+        for y in years
+    ]
+
+
+def submit_water_exports(cfgs: Configs, plan: list[dict]) -> list[dict]:
+    import ee
+
+    from indus_delta.earthengine.util import to_ee_geometry
+    from indus_delta.earthengine.water import landsat_water_frequency
+
+    bucket = os.environ.get("EXPORT_BUCKET")
+    folder = os.environ.get("EXPORT_DRIVE_FOLDER")
+    if not bucket and not folder:
+        raise GateError("set EXPORT_BUCKET (Cloud Storage) or EXPORT_DRIVE_FOLDER (Drive)")
+    region = to_ee_geometry(aoi_mod.build_aoi(cfgs.project))
+    nodata = cfgs.preprocessing.composites.nodata_value
+    results = []
+    for item in plan:
+        img = (
+            landsat_water_frequency(cfgs, region, item["label_year"])
+            .toFloat()
+            .clip(region)
+            .unmask(nodata, False)
+        )
+        kwargs = dict(
+            image=img,
+            description=item["description"],
+            fileNamePrefix=item["file_prefix"],
+            crs=item["crs"],
+            crsTransform=item["crs_transform"],
+            dimensions=f"{item['dimensions'][0]}x{item['dimensions'][1]}",
+            maxPixels=int(1e10),
+            fileFormat="GeoTIFF",
+            formatOptions={"cloudOptimized": True, "noData": nodata},
+        )
+        task = (
+            ee.batch.Export.image.toCloudStorage(bucket=bucket, **kwargs)
+            if bucket
+            else ee.batch.Export.image.toDrive(folder=folder, **kwargs)
+        )
+        task.start()
+        results.append({**item, "status": "submitted", "task_id": task.id})
+    return results

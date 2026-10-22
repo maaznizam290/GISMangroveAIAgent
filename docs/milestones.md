@@ -50,6 +50,62 @@ Still open from M1 (operator):
       (Cloud Score+ threshold)
 - [ ] Full-scale processing: not started, and must not start before the items above
 
+## M4: Random Forest baseline and validation (implemented, not run)
+
+- [x] `configs/classification.yaml`: 7 class definitions, feature stack (dry and
+      post-monsoon bands and indices), RF parameters, split, validation design and acceptance
+      criteria (proposed; `operator_confirmed: false`)
+- [x] Reference and validation sample schema and loader (operator-supplied; never generated)
+- [x] Independent validation file (default) or held-out 2 km blocks; training samples
+      within 500 m of validation are dropped; minimum training and validation counts per class
+- [x] Accuracy tables: confusion matrix; user's/producer's accuracy, precision, recall, F1
+      and IoU with Wilson intervals; overall accuracy and kappa; Olofsson et al. (2014)
+      area-adjusted estimates for stratified random designs
+- [x] Per-pixel uncertainty (vote fractions, margin, entropy); OOB score recorded but
+      never used by the gate
+- [x] Validation gate bound to the classification config and the map hash
+- [ ] **Run `classify`. Blocked: no composites (needs Earth Engine) and no reference or
+      validation samples**
+- [ ] Operator: supply samples (`data/reference/`) and confirm the acceptance criteria
+
+## M5: separate analytical layers and trends (implemented, not run)
+
+- [x] `mangrove` (extent, RF mangrove vote fraction, relative spectral-vigour terciles)
+- [x] `tidal_inundation`: threshold calibration from reference samples (`calibrate-water`);
+      annual Landsat water-frequency export in Earth Engine (gated like `preprocess`)
+- [x] `soil_salinity_proxy`: SWIR-only, eligible bare surfaces only, eligibility codes;
+      red/NIR features and mangrove eligibility rejected by the schema
+- [x] `freshwater_influence_proxy`: along-channel (Dijkstra) distance from a documented
+      source, plus an investigative turbidity change; not produced without a source
+- [x] `water_salinity_field` schema for operator measurements
+- [x] `annual_metrics.csv` and Mann–Kendall / Sen's slope (SciPy) with completeness rules;
+      Landsat and Sentinel never pooled
+- [ ] **Run. Blocked on M4 and on the water-frequency exports**
+- [ ] Operator: supply a documented freshwater source (U2); calibrate the water threshold
+
+## M6: site selection (implemented, not run)
+
+- [x] 500 m plots in EPSG:32642 inside the AOI; per-plot metrics
+- [x] Site A and Site B eligibility with exclusion reasons; weighted percentile scores;
+      alternatives; comparability preference with the trade-off reported
+- [x] Refused unless the validation gate passed, the map is unchanged and the rules are
+      confirmed; anti-circularity check on layer provenance; `NO_SELECTION` reported when
+      evidence is insufficient
+- [x] Outputs: `candidate_site_scores.csv`, `site_metrics.csv`, `sites.gpkg`,
+      `selection_report.md`
+- [ ] **Run. Blocked on M4 and M5**
+- [ ] Operator: confirm the rules and weights in `configs/site_selection.yaml`
+
+## Errors and findings during M4–M6
+
+- **Spatial separation can starve training.** With validation points spread across the
+  AOI, the 500 m exclusion removed almost every training sample in a test scene; the gate
+  failed correctly. A training-count check was added so this fails with a clear reason.
+  Validation samples must be planned in separate areas or blocks.
+- **The comparability preference can select weaker evidence.** In the mock scene the
+  strongest Site A plots flooded far less often than the mangrove plots, so a weaker plot
+  was chosen. The report now names the higher-scoring pair that was passed over.
+
 ## Errors met during M2/M3
 
 - The proxy-provided `CLOUDSDK_AUTH_ACCESS_TOKEN` is rejected by Google (`invalid_token`). No

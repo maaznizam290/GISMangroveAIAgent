@@ -1,0 +1,67 @@
+# M5 analytical layers (schema: indus_delta.config.LayersConfig)
+# Each layer is separate, named and labelled with its type (classified / proxy / measured),
+# validation status and the inputs it is derived from.
+config_version: "0.1.0"
+
+mangrove:
+  # Spectral-vigour classes inside the mapped mangrove extent: terciles of this index over
+  # mangrove pixels of the same composite. Relative and uncalibrated: they are NOT
+  # dense/moderate/sparse canopy grades.
+  vigour_index: ndvi
+  vigour_season: dry
+  vigour_quantiles: [0.3333, 0.6667]
+
+tidal_inundation:
+  # Per-image water detection for water-frequency layers (Earth Engine).
+  optical_index: mndwi
+  sar_band: VV
+  # Thresholds are calibrated from reference samples (water vs other classes) with
+  # `indus-delta calibrate-water`; null until then, and the layer is not produced.
+  optical_threshold: null
+  sar_threshold_db: null
+  calibration_note: ""
+  min_valid_observations: 5
+  # Water-frequency rasters exported by `indus-delta water-frequency --start`, downloaded here:
+  # {series}_water_frequency_{label_year}_epsg{epsg}_{scale}m.tif with bands
+  # water_frequency (0-1) and n_valid. Period: the calendar year label_year.
+  input_dir: outputs/m5/inputs
+
+soil_salinity_proxy:
+  # SWIR-only features on eligible bare surfaces. Red/NIR salinity indices are forbidden
+  # (they reduce to -NDVI). Values are published as within-AOI percentile ranks: an
+  # uncalibrated relative proxy, not salinity.
+  season: dry
+  # direction +1: higher values are treated as more salinity-related. This is an assumption
+  # (bright SWIR on dry salt crusts) that must be calibrated with field data (U22).
+  features:
+    - {name: swir1, kind: band, direction: 1}
+    - {name: swir2, kind: band, direction: 1}
+  eligible_classes: [mudflat, bare_saline_flat_candidate]
+  # Pixels flooded more often than this (tidal_inundation frequency) are too wet.
+  max_inundation_frequency: 0.5
+  min_valid_observations: 3
+
+freshwater_influence_proxy:
+  # A traceable freshwater source (documented active channel / outlet), supplied by the
+  # operator. Without it the layer is not produced. Proximity to the historic Indus channel
+  # is not accepted as a source.
+  source_path: data/reference/freshwater_source.gpkg
+  required_source_fields: [source_id, description, evidence, evidence_reference, valid_from]
+  # Channel network used for along-channel distance: pixels whose inundation frequency is
+  # at least this value.
+  channel_min_frequency: 0.5
+  # Post-monsoon minus dry composite difference of this band, over water pixels only, as a
+  # candidate turbidity indicator (investigative; no validated link to freshwater).
+  turbidity_band: red
+
+water_salinity_field:
+  path: data/reference/water_salinity_field.csv
+  required_columns: [measurement_id, datetime_utc, longitude, latitude, value, units, method, tide_state]
+  allowed_units: [PSU, ppt, mS/cm, uS/cm]
+
+trends:
+  # Mann-Kendall / Sen's slope only when at least this many years have complete-season,
+  # validated values and the gap fraction is below the maximum.
+  min_years: 8
+  max_missing_fraction: 0.3
+  alpha: 0.05

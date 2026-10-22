@@ -25,6 +25,10 @@
   `hydrology.py` (M1 review), `preview.py`, `m1.py`, `manifest.py`, `ee_auth.py`, `cli.py`,
   `catalog.py` and `m2.py` (catalog check, inventory), `inventory.py`, `spectral.py` (NumPy
   reference), `grid.py`, `preview_checks.py`, `gate.py`, `m3_preview.py`, `m3_export.py`
+- M4–M6: `samples.py`, `features.py`, `rf.py`, `accuracy.py`, `m4.py` (validation gate),
+  `m5.py` (layers), `trends.py`, `m6.py` (site selection), `layer_io.py` (provenance tags)
+- Never bypass the validation gate or edit layer `derived_from` tags by hand; never create
+  reference samples or freshwater sources.
 - `src/indus_delta/earthengine/`: all Earth Engine calls (prep, composite, inventory, download)
 - Full-scale processing must go through the gate (`m3_export.check_preconditions`); never
   bypass it or start exports without `--start`.

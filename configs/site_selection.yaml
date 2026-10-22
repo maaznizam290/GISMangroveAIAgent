@@ -1,0 +1,32 @@
+# M6 candidate site selection (schema: indus_delta.config.SiteSelectionConfig)
+# All rules are project decisions; selection is refused until operator_confirmed is true
+# AND the M4 validation gate has passed.
+config_version: "0.1.0"
+operator_confirmed: false
+
+plot_size_m: 500
+# Plots must lie entirely inside the AOI and have at least this share of valid pixels.
+min_valid_pixel_fraction: 0.9
+
+site_a:
+  description: High salinity-related surface evidence, sparse or absent mangrove.
+  max_mangrove_cover: 0.05
+  min_eligible_bare_fraction: 0.3
+  min_salinity_percentile_mean: 75
+  weights: {salinity_percentile_mean: 0.6, eligible_bare_fraction: 0.2, low_uncertainty: 0.2}
+
+site_b:
+  description: Healthy mangrove with evidence consistent with freshwater influence.
+  min_mangrove_cover: 0.6
+  min_high_vigour_fraction: 0.3
+  # Along-channel distance to the documented freshwater source (km).
+  max_channel_distance_km: 20
+  weights: {mangrove_cover: 0.3, high_vigour_fraction: 0.2, channel_proximity: 0.3, low_uncertainty: 0.2}
+
+comparability:
+  # Preferred maximum difference in mean inundation frequency between Site A and Site B.
+  max_inundation_difference: 0.15
+  # Number of alternative candidates reported for each site.
+  n_alternatives: 5
+  # Minimum distance between Site A and Site B (km), to avoid adjacent plots.
+  min_separation_km: 1.0

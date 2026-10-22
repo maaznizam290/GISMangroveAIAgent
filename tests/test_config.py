@@ -22,6 +22,9 @@ def test_repository_configs_validate(cfgs):
         "datasets.yaml",
         "indices.yaml",
         "preprocessing.yaml",
+        "classification.yaml",
+        "layers.yaml",
+        "site_selection.yaml",
     }
     assert len(cfgs.combined_sha256()) == 64
 

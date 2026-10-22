@@ -25,7 +25,7 @@ dependencies = [
 
 [project.optional-dependencies]
 # Later milestones. Pinned in uv.lock, installed with `uv sync --extra <name>`; untested in M1.
-classification = ["scikit-learn>=1.7,<2", "pymannkendall>=1.4,<2"]
+classification = ["scikit-learn>=1.7,<2"]
 dashboard = ["streamlit>=1.50,<2", "plotly>=6,<8", "geemap>=0.36,<1", "streamlit-folium>=0.25,<1"]
 
 [project.scripts]

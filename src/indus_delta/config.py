@@ -431,6 +431,232 @@ class IndicesConfig(_Strict):
         return self.roles_used(idx.minuend) | self.roles_used(idx.subtrahend)
 
 
+# --------------------------------------------------------------------------- classification.yaml
+
+
+class LandCoverClass(_Strict):
+    code: Annotated[int, Field(ge=1, le=255)]
+    name: str
+    definition: str
+
+
+class FeatureSpec(_Strict):
+    seasons: Annotated[list[str], Field(min_length=1)]
+    bands: Annotated[list[str], Field(min_length=1)]
+
+
+class Epoch(_Strict):
+    series: Literal["landsat", "sentinel2"]
+    label_year: int
+
+
+class RandomForestConfig(_Strict):
+    n_estimators: Annotated[int, Field(ge=10)]
+    max_features: str | float | int
+    min_samples_leaf: Annotated[int, Field(ge=1)]
+    class_weight: Literal["balanced"] | None
+    random_state: int
+    n_jobs: int
+
+
+class SplitConfig(_Strict):
+    validation_source: Literal["independent_file", "holdout_blocks"]
+    block_size_m: Annotated[float, Field(gt=0)]
+    holdout_fraction: Annotated[float, Field(gt=0, lt=1)]
+    min_train_validation_distance_m: Annotated[float, Field(ge=0)]
+    random_state: int
+
+
+class ValidationDesign(_Strict):
+    design: Literal["stratified_random_by_map_class", "non_probability"]
+    confidence_level: Annotated[float, Field(gt=0, lt=1)]
+
+
+class ClassMinimum(_Strict):
+    users_accuracy: Annotated[float, Field(ge=0, le=1)]
+    producers_accuracy: Annotated[float, Field(ge=0, le=1)]
+
+
+class AcceptanceCriteria(_Strict):
+    operator_confirmed: bool
+    overall_accuracy_min: Annotated[float, Field(ge=0, le=1)]
+    min_validation_samples_per_class: Annotated[int, Field(ge=1)]
+    min_training_samples_per_class: Annotated[int, Field(ge=1)]
+    class_minimums: dict[str, ClassMinimum]
+
+
+class SamplesConfig(_Strict):
+    reference_path: Path
+    validation_path: Path
+    required_fields: list[str]
+    allowed_sources: list[str]
+
+
+class ClassificationConfig(_Strict):
+    config_version: str
+    classes: list[LandCoverClass]
+    nodata_class: int
+    composites_dir: Path
+    features: FeatureSpec
+    epochs: list[Epoch]
+    random_forest: RandomForestConfig
+    split: SplitConfig
+    validation: ValidationDesign
+    acceptance: AcceptanceCriteria
+    samples: SamplesConfig
+
+    @model_validator(mode="after")
+    def _consistent(self) -> ClassificationConfig:
+        codes = [c.code for c in self.classes]
+        names = [c.name for c in self.classes]
+        if len(set(codes)) != len(codes) or len(set(names)) != len(names):
+            raise ValueError("class codes and names must be unique")
+        if self.nodata_class not in codes:
+            raise ValueError("nodata_class must be one of the class codes")
+        unknown = set(self.acceptance.class_minimums) - set(names)
+        if unknown:
+            raise ValueError(f"acceptance.class_minimums has unknown classes {sorted(unknown)}")
+        return self
+
+    def code_of(self, name: str) -> int:
+        return next(c.code for c in self.classes if c.name == name)
+
+    def name_of(self, code: int) -> str:
+        return next(c.name for c in self.classes if c.code == code)
+
+    def trainable_codes(self) -> list[int]:
+        return [c.code for c in self.classes if c.code != self.nodata_class]
+
+
+# --------------------------------------------------------------------------- layers.yaml
+
+
+class MangroveLayerConfig(_Strict):
+    vigour_index: str
+    vigour_season: str
+    vigour_quantiles: tuple[float, float]
+
+
+class TidalInundationConfig(_Strict):
+    optical_index: str
+    sar_band: str
+    optical_threshold: float | None
+    sar_threshold_db: float | None
+    calibration_note: str
+    min_valid_observations: Annotated[int, Field(ge=1)]
+    input_dir: Path
+
+
+class SalinityFeature(_Strict):
+    name: str
+    kind: Literal["band", "ratio"]
+    direction: Literal[1, -1]
+    numerator: str | None = None
+    denominator: str | None = None
+
+    def bands(self) -> set[str]:
+        return {self.name} if self.kind == "band" else {self.numerator, self.denominator}
+
+
+class SoilSalinityConfig(_Strict):
+    season: str
+    features: Annotated[list[SalinityFeature], Field(min_length=1)]
+    eligible_classes: list[str]
+    max_inundation_frequency: Annotated[float, Field(ge=0, le=1)]
+    min_valid_observations: Annotated[int, Field(ge=1)]
+
+    @model_validator(mode="after")
+    def _swir_only(self) -> SoilSalinityConfig:
+        used = set().union(*(f.bands() for f in self.features))
+        forbidden = used & {"red", "nir", "ndvi"}
+        if forbidden:
+            raise ValueError(
+                f"soil_salinity_proxy may not use {sorted(forbidden)}: red/NIR salinity "
+                "indices reduce to -NDVI and confound salinity with vegetation"
+            )
+        return self
+
+
+class FreshwaterConfig(_Strict):
+    source_path: Path
+    required_source_fields: list[str]
+    channel_min_frequency: Annotated[float, Field(gt=0, le=1)]
+    turbidity_band: str
+
+
+class FieldSalinityConfig(_Strict):
+    path: Path
+    required_columns: list[str]
+    allowed_units: list[str]
+
+
+class TrendConfig(_Strict):
+    min_years: Annotated[int, Field(ge=4)]
+    max_missing_fraction: Annotated[float, Field(ge=0, lt=1)]
+    alpha: Annotated[float, Field(gt=0, lt=1)]
+
+
+class LayersConfig(_Strict):
+    config_version: str
+    mangrove: MangroveLayerConfig
+    tidal_inundation: TidalInundationConfig
+    soil_salinity_proxy: SoilSalinityConfig
+    freshwater_influence_proxy: FreshwaterConfig
+    water_salinity_field: FieldSalinityConfig
+    trends: TrendConfig
+
+
+# --------------------------------------------------------------------------- site_selection.yaml
+
+
+class SiteARules(_Strict):
+    description: str
+    max_mangrove_cover: Annotated[float, Field(ge=0, le=1)]
+    min_eligible_bare_fraction: Annotated[float, Field(ge=0, le=1)]
+    min_salinity_percentile_mean: Annotated[float, Field(ge=0, le=100)]
+    weights: dict[str, float]
+
+
+class SiteBRules(_Strict):
+    description: str
+    min_mangrove_cover: Annotated[float, Field(ge=0, le=1)]
+    min_high_vigour_fraction: Annotated[float, Field(ge=0, le=1)]
+    max_channel_distance_km: Annotated[float, Field(gt=0)]
+    weights: dict[str, float]
+
+
+class Comparability(_Strict):
+    max_inundation_difference: Annotated[float, Field(ge=0, le=1)]
+    n_alternatives: Annotated[int, Field(ge=0)]
+    min_separation_km: Annotated[float, Field(ge=0)]
+
+
+_SITE_A_SCORES = {"salinity_percentile_mean", "eligible_bare_fraction", "low_uncertainty"}
+_SITE_B_SCORES = {"mangrove_cover", "high_vigour_fraction", "channel_proximity", "low_uncertainty"}
+
+
+class SiteSelectionConfig(_Strict):
+    config_version: str
+    operator_confirmed: bool
+    plot_size_m: Annotated[float, Field(gt=0)]
+    min_valid_pixel_fraction: Annotated[float, Field(ge=0, le=1)]
+    site_a: SiteARules
+    site_b: SiteBRules
+    comparability: Comparability
+
+    @model_validator(mode="after")
+    def _weights(self) -> SiteSelectionConfig:
+        for label, w, allowed in (
+            ("site_a", self.site_a.weights, _SITE_A_SCORES),
+            ("site_b", self.site_b.weights, _SITE_B_SCORES),
+        ):
+            if set(w) - allowed:
+                raise ValueError(f"{label}.weights: unknown scores {sorted(set(w) - allowed)}")
+            if abs(sum(w.values()) - 1) > 1e-9 or any(v < 0 for v in w.values()):
+                raise ValueError(f"{label}.weights must be non-negative and sum to 1")
+        return self
+
+
 # --------------------------------------------------------------------------- loading
 
 
@@ -439,6 +665,9 @@ class Configs(_Strict):
     datasets: DatasetRegistry
     indices: IndicesConfig
     preprocessing: PreprocessingConfig
+    classification: ClassificationConfig
+    layers: LayersConfig
+    site_selection: SiteSelectionConfig
     sha256: dict[str, str]
 
     def combined_sha256(self) -> str:
@@ -472,12 +701,18 @@ def load_configs(config_dir: Path = DEFAULT_CONFIG_DIR) -> Configs:
         "datasets": config_dir / "datasets.yaml",
         "indices": config_dir / "indices.yaml",
         "preprocessing": config_dir / "preprocessing.yaml",
+        "classification": config_dir / "classification.yaml",
+        "layers": config_dir / "layers.yaml",
+        "site_selection": config_dir / "site_selection.yaml",
     }
     cfgs = Configs(
         project=_validate(ProjectConfig, paths["project"]),
         datasets=_validate(DatasetRegistry, paths["datasets"]),
         indices=_validate(IndicesConfig, paths["indices"]),
         preprocessing=_validate(PreprocessingConfig, paths["preprocessing"]),
+        classification=_validate(ClassificationConfig, paths["classification"]),
+        layers=_validate(LayersConfig, paths["layers"]),
+        site_selection=_validate(SiteSelectionConfig, paths["site_selection"]),
         sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths.values()},
     )
     _cross_check(cfgs)
@@ -513,5 +748,31 @@ def _cross_check(cfgs: Configs) -> None:
             missing = set(idx.sensors[sensor].bands.values()) - set(ds[key].required_bands)
             if missing:
                 errors.append(f"datasets.{key}.required_bands lacks index bands {sorted(missing)}")
+    cl, ly = cfgs.classification, cfgs.layers
+    composite_bands = [*idx.band_roles, *idx.indices]
+    class_names = {c.name for c in cl.classes}
+    for season in cl.features.seasons:
+        if season not in cfgs.project.seasons:
+            errors.append(f"classification.features.seasons: unknown season {season!r}")
+    for band in cl.features.bands:
+        if band not in composite_bands:
+            errors.append(f"classification.features.bands: {band!r} is not a composite band")
+    if ly.mangrove.vigour_index not in idx.indices:
+        errors.append(f"layers.mangrove.vigour_index {ly.mangrove.vigour_index!r} unknown")
+    for season in (ly.mangrove.vigour_season, ly.soil_salinity_proxy.season):
+        if season not in cfgs.project.seasons:
+            errors.append(f"layers: unknown season {season!r}")
+    for name in ly.soil_salinity_proxy.eligible_classes:
+        if name not in class_names:
+            errors.append(f"layers.soil_salinity_proxy.eligible_classes: unknown class {name!r}")
+    if "mangrove" in ly.soil_salinity_proxy.eligible_classes:
+        errors.append("soil_salinity_proxy must not be computed on mangrove pixels")
+    for f in ly.soil_salinity_proxy.features:
+        if not f.bands() <= set(composite_bands):
+            errors.append(f"soil_salinity_proxy feature {f.name!r} uses unknown bands")
+    if ly.freshwater_influence_proxy.turbidity_band not in composite_bands:
+        errors.append("freshwater_influence_proxy.turbidity_band is not a composite band")
+    if ly.tidal_inundation.optical_index not in idx.indices:
+        errors.append("tidal_inundation.optical_index is not a configured index")
     if errors:
         raise ConfigError("configuration cross-check failed:\n" + "\n".join(errors))
