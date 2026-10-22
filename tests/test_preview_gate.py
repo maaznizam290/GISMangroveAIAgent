@@ -205,3 +205,33 @@ def test_export_destination_validation(monkeypatch, bucket, folder, ok):
     else:
         with pytest.raises(GateError):
             export_destination()
+
+
+def test_later_stage_config_edits_keep_preview_gate(tmp_path):
+    """Editing layers/classification/site configs must not invalidate the preview gate;
+    editing preprocessing must."""
+    import shutil
+
+    import yaml
+
+    from indus_delta.checks import Check
+    from indus_delta.config import load_configs
+
+    from .conftest import CONFIG_DIR
+
+    cdir = tmp_path / "configs"
+    cdir.mkdir()
+    for f in CONFIG_DIR.glob("*.yaml"):
+        shutil.copy(f, cdir / f.name)
+    write_gate(tmp_path, load_configs(cdir), [Check("a", "PASS", "")], {})
+
+    d = yaml.safe_load((cdir / "layers.yaml").read_text())
+    d["tidal_inundation"]["optical_threshold"] = 0.05
+    (cdir / "layers.yaml").write_text(yaml.safe_dump(d))
+    assert require_preview_pass(load_configs(cdir), tmp_path)["status"] == "PASS"
+
+    d = yaml.safe_load((cdir / "preprocessing.yaml").read_text())
+    d["sentinel2"]["cloud_score_plus"]["min_score"] = 0.5
+    (cdir / "preprocessing.yaml").write_text(yaml.safe_dump(d))
+    with pytest.raises(GateError, match="rerun"):
+        require_preview_pass(load_configs(cdir), tmp_path)

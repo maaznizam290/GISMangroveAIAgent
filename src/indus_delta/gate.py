@@ -3,6 +3,7 @@ configuration has passed every check."""
 
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import UTC, datetime
 from pathlib import Path
@@ -11,6 +12,14 @@ from indus_delta.checks import Check
 from indus_delta.config import Configs
 
 GATE_FILE = "preview_gate.json"
+# Only these files determine the composites; editing later-stage configs (classification,
+# layers, site selection, handover) must not invalidate a passed preview.
+PREVIEW_CONFIGS = ("project.yaml", "datasets.yaml", "indices.yaml", "preprocessing.yaml")
+
+
+def preview_config_hash(cfgs: Configs) -> str:
+    joined = "".join(f"{k}={cfgs.sha256[k]};" for k in PREVIEW_CONFIGS)
+    return hashlib.sha256(joined.encode()).hexdigest()
 
 
 class GateError(RuntimeError):
@@ -29,7 +38,7 @@ def write_gate(preview_dir: Path, cfgs: Configs, checks: list[Check], metadata: 
             {
                 "status": gate_status(checks),
                 "created_utc": datetime.now(UTC).isoformat(timespec="seconds"),
-                "config_sha256": cfgs.combined_sha256(),
+                "config_sha256": preview_config_hash(cfgs),
                 "checks": [c.to_dict() for c in checks],
                 "metadata": metadata,
             },
@@ -48,6 +57,9 @@ def require_preview_pass(cfgs: Configs, preview_dir: Path) -> dict:
     if gate.get("status") != "PASS":
         failed = [c["name"] for c in gate.get("checks", []) if c["status"] == "FAIL"]
         raise GateError(f"preview gate is {gate.get('status')}; failed checks: {failed}")
-    if gate.get("config_sha256") != cfgs.combined_sha256():
-        raise GateError("configuration changed since the preview passed; rerun the preview")
+    if gate.get("config_sha256") != preview_config_hash(cfgs):
+        raise GateError(
+            "project, datasets, indices or preprocessing configuration changed since the "
+            "preview passed; rerun `indus-delta preview`"
+        )
     return gate
