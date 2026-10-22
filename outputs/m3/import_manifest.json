@@ -1,0 +1,264 @@
+{
+  "milestone": "M3-import",
+  "command": "indus-delta import-exports",
+  "created_utc": "2026-10-22T10:54:37+00:00",
+  "status": "WARN",
+  "git_revision": "fdabbdafcfc220883b4e6fc84ce9de9a17cf58e7-dirty",
+  "config_sha256": {
+    "project.yaml": "38575f2f50a83b722e80fbaebb2a33df3cb889bf1e23a1b479336e7323b0504e",
+    "datasets.yaml": "471fc5f8e7ffb1287ea071210b320306a3887876a90cb1bc45a55e739a85b75e",
+    "indices.yaml": "89085b095ce0ca78dd879ec79e0e500017a6be29a4f39f2b4b81d2c8fe8e8ebb",
+    "preprocessing.yaml": "f98fd5e44f5788f171291cff8994a70644f9a6f98f2b76d4503b152e9b0530e0",
+    "classification.yaml": "eabd172d98bef05f33639132200a6ce08c1118a7b5c637e353573e4f129be435",
+    "layers.yaml": "59af4737e0b818e6445b3aefc77705922a27e00bc1d7ec2c694404fed68b3b20",
+    "site_selection.yaml": "629118b08b100260131059100ba75072d200a399c79ddba959772bc41ba5b52a",
+    "handover.yaml": "5d1540d7dcd4a63f5095295ee3e34a5845c647f0f42a8eaca887efac120d6438"
+  },
+  "software": {
+    "python": "3.12.10",
+    "indus-delta-mangrove-agent": "0.1.0",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "shapely": "2.2.0",
+    "pyproj": "3.8.0",
+    "geopandas": "1.2.0",
+    "pyogrio": "0.13.0",
+    "rasterio": "1.5.2",
+    "matplotlib": "3.11.2",
+    "pydantic": "2.14.1",
+    "earthengine-api": "1.7.49",
+    "gdal": "3.12.2",
+    "proj": "9.8.1"
+  },
+  "inputs": [
+    {
+      "download_dir": "G:\\My Drive\\mangrove_exports",
+      "plans": [
+        "outputs\\m3\\export_plan.json"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2005_epsg32642_30m.tif",
+      "sha256": "6f0ffbc84c92b4fc0ab8595d54699c2e5e632b18c6d794e18d38eafea962f751",
+      "bytes": 27486251
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2005_epsg32642_30m.tif",
+      "sha256": "8768f207fad3678b8bea72e055e3f939902103ff59e17f1cf6153ca12782ef9e",
+      "bytes": 25270797
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2006_epsg32642_30m.tif",
+      "sha256": "92f609d5c2f3c7dc5dd427821a722d67fdb6f4a47443417d58a31b33e837364e",
+      "bytes": 27505564
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2006_epsg32642_30m.tif",
+      "sha256": "f3061c9ca1063c45cac9b1356d0605a269f8a0dac67be66afc4ce66f615ef33d",
+      "bytes": 26165349
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2007_epsg32642_30m.tif",
+      "sha256": "1c20a5471969d70762392a07390d5f86656d354fb1282abe878698ce5bd246cd",
+      "bytes": 27362322
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2007_epsg32642_30m.tif",
+      "sha256": "b171daa5f36ed775b06ea47c7544c4cc1557ed5e31803f95418c9a2534293deb",
+      "bytes": 25782154
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2008_epsg32642_30m.tif",
+      "sha256": "cc01dc21420a420b4caed6e5a0a836493485d16cc4fa0e937c8c970dccc37536",
+      "bytes": 27167515
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2008_epsg32642_30m.tif",
+      "sha256": "849c906429119d1ebdb098c5d12ba2bda407daf83bfdef4cb199d12def9a48e1",
+      "bytes": 24981510
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2009_epsg32642_30m.tif",
+      "sha256": "aad26936c7e830e4e26a7df41d2072c04f813297dab967680d6c847fa09ed3b7",
+      "bytes": 27765026
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2009_epsg32642_30m.tif",
+      "sha256": "4f8c6398afc37afbc97afd26f36ff3105157ee2a142f3629cd7b662d725d190f",
+      "bytes": 26207350
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2010_epsg32642_30m.tif",
+      "sha256": "4daffe73a265ff5ba85f0098db92c887ad9b2068060450c974af072ad5d74b16",
+      "bytes": 27536342
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2010_epsg32642_30m.tif",
+      "sha256": "ec2be494e133679f3f6a0cd37310c50f3b2443c51e40a146dc433e71e2378516",
+      "bytes": 26325465
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2011_epsg32642_30m.tif",
+      "sha256": "407d1923e7937e662624523a3b0782b34363640c2b6cb11a3c4bbe00cec06657",
+      "bytes": 27605444
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2011_epsg32642_30m.tif",
+      "sha256": "13577c4ed9eb2723bd4a094416c159aa74a4116b735a5e968907da973c9e5431",
+      "bytes": 26657460
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2012_epsg32642_30m.tif",
+      "sha256": "8562e3db11af8cc949a6ff15cf013f741a763e2b53f3ed9425340141d7cc1740",
+      "bytes": 27350830
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2012_epsg32642_30m.tif",
+      "sha256": "f37d1c37f4a0accff7881a32639dc2c46fdddf56870755bc2b172c5ab4338a8b",
+      "bytes": 26222682
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2013_epsg32642_30m.tif",
+      "sha256": "3ec7a3f5822facbe4f555459497800cdba3d3cae3f33a464a5a1b7061851b204",
+      "bytes": 27532570
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2013_epsg32642_30m.tif",
+      "sha256": "fd6c28ecc8b839cb74e344b7754a4ca7b608888237f1b147f76de676f355b482",
+      "bytes": 27747582
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2014_epsg32642_30m.tif",
+      "sha256": "aaa7b10fa100bfc4bfdfe735ecbd8bcb7168757363a3eb20eeb920266d4405a9",
+      "bytes": 27970962
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2014_epsg32642_30m.tif",
+      "sha256": "9c70589ef3862fb97fed412f9d470d2ac2b37e21c3512ace961e7c8a72d9815c",
+      "bytes": 26706587
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2015_epsg32642_30m.tif",
+      "sha256": "2134845a4c5ba253499dcd52d61c3df0a73fd01192247c3fda80e67ea56db3af",
+      "bytes": 27865780
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2015_epsg32642_30m.tif",
+      "sha256": "3638a3fa8d6db61f455baf49fac45f0b2806a991560e962761692d58d701ea8c",
+      "bytes": 26959032
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2016_epsg32642_30m.tif",
+      "sha256": "eb5a4dabc009bfcb314a4623e77b5b45be58823fafc5913d67598a7180afd497",
+      "bytes": 27853249
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2016_epsg32642_30m.tif",
+      "sha256": "3d9ccd8ae4db492100c3b5c788658f7715f3272e216cc033d51e97fd18e12efc",
+      "bytes": 26308173
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2017_epsg32642_30m.tif",
+      "sha256": "c744a85eff7a775392546d4db57335851fc1c963b838c2c8a5d3d19abd3b6315",
+      "bytes": 27961410
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2017_epsg32642_30m.tif",
+      "sha256": "23d459209331c90df6a1620cb6c9d00e3428776a92bd85b9aa64f1e46a12ad50",
+      "bytes": 27826379
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2018_epsg32642_30m.tif",
+      "sha256": "26953df23379e8ceb03a09301ec27aee9bbe0a3874e269f58b2ba56bd5dc10fa",
+      "bytes": 27798956
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2018_epsg32642_30m.tif",
+      "sha256": "bba235009345d9b25bf1992ca0d82a03ee5ac53d128ccdd4463b11c3c939b929",
+      "bytes": 27751799
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2019_epsg32642_30m.tif",
+      "sha256": "bc139ad54eaf6f20bec513d96832e45c6c6aa37e113067fa5bd8c932e7c53272",
+      "bytes": 28027171
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2019_epsg32642_30m.tif",
+      "sha256": "725c8cf28ecb19c06f88c344497d82bdef9d3536452bf89f38dcd6fb45c766ed",
+      "bytes": 26977796
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2020_epsg32642_30m.tif",
+      "sha256": "26eadc942e7113af8d1187a0a19d234fd4e8dee9449a5da2479f51e80c6effa4",
+      "bytes": 27983311
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2020_epsg32642_30m.tif",
+      "sha256": "535a2777d75e21f278bcbaee9d385a92efa3adf35fb642bfdc0c7eccc63ebe80",
+      "bytes": 26927253
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2021_epsg32642_30m.tif",
+      "sha256": "769e5ec2fb6660bf0df8ad35863b4e7a07aaf4c6e99dfb1c546263dbc743a855",
+      "bytes": 27929051
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2021_epsg32642_30m.tif",
+      "sha256": "b7626c8b09002869ec3d69b65a6b4920c4f562e6ae031072232cfe6abeb8bb37",
+      "bytes": 27625757
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2022_epsg32642_30m.tif",
+      "sha256": "78826879891ee5f332aa9c954cd343ce65c2a11a038be4871278cb0fb6c910c3",
+      "bytes": 28139847
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2022_epsg32642_30m.tif",
+      "sha256": "2523e5da46ba8f407f7b607e0b36e8ce0c6f1a0fb77bc90c3234e1b63d2ed61b",
+      "bytes": 28081827
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2023_epsg32642_30m.tif",
+      "sha256": "a0d17f21859c9d8f018616c7dc3122fb7063f941eec9f64a92da37bf3d0098fb",
+      "bytes": 28297500
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2023_epsg32642_30m.tif",
+      "sha256": "08edf69b5a4d2f9458864fc4e6cdc3c37a30b83de480f5dfd3f13fa525b23ac8",
+      "bytes": 27998605
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2024_epsg32642_30m.tif",
+      "sha256": "1bf262fa8a228e701ef95af1f563664665e894f7edb1bd606935ee4fd5154657",
+      "bytes": 28287380
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2024_epsg32642_30m.tif",
+      "sha256": "45ed1701944d9f6dd88c1f6952198871a6d5ca91d43182778333f16861ce74b8",
+      "bytes": 27996372
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2025_epsg32642_30m.tif",
+      "sha256": "83b24eac11bfbb53339295282917a15ece4d6f57404a683914a6b32917ad7b1f",
+      "bytes": 28344848
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2025_epsg32642_30m.tif",
+      "sha256": "82e26704a6c714e7ed11a77d2a8f190119191d323df7fa9361cc776c77729c1b",
+      "bytes": 27935446
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_dry_2026_epsg32642_30m.tif",
+      "sha256": "702391b84f11d3dd4f214204888029ae5ff9aa3dad10f2fcdb842f7b7d324250",
+      "bytes": 28266256
+    },
+    {
+      "path": "outputs\\m3\\composites\\landsat_post_monsoon_2026_partial_epsg32642_30m.tif",
+      "sha256": "0871adfcb48f1f0464c9a55c919bafb972a31c07d00d70b633a7a5f93c0b89a9",
+      "bytes": 28018562
+    }
+  ]
+}

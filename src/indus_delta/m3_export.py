@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import os
 import re
+from collections.abc import Callable
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 
@@ -120,9 +121,60 @@ def plan_exports(cfgs: Configs, gate: dict, series: list[str], today: date) -> l
     return plan
 
 
-def submit_exports(cfgs: Configs, plan: list[dict], gate: dict) -> list[dict]:
-    """Start one batch export per planned composite. Empty windows are skipped and recorded."""
+# Task states meaning the export is queued, running or done; another task would duplicate it.
+LIVE_TASK_STATES = ("UNSUBMITTED", "READY", "RUNNING", "COMPLETED")
+
+
+def existing_tasks(descriptions: set[str]) -> dict[str, dict]:
+    """Most recent live Earth Engine task per description, among the given descriptions."""
     import ee
+
+    from indus_delta.earthengine.util import with_retries
+
+    found: dict[str, dict] = {}
+    tasks = with_retries(ee.data.getTaskList, "list export tasks")
+    for t in sorted(tasks, key=lambda t: t.get("creation_timestamp_ms", 0)):
+        if t.get("description") in descriptions and t.get("state") in LIVE_TASK_STATES:
+            found[t["description"]] = t
+    return found
+
+
+def _start_task(kwargs: dict, bucket: str | None, folder: str | None) -> str:
+    import ee
+
+    task = (
+        ee.batch.Export.image.toCloudStorage(bucket=bucket, **kwargs)
+        if bucket
+        else ee.batch.Export.image.toDrive(folder=folder, **kwargs)
+    )
+    task.start()
+    return task.id
+
+
+def _already(item: dict, live: dict[str, dict]) -> dict | None:
+    t = live.get(item["description"])
+    if t is None:
+        return None
+    return {
+        **item,
+        "status": "submitted",
+        "task_id": t["id"],
+        "task_state": t["state"],
+        "note": "existing task reused; rerun with --resubmit to export again",
+    }
+
+
+def submit_exports(
+    cfgs: Configs,
+    plan: list[dict],
+    gate: dict,
+    record: Callable[[list[dict]], object] | None = None,
+    resubmit: bool = False,
+) -> list[dict]:
+    """Start one batch export per planned composite. Empty windows are skipped and recorded.
+    Composites that already have a queued, running or completed task are not exported again
+    (unless resubmit). `record` is called after every item, so an interrupted run keeps its
+    record."""
 
     from indus_delta.earthengine import composite as comp
     from indus_delta.earthengine import prep
@@ -133,8 +185,14 @@ def submit_exports(cfgs: Configs, plan: list[dict], gate: dict) -> list[dict]:
     pp = cfgs.preprocessing
     region = to_ee_geometry(aoi_mod.build_aoi(cfgs.project))
     s1_pass = pp.sentinel1.orbit_pass or gate["metadata"].get("sentinel1_orbit_pass")
+    live = {} if resubmit else existing_tasks({i["description"] for i in plan})
     results = []
     for item in plan:
+        if done := _already(item, live):
+            results.append(done)
+            if record:
+                record(results)
+            continue
         w = season_window(item["season"], cfgs.project.seasons[item["season"]], item["label_year"])
         end = w.end - timedelta(days=1)
         if item["series"] == "landsat":
@@ -149,6 +207,8 @@ def submit_exports(cfgs: Configs, plan: list[dict], gate: dict) -> list[dict]:
         n = with_retries(lambda col=col: col.size().getInfo(), f"count {item['description']}")
         if n == 0:
             results.append({**item, "status": "skipped", "reason": "no images in window"})
+            if record:
+                record(results)
             continue
         img = (
             make(col).select(bands).toFloat().clip(region).unmask(pp.composites.nodata_value, False)
@@ -164,13 +224,10 @@ def submit_exports(cfgs: Configs, plan: list[dict], gate: dict) -> list[dict]:
             fileFormat="GeoTIFF",
             formatOptions={"cloudOptimized": True, "noData": pp.composites.nodata_value},
         )
-        task = (
-            ee.batch.Export.image.toCloudStorage(bucket=bucket, **kwargs)
-            if bucket
-            else ee.batch.Export.image.toDrive(folder=folder, **kwargs)
-        )
-        task.start()
-        results.append({**item, "status": "submitted", "task_id": task.id, "n_images": n})
+        task_id = _start_task(kwargs, bucket, folder)
+        results.append({**item, "status": "submitted", "task_id": task_id, "n_images": n})
+        if record:
+            record(results)
     return results
 
 
@@ -224,17 +281,27 @@ def plan_water_exports(cfgs: Configs, gate: dict, years: list[int]) -> list[dict
     ]
 
 
-def submit_water_exports(cfgs: Configs, plan: list[dict]) -> list[dict]:
-    import ee
-
+def submit_water_exports(
+    cfgs: Configs,
+    plan: list[dict],
+    record: Callable[[list[dict]], object] | None = None,
+    resubmit: bool = False,
+) -> list[dict]:
+    """Like submit_exports, for the annual water-frequency rasters."""
     from indus_delta.earthengine.util import to_ee_geometry
     from indus_delta.earthengine.water import landsat_water_frequency
 
     bucket, folder = export_destination()
     region = to_ee_geometry(aoi_mod.build_aoi(cfgs.project))
     nodata = cfgs.preprocessing.composites.nodata_value
+    live = {} if resubmit else existing_tasks({i["description"] for i in plan})
     results = []
     for item in plan:
+        if done := _already(item, live):
+            results.append(done)
+            if record:
+                record(results)
+            continue
         img = (
             landsat_water_frequency(cfgs, region, item["label_year"])
             .toFloat()
@@ -252,13 +319,11 @@ def submit_water_exports(cfgs: Configs, plan: list[dict]) -> list[dict]:
             fileFormat="GeoTIFF",
             formatOptions={"cloudOptimized": True, "noData": nodata},
         )
-        task = (
-            ee.batch.Export.image.toCloudStorage(bucket=bucket, **kwargs)
-            if bucket
-            else ee.batch.Export.image.toDrive(folder=folder, **kwargs)
+        results.append(
+            {**item, "status": "submitted", "task_id": _start_task(kwargs, bucket, folder)}
         )
-        task.start()
-        results.append({**item, "status": "submitted", "task_id": task.id})
+        if record:
+            record(results)
     return results
 
 
@@ -324,8 +389,12 @@ def import_exports(
     for plan_path, dest_dir, fixed_bands in plans:
         if not plan_path.is_file():
             continue
-        submitted = json.loads(plan_path.read_text(encoding="utf-8")).get("submitted") or []
-        submitted = [s for s in submitted if s.get("status") == "submitted"]
+        record = json.loads(plan_path.read_text(encoding="utf-8"))
+        submitted = [s for s in record.get("submitted") or [] if s.get("status") == "submitted"]
+        if not record.get("submitted"):
+            # No submission record (e.g. an interrupted --start): every planned file may
+            # exist; each one is still checked against its planned grid and bands.
+            submitted = record.get("plan") or []
         if submitted:
             used_plans.append(plan_path)
         for item in submitted:
@@ -353,16 +422,21 @@ def import_exports(
             dest_dir.mkdir(parents=True, exist_ok=True)
             dest = dest_dir / name
             shutil.copy2(src, dest)
-            with rasterio.open(dest, "r+") as dst:
-                dst.nodata = nodata
-                for i, b in enumerate(bands, start=1):
-                    dst.set_band_description(i, b)
+            with rasterio.open(dest) as d:
+                needs_tags = d.nodata != nodata or list(d.descriptions) != bands
+            if needs_tags:
+                # Earth Engine writes COGs; GDAL edits them only when told the layout may
+                # change (the handover rebuilds COGs from these files).
+                with rasterio.open(dest, "r+", IGNORE_COG_LAYOUT_BREAK="YES") as dst:
+                    dst.nodata = nodata
+                    for i, b in enumerate(bands, start=1):
+                        dst.set_band_description(i, b)
             imported.append(dest)
             checks.append(Check(f"import_{stem}", "PASS", f"{src.name} -> {dest}"))
     if not used_plans:
         raise GateError(
-            "no submitted exports recorded; run `indus-delta preprocess --start` (and "
-            "`water-frequency --start`) first"
+            "no export plan found in m3/export_plan.json or m5/water_export_plan.json; run "
+            "`indus-delta preprocess` (and `--start`) first"
         )
     status = worst(checks)
     manifest = out_root / "m3" / "import_manifest.json"

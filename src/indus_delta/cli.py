@@ -188,6 +188,9 @@ def preprocess(
     start: bool = typer.Option(
         False, "--start", help="Actually submit the Earth Engine export tasks."
     ),
+    resubmit: bool = typer.Option(
+        False, "--resubmit", help="Export again even where a task is queued, running or done."
+    ),
 ) -> None:
     """[M3] Full-AOI seasonal composites. Plans only, unless --start is given. Refused until
     the AOI is confirmed and the preview gate has passed for the current configuration."""
@@ -207,21 +210,41 @@ def preprocess(
     plan_path = root / "m3" / "export_plan.json"
     total = sum(p["pixels"] for p in plan)
     if not start:
-        write_plan(plan_path, plan)
+        path = _dry_run_path(plan_path)
+        write_plan(path, plan)
         typer.echo(
             f"{len(plan)} composites planned ({total:,} pixels per band in total). "
-            f"Plan: {plan_path}. Nothing submitted; rerun with --start to export."
+            f"Plan: {path}. Nothing submitted; rerun with --start to export."
         )
         return
     _ee_or_exit(project)
     try:
-        submitted = submit_exports(cfgs, plan, gate)
+        submitted = submit_exports(
+            cfgs, plan, gate, lambda r: write_plan(plan_path, plan, r), resubmit
+        )
     except GateError as exc:
         typer.secho(f"Export refused: {exc}", fg="red", err=True)
         raise typer.Exit(5) from exc
-    write_plan(plan_path, plan, submitted)
-    n = sum(1 for r in submitted if r["status"] == "submitted")
-    typer.echo(f"{n} export tasks submitted, {len(submitted) - n} skipped. Record: {plan_path}")
+    _report_submitted(submitted, plan_path)
+
+
+def _dry_run_path(plan_path: Path) -> Path:
+    """A dry run never overwrites a record of submitted tasks."""
+    import json
+
+    if plan_path.is_file() and json.loads(plan_path.read_text(encoding="utf-8")).get("submitted"):
+        return plan_path.with_name(plan_path.stem + "_dryrun.json")
+    return plan_path
+
+
+def _report_submitted(submitted: list[dict], record: Path) -> None:
+    new = sum(r["status"] == "submitted" and "task_state" not in r for r in submitted)
+    reused = sum("task_state" in r for r in submitted)
+    skipped = sum(r["status"] == "skipped" for r in submitted)
+    typer.echo(
+        f"{new} export tasks submitted, {reused} already queued/running/done (not "
+        f"duplicated), {skipped} skipped (no images). Record: {record}"
+    )
 
 
 @app.command("import-exports")
@@ -364,6 +387,9 @@ def water_frequency(
     project: str = EEProject,
     year: list[int] = typer.Option(..., "--year"),
     start: bool = typer.Option(False, "--start", help="Submit the Earth Engine exports."),
+    resubmit: bool = typer.Option(
+        False, "--resubmit", help="Export again even where a task is queued, running or done."
+    ),
 ) -> None:
     """[M5] Annual Landsat water-frequency exports (gated like `preprocess`)."""
     from indus_delta.m3_export import (
@@ -379,13 +405,15 @@ def water_frequency(
     plan = _gated(plan_water_exports, cfgs, gate, list(year))
     path = root / "m5" / "water_export_plan.json"
     if not start:
-        write_plan(path, plan)
-        typer.echo(f"{len(plan)} water-frequency exports planned: {path}. Nothing submitted.")
+        dry = _dry_run_path(path)
+        write_plan(dry, plan)
+        typer.echo(f"{len(plan)} water-frequency exports planned: {dry}. Nothing submitted.")
         return
     _ee_or_exit(project)
-    submitted = _gated(submit_water_exports, cfgs, plan)
-    write_plan(path, plan, submitted)
-    typer.echo(f"{len(submitted)} export tasks submitted. Record: {path}")
+    submitted = _gated(
+        submit_water_exports, cfgs, plan, lambda r: write_plan(path, plan, r), resubmit
+    )
+    _report_submitted(submitted, path)
 
 
 @app.command("layers")

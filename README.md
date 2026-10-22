@@ -87,7 +87,7 @@ Docker (untested in the build environment): `docker compose run --rm pipeline m1
 | `indus-delta check-ee` | Checks Earth Engine authentication | yes |
 | `indus-delta inventory [--dataset KEY ...]` | Per-image inventory over the primary AOI: `image_inventory.csv`, `inventory_summary.csv`, `missing_observations.csv`, `s1_orbit_summary.csv` | yes |
 | `indus-delta preview` | Small-area dry run (3 km box): Landsat, Sentinel-2 and Sentinel-1 seasonal composites, downloaded and checked; writes `outputs/m3/preview/preview_gate.json` | yes |
-| `indus-delta preprocess [--series ...] [--start]` | Plans full-AOI seasonal exports; submits them only with `--start`. Refused until the AOI is confirmed and the preview gate passed | yes, for `--start` |
+| `indus-delta preprocess [--series ...] [--start] [--resubmit]` | Plans full-AOI seasonal exports; submits them only with `--start`. Composites that already have a queued, running or completed Earth Engine task are not exported again (`--resubmit` overrides). Refused until the AOI is confirmed and the preview gate passed | yes, for `--start` |
 | `indus-delta import-exports --from DIR` | Checks GeoTIFFs downloaded from Drive / Cloud Storage against `export_plan.json` / `water_export_plan.json` (CRS, grid, bands) and copies them, with band names and nodata, to `outputs/m3/composites/` and `outputs/m5/inputs/` | no |
 | `indus-delta classify --year Y [--series S]` | Random Forest land cover, independent validation, accuracy tables, validation gate | no (needs exported composites and samples) |
 | `indus-delta validate --year Y` | Shows the stored gate and accuracy of an epoch | no |

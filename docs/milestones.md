@@ -168,6 +168,18 @@ Still open from M1 (operator):
 - **No step connected the downloaded exports to `classify` / `layers`**; added
   `import-exports`.
 
+- **`preprocess --start` was run twice (2026-10-22) and its record was lost**: a later
+  dry run overwrote `export_plan.json`, and submissions were only recorded at the end.
+  116 tasks existed for 72 composites; the 44 duplicate READY tasks of already-completed
+  composites were cancelled (operator approved). Fixes: `--start` reuses any queued,
+  running or completed task with the same description (`--resubmit` overrides), records
+  after every task, and a dry run never overwrites a submission record
+  (`export_plan_dryrun.json`). `import-exports` falls back to the plan when no record
+  exists and edits Earth Engine COGs in place only when band names or nodata need it.
+- **Full-scale run (10 km AOI):** 44 of 72 composites imported to `outputs/m3/composites/`
+  and checked against the plan (CRS, grid, 13 named bands, nodata); the remaining tasks
+  were still queued or running at the time of writing.
+
 ## Errors and findings during M7–M8
 
 - **The COG check was too weak.** The `LAYOUT=COG` tag survives edits that break the
