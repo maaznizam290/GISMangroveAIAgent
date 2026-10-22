@@ -179,3 +179,29 @@ def test_plan_requires_product_in_gate(cfgs):
     del gate["metadata"]["products"]["sentinel1"]
     with pytest.raises(GateError, match="sentinel1"):
         plan_exports(cfgs, gate, ["sentinel1"], date(2026, 10, 22))
+
+
+@pytest.mark.parametrize(
+    ("bucket", "folder", "ok"),
+    [
+        ("mangroove-exports", None, True),
+        (None, "indus_delta_exports", True),
+        ("https://drive.google.com/drive/folders/10Xys?usp=sharing", None, False),
+        ("gs://mangroove-exports", None, False),
+        (None, "https://drive.google.com/drive/folders/10Xys", False),
+        (None, None, False),
+    ],
+)
+def test_export_destination_validation(monkeypatch, bucket, folder, ok):
+    from indus_delta.m3_export import export_destination
+
+    for name, value in (("EXPORT_BUCKET", bucket), ("EXPORT_DRIVE_FOLDER", folder)):
+        if value is None:
+            monkeypatch.delenv(name, raising=False)
+        else:
+            monkeypatch.setenv(name, value)
+    if ok:
+        assert export_destination() == (bucket, folder)
+    else:
+        with pytest.raises(GateError):
+            export_destination()

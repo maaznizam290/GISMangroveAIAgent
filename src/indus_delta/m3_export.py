@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 
@@ -15,6 +16,38 @@ from indus_delta.grid import aligned_bounds, transform_list
 from indus_delta.seasons import windows_for_years
 
 SERIES = ("landsat", "sentinel2", "sentinel1")
+
+
+_BUCKET_NAME = re.compile(r"^[a-z0-9][a-z0-9._-]{1,220}[a-z0-9]$")
+
+
+def export_destination() -> tuple[str | None, str | None]:
+    """(bucket, drive_folder) from EXPORT_BUCKET / EXPORT_DRIVE_FOLDER, validated.
+
+    EXPORT_BUCKET is a Cloud Storage bucket *name*; EXPORT_DRIVE_FOLDER is a folder *name*
+    in the authenticated account's Google Drive. URLs are rejected: Earth Engine accepts
+    neither a bucket URL nor a Drive link.
+    """
+    bucket = (os.environ.get("EXPORT_BUCKET") or "").strip() or None
+    folder = (os.environ.get("EXPORT_DRIVE_FOLDER") or "").strip() or None
+    if not bucket and not folder:
+        raise GateError(
+            "set EXPORT_BUCKET (Cloud Storage bucket name) or EXPORT_DRIVE_FOLDER "
+            "(Google Drive folder name)"
+        )
+    if bucket and (bucket.startswith(("http", "gs://")) or not _BUCKET_NAME.match(bucket)):
+        raise GateError(
+            f"EXPORT_BUCKET={bucket!r} is not a Cloud Storage bucket name (expected e.g. "
+            "'my-exports'; lowercase letters, digits, '-', '_', '.'). For Google Drive set "
+            "EXPORT_DRIVE_FOLDER to a folder name instead"
+        )
+    if folder and ("://" in folder or "/" in folder or "?" in folder):
+        raise GateError(
+            f"EXPORT_DRIVE_FOLDER={folder!r} looks like a link or path. Use a plain folder "
+            "name such as 'indus_delta_exports'; Earth Engine creates or reuses a folder with "
+            "that name in the authenticated account's Drive"
+        )
+    return bucket, folder
 
 
 def check_preconditions(cfgs: Configs, preview_dir: Path) -> dict:
@@ -79,10 +112,7 @@ def submit_exports(cfgs: Configs, plan: list[dict], gate: dict) -> list[dict]:
     from indus_delta.earthengine.util import to_ee_geometry, with_retries
     from indus_delta.seasons import season_window
 
-    bucket = os.environ.get("EXPORT_BUCKET")
-    folder = os.environ.get("EXPORT_DRIVE_FOLDER")
-    if not bucket and not folder:
-        raise GateError("set EXPORT_BUCKET (Cloud Storage) or EXPORT_DRIVE_FOLDER (Drive)")
+    bucket, folder = export_destination()
     pp = cfgs.preprocessing
     region = to_ee_geometry(aoi_mod.build_aoi(cfgs.project))
     s1_pass = pp.sentinel1.orbit_pass or gate["metadata"].get("sentinel1_orbit_pass")
@@ -182,10 +212,7 @@ def submit_water_exports(cfgs: Configs, plan: list[dict]) -> list[dict]:
     from indus_delta.earthengine.util import to_ee_geometry
     from indus_delta.earthengine.water import landsat_water_frequency
 
-    bucket = os.environ.get("EXPORT_BUCKET")
-    folder = os.environ.get("EXPORT_DRIVE_FOLDER")
-    if not bucket and not folder:
-        raise GateError("set EXPORT_BUCKET (Cloud Storage) or EXPORT_DRIVE_FOLDER (Drive)")
+    bucket, folder = export_destination()
     region = to_ee_geometry(aoi_mod.build_aoi(cfgs.project))
     nodata = cfgs.preprocessing.composites.nodata_value
     results = []

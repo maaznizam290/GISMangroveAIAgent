@@ -125,7 +125,10 @@ proxies and the site scores.
    variables already set in the shell take precedence. Alternatively `export EE_PROJECT=...`
    for the terminal session, or pass `--project` to `check-ee`, `inventory` and `preview`.
    Note that `EE_PROJECT=x uv run ...` sets the variable for that one command only.
-4. For full-scale exports also set `EXPORT_BUCKET` (Cloud Storage) or `EXPORT_DRIVE_FOLDER`.
+4. For full-scale exports also set **one** destination, as a plain name, not a URL:
+   `EXPORT_DRIVE_FOLDER=indus_delta_exports` (a folder in the authenticated account's
+   Google Drive, created if missing), or `EXPORT_BUCKET=my-bucket` (a Cloud Storage bucket
+   name). Links such as `https://drive.google.com/...` are rejected.
 
 In a Claude Code cloud environment, add `EE_PROJECT` and a service-account key (via
 `GOOGLE_APPLICATION_CREDENTIALS`) in the environment settings; never paste keys into chat.
