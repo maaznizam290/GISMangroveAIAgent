@@ -53,7 +53,7 @@ def git_revision(repo: Path = Path(".")) -> str | None:
             check=True,
         ).stdout.strip()
         dirty = subprocess.run(
-            ["git", "-C", str(repo), "status", "--porcelain"],
+            ["git", "-C", str(repo), "status", "--porcelain", "--untracked-files=no"],
             capture_output=True,
             text=True,
             check=True,
